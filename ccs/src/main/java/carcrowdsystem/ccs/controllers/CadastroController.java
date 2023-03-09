@@ -1,17 +1,21 @@
 package carcrowdsystem.ccs.controllers;
 
-import carcrowdsystem.ccs.entidades.Funcionario;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import carcrowdsystem.ccs.entidades.GerenteEstacionamento;
+import carcrowdsystem.ccs.entidades.abstracts.Funcionario;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cadastro")
+@RequestMapping("/ccs/funcionario")
 public class CadastroController {
 
-    @PostMapping
-    public String cadastraUsuario(@RequestBody Funcionario funcionario) {
-        return "Começo de um sonho";
+    @PostMapping("/{adm}")
+    public String cadastraUsuario(
+            @RequestBody GerenteEstacionamento gerenteEstacionamento,
+            @PathVariable(required = false) String adm
+    ) {
+        if( adm == null ) {
+            return "Começo de um sonho";
+        }
+        return "Deu bom";
     }
 }

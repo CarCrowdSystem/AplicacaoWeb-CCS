@@ -1,4 +1,7 @@
-package carcrowdsystem.ccs.entidades;
+package carcrowdsystem.ccs.entidades.abstracts;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public abstract class Funcionario {
     private String nome;
@@ -8,6 +11,32 @@ public abstract class Funcionario {
     private String email;
     private String telefone;
     private String senha;
+    private LocalDateTime dthInicio = null;
+    private LocalDateTime dthFinal = null;
+
+
+    public void iniciarExpediente() {
+        dthInicio = LocalDateTime.now();
+        System.out.println("Começou o expediente as " + dthInicio);
+    }
+
+    public void finalizarExpediente() {
+        dthFinal = LocalDateTime.now();
+        System.out.println(
+            "Começou o expediente as " + dthInicio +
+            "\nE terminou as " + dthFinal
+        );
+        dthInicio = null;
+        dthFinal = null;
+    }
+
+    public LocalDateTime getInicioExpediente() {
+        return dthInicio;
+    }
+
+    public LocalDateTime getFinalExpediente() {
+        return dthFinal;
+    }
 
     public String getNome() {
         return nome;
