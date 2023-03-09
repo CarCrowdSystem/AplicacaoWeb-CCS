@@ -1,9 +1,11 @@
-package carcrowdsystem.ccs.entidades.abstracts;
+package carcrowdsystem.ccs.dtos;
 
-import java.time.LocalDate;
+import carcrowdsystem.ccs.entidades.FuncionarioEstacionamento;
+import carcrowdsystem.ccs.entidades.GerenteEstacionamento;
+
 import java.time.LocalDateTime;
 
-public abstract class Funcionario {
+public class FuncionarioDto {
     private String nome;
     private String rg;
     private String cpf;
@@ -13,39 +15,6 @@ public abstract class Funcionario {
     private String senha;
     private LocalDateTime dthInicio = null;
     private LocalDateTime dthFinal = null;
-
-    public Funcionario(String nome, String rg, String cpf, String cargo, String email, String telefone, String senha) {
-        this.nome = nome;
-        this.rg = rg;
-        this.cpf = cpf;
-        this.cargo = cargo;
-        this.email = email;
-        this.telefone = telefone;
-        this.senha = senha;
-    }
-
-    public void iniciarExpediente() {
-        dthInicio = LocalDateTime.now();
-        System.out.println("Começou o expediente as " + dthInicio);
-    }
-
-    public void finalizarExpediente() {
-        dthFinal = LocalDateTime.now();
-        System.out.println(
-            "Começou o expediente as " + dthInicio +
-            "\nE terminou as " + dthFinal
-        );
-        dthInicio = null;
-        dthFinal = null;
-    }
-
-    public LocalDateTime getInicioExpediente() {
-        return dthInicio;
-    }
-
-    public LocalDateTime getFinalExpediente() {
-        return dthFinal;
-    }
 
     public String getNome() {
         return nome;
@@ -95,11 +64,31 @@ public abstract class Funcionario {
         this.telefone = telefone;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public GerenteEstacionamento toGerente(){
+        return new GerenteEstacionamento(
+                nome,
+                rg,
+                cpf,
+                "Gerente",
+                email,
+                telefone,
+                senha
+        );
+    }
+
+    public FuncionarioEstacionamento toFuncionario(){
+        return new FuncionarioEstacionamento(
+                nome,
+                rg,
+                cpf,
+                "Func",
+                email,
+                telefone,
+                senha
+        );
     }
 }
