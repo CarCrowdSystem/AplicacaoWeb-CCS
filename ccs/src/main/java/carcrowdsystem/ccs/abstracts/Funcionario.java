@@ -1,26 +1,42 @@
 package carcrowdsystem.ccs.abstracts;
 
+import carcrowdsystem.ccs.dtos.FuncionarioDto;
+import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
+import carcrowdsystem.ccs.models.GerenteEstacionamento;
+
 import java.time.LocalDateTime;
 
 public abstract class Funcionario {
     private String nome;
     private String rg;
     private String cpf;
-    private String cargo;
     private String email;
     private String telefone;
     private String senha;
-    private LocalDateTime dthInicio = null;
-    private LocalDateTime dthFinal = null;
+    private String cargo;
+    private LocalDateTime dthInicio;
+    private LocalDateTime dthFinal;
+    private Boolean logado;
 
-    public Funcionario(String nome, String rg, String cpf, String cargo, String email, String telefone, String senha) {
+    public Boolean getLogado() {
+        return logado;
+    }
+
+    public void setLogado(Boolean logado) {
+        this.logado = logado;
+    }
+
+    public Funcionario(String nome, String rg, String cpf, String email, String telefone, String senha) {
         this.nome = nome;
         this.rg = rg;
         this.cpf = cpf;
-        this.cargo = cargo;
         this.email = email;
         this.telefone = telefone;
         this.senha = senha;
+        this.cargo = null;
+        this.dthInicio = null;
+        this.dthFinal = null;
+        this.logado = false;
     }
 
     public void iniciarExpediente() {
@@ -36,6 +52,39 @@ public abstract class Funcionario {
         );
         dthInicio = null;
         dthFinal = null;
+    }
+
+    public FuncionarioEstacionamento toFuncionario(){
+        return new FuncionarioEstacionamento(
+                nome,
+                rg,
+                cpf,
+                email,
+                telefone,
+                senha
+        );
+    }
+
+    public GerenteEstacionamento toGerente(){
+        return new GerenteEstacionamento(
+                nome,
+                rg,
+                cpf,
+                email,
+                telefone,
+                senha
+        );
+    }
+
+    public FuncionarioDto toFuncionarioDto(){
+        return new FuncionarioDto(
+                nome,
+                rg,
+                cpf,
+                cargo,
+                email,
+                telefone
+        );
     }
 
     public LocalDateTime getInicioExpediente() {

@@ -12,9 +12,22 @@ public class FuncionarioDto {
     private String cargo;
     private String email;
     private String telefone;
-    private String senha;
-    private LocalDateTime dthInicio = null;
-    private LocalDateTime dthFinal = null;
+
+    public FuncionarioDto(
+        String nome,
+        String rg,
+        String cpf,
+        String cargo,
+        String email,
+        String telefone
+    ) {
+        this.nome = nome;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.cargo = cargo;
+        this.email = email;
+        this.telefone = telefone;
+    }
 
     public String getNome() {
         return nome;
@@ -62,33 +75,5 @@ public class FuncionarioDto {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public GerenteEstacionamento toGerente(){
-        return new GerenteEstacionamento(
-                nome,
-                rg,
-                cpf,
-                "Gerente",
-                email,
-                telefone,
-                senha
-        );
-    }
-
-    public FuncionarioEstacionamento toFuncionario(){
-        return new FuncionarioEstacionamento(
-                nome,
-                rg,
-                cpf,
-                "Func",
-                email,
-                telefone,
-                senha
-        );
     }
 }
