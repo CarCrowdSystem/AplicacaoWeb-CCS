@@ -1,7 +1,7 @@
 package carcrowdsystem.ccs.dtos;
 
-import carcrowdsystem.ccs.entidades.FuncionarioEstacionamento;
-import carcrowdsystem.ccs.entidades.GerenteEstacionamento;
+import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
+import carcrowdsystem.ccs.models.GerenteEstacionamento;
 
 import java.time.LocalDateTime;
 

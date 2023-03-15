@@ -1,8 +1,7 @@
 package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.FuncionarioDto;
-import carcrowdsystem.ccs.entidades.GerenteEstacionamento;
-import carcrowdsystem.ccs.entidades.abstracts.Funcionario;
+import carcrowdsystem.ccs.abstracts.Funcionario;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
