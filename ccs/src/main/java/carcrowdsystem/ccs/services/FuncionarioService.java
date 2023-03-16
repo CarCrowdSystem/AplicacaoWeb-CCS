@@ -36,4 +36,14 @@ public class FuncionarioService {
         }
         return "Falha ao logar";
     }
+
+    public String logoff(String email) {
+        for (Funcionario f: funcs){
+            if (f.getEmail().equals(email) && f.getLogado()){
+                f.setLogado(false);
+                return "Usuário: " + f.getNome() + " foi deslogado com sucesso";
+            }
+        }
+        return "Usuário não está logado";
+    }
 }

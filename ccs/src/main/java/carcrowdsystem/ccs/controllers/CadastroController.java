@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ccs/funcionario")
+@RequestMapping("/ccs/funcionarios")
 public class CadastroController {
     FuncionarioService funcionarioService = new FuncionarioService();
     @PostMapping({"/{gerente}",""})
@@ -35,5 +35,10 @@ public class CadastroController {
     @GetMapping("/{email}/{senha}")
     public String loginUsuario(@PathVariable String email, @PathVariable String senha) {
         return funcionarioService.login(email, senha);
+    }
+
+    @GetMapping("/{email}")
+    public String logoffUsuario(@PathVariable String email) {
+        return funcionarioService.logoff(email);
     }
 }
