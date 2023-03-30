@@ -3,14 +3,30 @@ package carcrowdsystem.ccs.abstracts;
 import carcrowdsystem.ccs.dtos.FuncionarioDto;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
+import org.hibernate.validator.constraints.br.CPF;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+@Entity
 public abstract class Funcionario {
+    @Id
+    @GeneratedValue
+    private Integer id;
+    @NotNull
+    @Size(min = 3)
     private String nome;
     private String rg;
+    @CPF
     private String cpf;
+    @Email
     private String email;
+    @Size(min = 9, max = 11)
     private String telefone;
     private String senha;
     private String cargo;

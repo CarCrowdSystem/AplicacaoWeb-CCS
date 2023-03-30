@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.dtos;
 
+import carcrowdsystem.ccs.abstracts.Funcionario;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
 
