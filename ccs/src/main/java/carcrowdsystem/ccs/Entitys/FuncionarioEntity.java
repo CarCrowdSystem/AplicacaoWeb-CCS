@@ -1,5 +1,6 @@
-package carcrowdsystem.ccs.abstracts;
+package carcrowdsystem.ccs.Entitys;
 
+import carcrowdsystem.ccs.abstracts.Funcionario;
 import carcrowdsystem.ccs.dtos.FuncionarioDto;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
@@ -13,12 +14,20 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-public abstract class Funcionario {
+@Entity
+public class FuncionarioEntity {
+    @Id
+    @GeneratedValue
     private Integer id;
+    @NotNull
+    @Size(min = 3)
     private String nome;
     private String rg;
+    @CPF
     private String cpf;
+    @Email
     private String email;
+    @Size(min = 9, max = 11)
     private String telefone;
     private String senha;
     private String cargo;
@@ -26,40 +35,17 @@ public abstract class Funcionario {
     private LocalDateTime dthFinal;
     private Boolean logado;
 
-    public Boolean getLogado() {
-        return logado;
-    }
-
-    public void setLogado(Boolean logado) {
-        this.logado = logado;
-    }
-
-    public Funcionario(String nome, String rg, String cpf, String email, String telefone, String senha) {
-        this.nome = nome;
-        this.rg = rg;
-        this.cpf = cpf;
-        this.email = email;
-        this.telefone = telefone;
-        this.senha = senha;
-        this.cargo = null;
-        this.dthInicio = null;
-        this.dthFinal = null;
-        this.logado = false;
-    }
-
-    public void iniciarExpediente() {
-        dthInicio = LocalDateTime.now();
-        System.out.println("Começou o expediente as " + dthInicio);
-    }
-
-    public void finalizarExpediente() {
-        dthFinal = LocalDateTime.now();
-        System.out.println(
-            "Começou o expediente as " + dthInicio +
-            "\nE terminou as " + dthFinal
-        );
-        dthInicio = null;
-        dthFinal = null;
+    public FuncionarioEntity(Funcionario fun) {
+        nome = fun.getNome();
+        rg = fun.getSenha();
+        cpf = fun.getCpf();
+        email = fun.getEmail();
+        telefone = fun.getTelefone();
+        senha = fun.getSenha();
+        cargo = fun.getCargo();
+        dthInicio = fun.getInicioExpediente();
+        dthFinal = fun.getFinalExpediente();
+        logado = fun.getLogado();
     }
 
     public FuncionarioEstacionamento toFuncionario(){
@@ -93,6 +79,14 @@ public abstract class Funcionario {
                 email,
                 telefone
         );
+    }
+
+    public Boolean getLogado() {
+        return logado;
+    }
+
+    public void setLogado(Boolean logado) {
+        this.logado = logado;
     }
 
     public LocalDateTime getInicioExpediente() {

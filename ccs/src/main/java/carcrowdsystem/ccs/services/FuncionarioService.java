@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.services;
 
+import carcrowdsystem.ccs.Entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.abstracts.Funcionario;
 import carcrowdsystem.ccs.dtos.FuncionarioDto;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
@@ -15,7 +16,7 @@ public class FuncionarioService {
     private FuncionarioRepository funcionarioRepository;
 
     public FuncionarioDto create(Funcionario funcionario){
-        funcionarioRepository.save(funcionario);
+        funcionarioRepository.save(new FuncionarioEntity(funcionario));
         FuncionarioDto funcDto = funcionario.toFuncionarioDto();
         return funcDto;
     }
