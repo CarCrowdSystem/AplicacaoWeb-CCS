@@ -27,10 +27,10 @@ public class CadastroController {
         return funcionarioService.create(funcionario);
     }
 
-    @GetMapping
-    public List<FuncionarioDto> getFuncionarios(){
-        return funcionarioService.list();
-    }
+//    @GetMapping
+//    public List<FuncionarioDto> getFuncionarios(){
+//        return funcionarioService.list();
+//    }
 
 //    @GetMapping("/{email}/{senha}")
 //    public String loginUsuario(@PathVariable String email, @PathVariable String senha) {

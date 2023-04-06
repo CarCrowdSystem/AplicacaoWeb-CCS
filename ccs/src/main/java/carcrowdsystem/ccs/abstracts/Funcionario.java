@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.abstracts;
 
+import carcrowdsystem.ccs.Entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.dtos.FuncionarioDto;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
@@ -16,23 +17,16 @@ import java.time.LocalDateTime;
 public abstract class Funcionario {
     private Integer id;
     private String nome;
+    private String email;
     private String rg;
     private String cpf;
-    private String email;
-    private String telefone;
-    private String senha;
     private String cargo;
-    private LocalDateTime dthInicio;
-    private LocalDateTime dthFinal;
-    private Boolean logado;
+    private String senha;
+    private String telefone;
+//    private LocalDateTime dthInicio;
+//    private LocalDateTime dthFinal;
+//    private Boolean logado;
 
-    public Boolean getLogado() {
-        return logado;
-    }
-
-    public void setLogado(Boolean logado) {
-        this.logado = logado;
-    }
 
     public Funcionario(String nome, String rg, String cpf, String email, String telefone, String senha) {
         this.nome = nome;
@@ -42,25 +36,24 @@ public abstract class Funcionario {
         this.telefone = telefone;
         this.senha = senha;
         this.cargo = null;
-        this.dthInicio = null;
-        this.dthFinal = null;
-        this.logado = false;
+//        this.dthInicio = null;
+//        this.dthFinal = null;
+//        this.logado = false;
     }
-
-    public void iniciarExpediente() {
-        dthInicio = LocalDateTime.now();
-        System.out.println("Começou o expediente as " + dthInicio);
-    }
-
-    public void finalizarExpediente() {
-        dthFinal = LocalDateTime.now();
-        System.out.println(
-            "Começou o expediente as " + dthInicio +
-            "\nE terminou as " + dthFinal
-        );
-        dthInicio = null;
-        dthFinal = null;
-    }
+//    public void iniciarExpediente() {
+//        dthInicio = LocalDateTime.now();
+//        System.out.println("Começou o expediente as " + dthInicio);
+//    }
+//
+//    public void finalizarExpediente() {
+//        dthFinal = LocalDateTime.now();
+//        System.out.println(
+//            "Começou o expediente as " + dthInicio +
+//            "\nE terminou as " + dthFinal
+//        );
+//        dthInicio = null;
+//        dthFinal = null;
+//    }
 
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
@@ -95,13 +88,34 @@ public abstract class Funcionario {
         );
     }
 
-    public LocalDateTime getInicioExpediente() {
-        return dthInicio;
+    public FuncionarioEntity toFuncionarioEntity(){
+        FuncionarioEntity func = new FuncionarioEntity();
+        func.setNome(nome);
+        func.setRg(rg);
+        func.setCpf(cpf);
+        func.setCargo(cargo);
+        func.setEmail(email);
+        func.setTelefone(telefone);
+        func.setSenha(senha);
+
+        return func;
     }
 
-    public LocalDateTime getFinalExpediente() {
-        return dthFinal;
-    }
+//    public Boolean getLogado() {
+//        return logado;
+//    }
+//
+//    public void setLogado(Boolean logado) {
+//        this.logado = logado;
+//    }
+//
+//    public LocalDateTime getInicioExpediente() {
+//        return dthInicio;
+//    }
+//
+//    public LocalDateTime getFinalExpediente() {
+//        return dthFinal;
+//    }
 
     public String getNome() {
         return nome;

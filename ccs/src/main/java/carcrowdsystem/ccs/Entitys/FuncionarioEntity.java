@@ -35,19 +35,6 @@ public class FuncionarioEntity {
     private LocalDateTime dthFinal;
     private Boolean logado;
 
-    public FuncionarioEntity(Funcionario fun) {
-        nome = fun.getNome();
-        rg = fun.getSenha();
-        cpf = fun.getCpf();
-        email = fun.getEmail();
-        telefone = fun.getTelefone();
-        senha = fun.getSenha();
-        cargo = fun.getCargo();
-        dthInicio = fun.getInicioExpediente();
-        dthFinal = fun.getFinalExpediente();
-        logado = fun.getLogado();
-    }
-
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
                 nome,
