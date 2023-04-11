@@ -6,23 +6,19 @@ import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class FuncionarioService {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
     public FuncionarioDto create(Funcionario funcionario){
-        funcionarioRepository.save(funcionario);
-        FuncionarioDto funcDto = funcionario.toFuncionarioDto();
-        return funcDto;
+        funcionarioRepository.save(funcionario.toFuncionarioEntity());
+        return funcionario.toFuncionarioDto();
     }
 
-    public List<FuncionarioDto> list(){
-        return funcionarioRepository.findAllToFuncionarioDto();
-    }
+//    public List<FuncionarioDto> list(){
+//        return funcionarioRepository.findAllToFuncionarioDto();
+//    }
 
 //    public String login(String email, String senha) {
 //        for (Funcionario f: funcs){

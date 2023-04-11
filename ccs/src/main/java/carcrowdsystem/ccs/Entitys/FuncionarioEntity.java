@@ -1,6 +1,5 @@
-package carcrowdsystem.ccs.abstracts;
+package carcrowdsystem.ccs.Entitys;
 
-import carcrowdsystem.ccs.Entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.dtos.FuncionarioDto;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
@@ -12,48 +11,26 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 
-public abstract class Funcionario {
+@Entity
+public class FuncionarioEntity {
+    @Id
+    @GeneratedValue
     private Integer id;
+    @NotNull
+    @Size(min = 3)
     private String nome;
-    private String email;
     private String rg;
     private String cpf;
-    private String cargo;
-    private String senha;
+    @Email
+    private String email;
+    @Size(min = 9, max = 11)
     private String telefone;
+    private String senha;
+    private String cargo;
 //    private LocalDateTime dthInicio;
 //    private LocalDateTime dthFinal;
-//    private Boolean logado;
-
-
-    public Funcionario(String nome, String rg, String cpf, String email, String telefone, String senha) {
-        this.nome = nome;
-        this.rg = rg;
-        this.cpf = cpf;
-        this.email = email;
-        this.telefone = telefone;
-        this.senha = senha;
-        this.cargo = null;
-//        this.dthInicio = null;
-//        this.dthFinal = null;
-//        this.logado = false;
-    }
-//    public void iniciarExpediente() {
-//        dthInicio = LocalDateTime.now();
-//        System.out.println("Começou o expediente as " + dthInicio);
-//    }
-//
-//    public void finalizarExpediente() {
-//        dthFinal = LocalDateTime.now();
-//        System.out.println(
-//            "Começou o expediente as " + dthInicio +
-//            "\nE terminou as " + dthFinal
-//        );
-//        dthInicio = null;
-//        dthFinal = null;
-//    }
+    private Boolean logado;
 
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
@@ -88,27 +65,14 @@ public abstract class Funcionario {
         );
     }
 
-    public FuncionarioEntity toFuncionarioEntity(){
-        FuncionarioEntity func = new FuncionarioEntity();
-        func.setNome(nome);
-        func.setRg(rg);
-        func.setCpf(cpf);
-        func.setCargo(cargo);
-        func.setEmail(email);
-        func.setTelefone(telefone);
-        func.setSenha(senha);
-
-        return func;
+    public Boolean getLogado() {
+        return logado;
     }
 
-//    public Boolean getLogado() {
-//        return logado;
-//    }
-//
-//    public void setLogado(Boolean logado) {
-//        this.logado = logado;
-//    }
-//
+    public void setLogado(Boolean logado) {
+        this.logado = logado;
+    }
+
 //    public LocalDateTime getInicioExpediente() {
 //        return dthInicio;
 //    }
