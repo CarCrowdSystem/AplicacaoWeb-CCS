@@ -4,6 +4,7 @@ import carcrowdsystem.ccs.dtos.FuncionarioDto;
 import carcrowdsystem.ccs.abstracts.Funcionario;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.services.FuncionarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/ccs/funcionarios")
 public class CadastroController {
-    FuncionarioService funcionarioService = new FuncionarioService();
+    @Autowired
+    FuncionarioService funcionarioService;
     @PostMapping({"/{gerente}",""})
     public FuncionarioDto postUsuario(
             @RequestBody FuncionarioEstacionamento funcionario,

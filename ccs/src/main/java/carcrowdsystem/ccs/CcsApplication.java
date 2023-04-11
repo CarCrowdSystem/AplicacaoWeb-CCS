@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /*{
     "nome": "nome",
     "rg": "rg",
-    "cpf": "cpf",
-    "email": "email",
-    "telefone": "telefone",
+    "cpf": "111.222.333-44",
+    "email": "email@gmail.com",
+    "telefone": "telefonea",
     "senha": "senha"
 }*/
 

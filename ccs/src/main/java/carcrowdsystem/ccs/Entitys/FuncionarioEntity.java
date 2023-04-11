@@ -21,7 +21,6 @@ public class FuncionarioEntity {
     @Size(min = 3)
     private String nome;
     private String rg;
-    @CPF
     private String cpf;
     @Email
     private String email;
