@@ -1,6 +1,5 @@
 package carcrowdsystem.ccs.Entitys;
 
-import carcrowdsystem.ccs.abstracts.Funcionario;
 import carcrowdsystem.ccs.dtos.FuncionarioDto;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
@@ -12,7 +11,6 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 
 @Entity
 public class FuncionarioEntity {
@@ -31,8 +29,8 @@ public class FuncionarioEntity {
     private String telefone;
     private String senha;
     private String cargo;
-    private LocalDateTime dthInicio;
-    private LocalDateTime dthFinal;
+//    private LocalDateTime dthInicio;
+//    private LocalDateTime dthFinal;
     private Boolean logado;
 
     public FuncionarioEstacionamento toFuncionario(){
@@ -76,13 +74,13 @@ public class FuncionarioEntity {
         this.logado = logado;
     }
 
-    public LocalDateTime getInicioExpediente() {
-        return dthInicio;
-    }
-
-    public LocalDateTime getFinalExpediente() {
-        return dthFinal;
-    }
+//    public LocalDateTime getInicioExpediente() {
+//        return dthInicio;
+//    }
+//
+//    public LocalDateTime getFinalExpediente() {
+//        return dthFinal;
+//    }
 
     public String getNome() {
         return nome;
