@@ -1,16 +1,16 @@
 package carcrowdsystem.ccs.dtos;
 
 public class FuncionarioTokenDto {
-    private Long funcId;
+    private Integer funcId;
     private String email;
     private String senha;
     private String token;
 
-    public Long getFuncId() {
+    public Integer getFuncId() {
         return funcId;
     }
 
-    public void setFuncId(Long funcId) {
+    public void setFuncId(Integer funcId) {
         this.funcId = funcId;
     }
 

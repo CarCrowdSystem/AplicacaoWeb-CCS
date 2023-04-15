@@ -16,6 +16,10 @@ public class FuncionarioDetailsDto implements UserDetails {
         this.senha = funcionario.getSenha();
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

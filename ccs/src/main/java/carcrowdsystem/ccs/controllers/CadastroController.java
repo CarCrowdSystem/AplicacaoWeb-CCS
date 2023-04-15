@@ -1,13 +1,14 @@
 package carcrowdsystem.ccs.controllers;
 
+import carcrowdsystem.ccs.Entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.dtos.FuncionarioDto;
-import carcrowdsystem.ccs.abstracts.Funcionario;
-import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
+import carcrowdsystem.ccs.dtos.FuncionarioLoginDto;
+import carcrowdsystem.ccs.dtos.FuncionarioTokenDto;
 import carcrowdsystem.ccs.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,22 +18,30 @@ public class CadastroController {
     FuncionarioService funcionarioService;
     @PostMapping({"/{gerente}",""})
     public FuncionarioDto postUsuario(
-            @RequestBody FuncionarioEstacionamento funcionario,
+            @RequestBody FuncionarioEntity funcionario,
             @PathVariable(required = false) String gerente
     ) {
         if(gerente != null) {
             if( gerente.equals("gerente") ) {
-                return funcionarioService.create(funcionario.toGerente());
+                funcionario.setCargo("gerente");
+                return funcionarioService.create(funcionario);
             }
             return null;
         }
         return funcionarioService.create(funcionario);
     }
 
-//    @GetMapping
-//    public List<FuncionarioDto> getFuncionarios(){
-//        return funcionarioService.list();
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<FuncionarioTokenDto> login(@RequestBody FuncionarioLoginDto funcionarioLoginDto) {
+        FuncionarioTokenDto funcionarioTokenDto = funcionarioService.autenticar(funcionarioLoginDto);
+
+        return ResponseEntity.status(200).body(funcionarioTokenDto);
+    }
+
+    @GetMapping
+    public List<FuncionarioDto> getFuncionarios(){
+        return funcionarioService.getAllFuncs();
+    }
 
 //    @GetMapping("/{email}/{senha}")
 //    public String loginUsuario(@PathVariable String email, @PathVariable String senha) {
