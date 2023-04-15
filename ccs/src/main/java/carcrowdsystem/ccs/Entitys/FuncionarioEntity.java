@@ -5,17 +5,16 @@ import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
+@SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
 public class FuncionarioEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ID_INIT_100")
     private Integer id;
     @NotNull
     @Size(min = 3)
@@ -27,13 +26,14 @@ public class FuncionarioEntity {
     @Size(min = 9, max = 11)
     private String telefone;
     private String senha;
-    private String cargo;
+    private String cargo = "Funcionario";
 //    private LocalDateTime dthInicio;
 //    private LocalDateTime dthFinal;
-    private Boolean logado;
+    private Boolean logado = false;
 
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
+                id,
                 nome,
                 rg,
                 cpf,
@@ -45,6 +45,7 @@ public class FuncionarioEntity {
 
     public GerenteEstacionamento toGerente(){
         return new GerenteEstacionamento(
+                id,
                 nome,
                 rg,
                 cpf,
@@ -80,6 +81,14 @@ public class FuncionarioEntity {
 //    public LocalDateTime getFinalExpediente() {
 //        return dthFinal;
 //    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

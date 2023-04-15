@@ -28,7 +28,7 @@ public abstract class Funcionario {
 //    private Boolean logado;
 
 
-    public Funcionario(String nome, String rg, String cpf, String email, String telefone, String senha) {
+    public Funcionario(Integer id, String nome, String rg, String cpf, String email, String telefone, String senha) {
         this.nome = nome;
         this.rg = rg;
         this.cpf = cpf;
@@ -57,6 +57,7 @@ public abstract class Funcionario {
 
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
+                id,
                 nome,
                 rg,
                 cpf,
@@ -68,6 +69,7 @@ public abstract class Funcionario {
 
     public GerenteEstacionamento toGerente(){
         return new GerenteEstacionamento(
+                id,
                 nome,
                 rg,
                 cpf,
@@ -116,6 +118,14 @@ public abstract class Funcionario {
 //    public LocalDateTime getFinalExpediente() {
 //        return dthFinal;
 //    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

@@ -4,6 +4,7 @@ import carcrowdsystem.ccs.abstracts.Funcionario;
 
 public class GerenteEstacionamento extends Funcionario {
     public GerenteEstacionamento(
+        Integer id,
         String nome,
         String rg,
         String cpf,
@@ -11,7 +12,7 @@ public class GerenteEstacionamento extends Funcionario {
         String telefone,
         String senha
     ) {
-        super(nome, rg, cpf, email, telefone, senha);
+        super(id, nome, rg, cpf, email, telefone, senha);
         super.setCargo("Gerente");
     }
 }
