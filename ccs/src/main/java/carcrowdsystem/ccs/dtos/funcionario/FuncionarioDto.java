@@ -1,38 +1,37 @@
-package carcrowdsystem.ccs.dtos;
+package carcrowdsystem.ccs.dtos.funcionario;
 
-import carcrowdsystem.ccs.Entitys.FuncionarioEntity;
+import carcrowdsystem.ccs.abstracts.Funcionario;
+import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
+import carcrowdsystem.ccs.models.GerenteEstacionamento;
 
-public class FuncionarioDtoComSenha{
+import java.time.LocalDateTime;
+
+public class FuncionarioDto {
     private String nome;
     private String rg;
     private String cpf;
     private String cargo;
     private String email;
-    private String senha;
     private String telefone;
 
-    public FuncionarioEntity toFuncionarioEntity(){
-        FuncionarioEntity func = new FuncionarioEntity();
-        func.setNome(nome);
-        func.setRg(rg);
-        func.setCpf(cpf);
-        func.setCargo(cargo);
-        func.setEmail(email);
-        func.setTelefone(telefone);
-        func.setSenha(senha);
-
-        return func;
+    public FuncionarioDto(
+        String nome,
+        String rg,
+        String cpf,
+        String cargo,
+        String email,
+        String telefone
+    ) {
+        this.nome = nome;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.cargo = cargo;
+        this.email = email;
+        this.telefone = telefone;
     }
+
     public String getNome() {
         return nome;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public void setNome(String nome) {

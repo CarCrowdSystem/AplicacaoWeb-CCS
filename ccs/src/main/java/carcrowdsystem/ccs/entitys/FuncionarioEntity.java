@@ -1,13 +1,12 @@
-package carcrowdsystem.ccs.Entitys;
+package carcrowdsystem.ccs.entitys;
 
-import carcrowdsystem.ccs.dtos.FuncionarioDto;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -16,7 +15,7 @@ public class FuncionarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ID_INIT_100")
     private Integer id;
-    @NotNull
+    @NotBlank
     @Size(min = 3)
     private String nome;
     private String rg;

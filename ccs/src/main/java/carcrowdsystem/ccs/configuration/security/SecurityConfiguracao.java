@@ -46,8 +46,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/webjars/**"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/actuator/*"),
-            new AntPathRequestMatcher("/ccs/funcionarios**"),
-            new AntPathRequestMatcher("/ccs/funcionarios/**"),
+            new AntPathRequestMatcher("/ccs-dev/funcionarios**"),
+            new AntPathRequestMatcher("/ccs-dev/funcionarios/**"),
             new AntPathRequestMatcher("/h2-console/**")
     };
 

@@ -1,15 +1,12 @@
 package carcrowdsystem.ccs.services;
 
-import carcrowdsystem.ccs.Entitys.FuncionarioEntity;
-import carcrowdsystem.ccs.abstracts.Funcionario;
+import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.configuration.security.jwt.GerenciadorTokenJwt;
-import carcrowdsystem.ccs.dtos.FuncionarioDto;
-import carcrowdsystem.ccs.dtos.FuncionarioDtoComSenha;
-import carcrowdsystem.ccs.dtos.FuncionarioLoginDto;
-import carcrowdsystem.ccs.dtos.FuncionarioTokenDto;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.mapper.FuncionarioMapper;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
-import net.bytebuddy.implementation.ExceptionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.GeneratedValue;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,30 +68,7 @@ public class FuncionarioService {
         return listFuncToListFuncDto(funcionarioRepository.findAll());
     }
 
-//    public List<FuncionarioDto> list(){
-//        return funcionarioRepository.findAllToFuncionarioDto();
-//    }
-
-//    public String login(String email, String senha) {
-//        for (Funcionario f: funcs){
-//            if (f.getEmail().equals(email) && f.getSenha().equals(senha)){
-//                f.setLogado(true);
-//                return "Usuário: " + f.getNome() + " foi logado com sucesso";
-//            }
-//        }
-//        return "Falha ao logar";
-//    }
-//
-//    public String logoff(String email) {
-//        for (Funcionario f: funcs){
-//            if (f.getEmail().equals(email) && f.getLogado()){
-//                f.setLogado(false);
-//                return "Usuário: " + f.getNome() + " foi deslogado com sucesso";
-//            }
-//        }
-//        return "Usuário não está logado";
-//    }
-
+    // Pega uma lista de funcionarioEntity e transforma em lista de funcionarioDto
     private List<FuncionarioDto> listFuncToListFuncDto(List<FuncionarioEntity> funcs){
         List<FuncionarioDto> funcsDto = new ArrayList<>();
         for(FuncionarioEntity f: funcs){

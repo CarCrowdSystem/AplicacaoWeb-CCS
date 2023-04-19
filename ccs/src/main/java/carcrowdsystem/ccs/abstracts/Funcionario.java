@@ -1,18 +1,9 @@
 package carcrowdsystem.ccs.abstracts;
 
-import carcrowdsystem.ccs.Entitys.FuncionarioEntity;
-import carcrowdsystem.ccs.dtos.FuncionarioDto;
+import carcrowdsystem.ccs.entitys.FuncionarioEntity;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
-import org.hibernate.validator.constraints.br.CPF;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 
 public abstract class Funcionario {
     private Integer id;
