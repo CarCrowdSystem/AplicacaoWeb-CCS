@@ -1,9 +1,9 @@
 package carcrowdsystem.ccs.mapper;
 
-import carcrowdsystem.ccs.Entitys.FuncionarioEntity;
+import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.abstracts.Funcionario;
-import carcrowdsystem.ccs.dtos.FuncionarioDto;
-import carcrowdsystem.ccs.dtos.FuncionarioTokenDto;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
 

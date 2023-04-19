@@ -1,4 +1,4 @@
-package carcrowdsystem.ccs.dtos;
+package carcrowdsystem.ccs.dtos.funcionario;
 
 public class FuncionarioTokenDto {
     private Integer funcId;

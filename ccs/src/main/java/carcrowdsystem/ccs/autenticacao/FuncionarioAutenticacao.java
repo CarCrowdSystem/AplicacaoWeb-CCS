@@ -1,7 +1,7 @@
 package carcrowdsystem.ccs.autenticacao;
 
 import carcrowdsystem.ccs.abstracts.Funcionario;
-import carcrowdsystem.ccs.dtos.FuncionarioDetailsDto;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDetailsDto;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

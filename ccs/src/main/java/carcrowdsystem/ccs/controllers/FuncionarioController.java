@@ -1,9 +1,9 @@
 package carcrowdsystem.ccs.controllers;
 
-import carcrowdsystem.ccs.Entitys.FuncionarioEntity;
-import carcrowdsystem.ccs.dtos.FuncionarioDto;
-import carcrowdsystem.ccs.dtos.FuncionarioLoginDto;
-import carcrowdsystem.ccs.dtos.FuncionarioTokenDto;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
+import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
+import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ccs/funcionarios")
+@RequestMapping("${uri.dev}/funcionarios")
 public class FuncionarioController {
     @Autowired
     FuncionarioService funcionarioService;
