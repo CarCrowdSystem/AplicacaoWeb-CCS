@@ -28,13 +28,13 @@ import java.util.List;
 public class FuncionarioService {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
-    private FuncionarioMapper funcionarioMapper = new FuncionarioMapper();
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private GerenciadorTokenJwt gerenciadorTokenJwt;
     @Autowired
     private AuthenticationManager authenticationManager;
+    private FuncionarioMapper funcionarioMapper = new FuncionarioMapper();
 
     public FuncionarioDto create(FuncionarioEntity newFunc){
         newFunc.setSenha(passwordEncoder.encode(newFunc.getSenha()));
