@@ -1,14 +1,13 @@
 package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
-import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
-import carcrowdsystem.ccs.entitys.FuncionarioEntity;
-import carcrowdsystem.ccs.repositorys.EstacionamentoRepository;
 import carcrowdsystem.ccs.services.EstacionamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("${uri.dev}/estacionamento")
@@ -21,5 +20,18 @@ public class EstacionamentoController {
             @RequestBody EstacionamentoEntity estacionamento
     ) {
         return ResponseEntity.status(201).body(estacionamentoService.create(estacionamento));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EstacionamentoDto>> getAllEstacionamento(){
+        return ResponseEntity.status(200).body(estacionamentoService.getAllEstacionamento());
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<EstacionamentoDto> patchEstacionamento(
+        @RequestBody EstacionamentoEntity estacionamento,
+        @PathVariable int id
+    ){
+        estacionamentoService.patchEstacionamento(id, estacionamento);
     }
 }
