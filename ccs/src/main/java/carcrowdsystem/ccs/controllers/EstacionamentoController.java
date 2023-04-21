@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("${uri.dev}/estacionamento")
+@RequestMapping("${uri.dev}/estacionamentos")
 public class EstacionamentoController {
     @Autowired
     private EstacionamentoService estacionamentoService;
@@ -29,7 +29,7 @@ public class EstacionamentoController {
 
     @PatchMapping("/{id}")
     public ResponseEntity patchEstacionamento(
-        @PathVariable int id,
+        @PathVariable Integer id,
         @RequestBody EstacionamentoEntity estacionamento
     ){
         estacionamentoService.patchEstacionamento(id, estacionamento);

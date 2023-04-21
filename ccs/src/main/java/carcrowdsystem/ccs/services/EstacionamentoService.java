@@ -14,8 +14,6 @@ import java.util.Optional;
 
 @Service
 public class EstacionamentoService {
-//    @Autowired
-//    private EstacionamentoUpdateMapper mapper;
     @Autowired
     private EstacionamentoRepository estacionamentoRepository;
 
@@ -30,18 +28,21 @@ public class EstacionamentoService {
         return toListDto(estacionamentoRepository.findAll());
     }
 
-    public void patchEstacionamento(int id, EstacionamentoEntity estacionamento) {
+    public void patchEstacionamento(Integer id, EstacionamentoEntity estacionamento) {
         Optional<EstacionamentoEntity> estacionamentoAntigo = estacionamentoRepository.findById(id);
         if (estacionamentoAntigo.isEmpty()){
             estacionamentoRepository.save(estacionamento);
         }
         if(estacionamento.getNomeEstacionamento() != null){
             estacionamentoAntigo.get().setNomeEstacionamento(estacionamento.getNomeEstacionamento());
-        } else if(estacionamento.getCep() != null){
+        }
+        if(estacionamento.getCep() != null){
             estacionamentoAntigo.get().setCep(estacionamento.getCep());
-        } else if(estacionamento.getTelefone() != null){
+        }
+        if(estacionamento.getTelefone() != null){
             estacionamentoAntigo.get().setTelefone(estacionamento.getTelefone());
-        } else if(estacionamento.getNumeroEndereco() != null){
+        }
+        if(estacionamento.getNumeroEndereco() != null){
             estacionamentoAntigo.get().setNumeroEndereco(estacionamento.getNumeroEndereco());
         }
         estacionamentoRepository.save(estacionamentoAntigo.get());

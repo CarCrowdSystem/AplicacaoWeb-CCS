@@ -26,8 +26,6 @@ public class FuncionarioEntity {
     private String telefone;
     private String senha;
     private String cargo = "Funcionario";
-//    private LocalDateTime dthInicio;
-//    private LocalDateTime dthFinal;
     private Boolean logado = false;
 
     public FuncionarioEstacionamento toFuncionario(){
@@ -72,14 +70,6 @@ public class FuncionarioEntity {
     public void setLogado(Boolean logado) {
         this.logado = logado;
     }
-
-//    public LocalDateTime getInicioExpediente() {
-//        return dthInicio;
-//    }
-//
-//    public LocalDateTime getFinalExpediente() {
-//        return dthFinal;
-//    }
 
     public Integer getId() {
         return id;
