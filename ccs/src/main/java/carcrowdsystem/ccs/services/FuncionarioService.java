@@ -46,19 +46,17 @@ public class FuncionarioService {
 
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
-        FuncionarioEntity funcionarioEntity =
-                funcionarioMapper.toFuncionarioEntity(
-                    funcionarioRepository.findByEmail(funcionarioLoginDto.getEmail())
-                        .orElseThrow(
-                                () -> new ResponseStatusException(404, "Email do usuário não cadastrado", null)
-                        )
+        FuncionarioEntity funcionarioAutenticado =
+            funcionarioRepository.findByEmail(funcionarioLoginDto.getEmail())
+                .orElseThrow(
+                        () -> new ResponseStatusException(404, "Email do usuário não cadastrado", null)
                 );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final String token = gerenciadorTokenJwt.generateToken(authentication);
 
-        return funcionarioMapper.toFuncionarioTokenDto(funcionarioEntity, token);
+        return funcionarioMapper.toFuncionarioTokenDto(funcionarioAutenticado, token);
     }
 
     public List<FuncionarioDto> getAllFuncs() {

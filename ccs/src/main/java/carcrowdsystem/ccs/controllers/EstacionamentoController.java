@@ -28,10 +28,11 @@ public class EstacionamentoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<EstacionamentoDto> patchEstacionamento(
-        @RequestBody EstacionamentoEntity estacionamento,
-        @PathVariable int id
+    public ResponseEntity patchEstacionamento(
+        @PathVariable int id,
+        @RequestBody EstacionamentoEntity estacionamento
     ){
         estacionamentoService.patchEstacionamento(id, estacionamento);
+        return ResponseEntity.status(201).build();
     }
 }
