@@ -26,9 +26,10 @@ public class FuncionarioEntity {
     private String telefone;
     private String senha;
     private String cargo = "Funcionario";
-//    private LocalDateTime dthInicio;
-//    private LocalDateTime dthFinal;
     private Boolean logado = false;
+
+    @ManyToOne
+    private EstacionamentoEntity estacionamento;
 
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
@@ -72,14 +73,6 @@ public class FuncionarioEntity {
     public void setLogado(Boolean logado) {
         this.logado = logado;
     }
-
-//    public LocalDateTime getInicioExpediente() {
-//        return dthInicio;
-//    }
-//
-//    public LocalDateTime getFinalExpediente() {
-//        return dthFinal;
-//    }
 
     public Integer getId() {
         return id;
@@ -143,5 +136,13 @@ public class FuncionarioEntity {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public EstacionamentoEntity getEstacionamento() {
+        return estacionamento;
+    }
+
+    public void setEstacionamento(EstacionamentoEntity estacionamento) {
+        this.estacionamento = estacionamento;
     }
 }

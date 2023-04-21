@@ -35,20 +35,21 @@ public class SecurityConfiguracao {
     private AutenticacaoEntryPoint autenticacaoJwtEntryPoint;
 
     private static final AntPathRequestMatcher[] URLS_PERMITIDAS = {
+            new AntPathRequestMatcher("/ccs-dev/**"),
+            new AntPathRequestMatcher("/webjars/**"),
+            new AntPathRequestMatcher("/actuator/*"),
             new AntPathRequestMatcher("/swagger-ui/**"),
+            new AntPathRequestMatcher("/h2-console/**"),
+            new AntPathRequestMatcher("/api/public/**"),
+            new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/swagger-ui.html"),
+            new AntPathRequestMatcher("/configuration/ui"),
             new AntPathRequestMatcher("/swagger-resources"),
             new AntPathRequestMatcher("/swagger-resources/**"),
-            new AntPathRequestMatcher("/configuration/ui"),
-            new AntPathRequestMatcher("/configuration/security"),
-            new AntPathRequestMatcher("/api/public/**"),
-            new AntPathRequestMatcher("/api/public/authenticate"),
-            new AntPathRequestMatcher("/webjars/**"),
-            new AntPathRequestMatcher("/v3/api-docs/**"),
-            new AntPathRequestMatcher("/actuator/*"),
             new AntPathRequestMatcher("/ccs-dev/funcionarios**"),
-            new AntPathRequestMatcher("/ccs-dev/funcionarios/**"),
-            new AntPathRequestMatcher("/h2-console/**")
+            new AntPathRequestMatcher("/configuration/security"),
+            new AntPathRequestMatcher("/api/public/authenticate"),
+            new AntPathRequestMatcher("/ccs-dev/funcionarios/**")
     };
 
     @Bean

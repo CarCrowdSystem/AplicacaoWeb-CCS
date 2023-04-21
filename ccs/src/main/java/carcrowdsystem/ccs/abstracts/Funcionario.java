@@ -14,10 +14,6 @@ public abstract class Funcionario {
     private String cargo;
     private String senha;
     private String telefone;
-//    private LocalDateTime dthInicio;
-//    private LocalDateTime dthFinal;
-//    private Boolean logado;
-
 
     public Funcionario(Integer id, String nome, String rg, String cpf, String email, String telefone, String senha) {
         this.nome = nome;
@@ -27,24 +23,7 @@ public abstract class Funcionario {
         this.telefone = telefone;
         this.senha = senha;
         this.cargo = null;
-//        this.dthInicio = null;
-//        this.dthFinal = null;
-//        this.logado = false;
     }
-//    public void iniciarExpediente() {
-//        dthInicio = LocalDateTime.now();
-//        System.out.println("Começou o expediente as " + dthInicio);
-//    }
-//
-//    public void finalizarExpediente() {
-//        dthFinal = LocalDateTime.now();
-//        System.out.println(
-//            "Começou o expediente as " + dthInicio +
-//            "\nE terminou as " + dthFinal
-//        );
-//        dthInicio = null;
-//        dthFinal = null;
-//    }
 
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
@@ -93,22 +72,6 @@ public abstract class Funcionario {
 
         return func;
     }
-
-//    public Boolean getLogado() {
-//        return logado;
-//    }
-//
-//    public void setLogado(Boolean logado) {
-//        this.logado = logado;
-//    }
-//
-//    public LocalDateTime getInicioExpediente() {
-//        return dthInicio;
-//    }
-//
-//    public LocalDateTime getFinalExpediente() {
-//        return dthFinal;
-//    }
 
     public Integer getId() {
         return id;

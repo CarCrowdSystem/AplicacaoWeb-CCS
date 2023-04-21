@@ -3,6 +3,7 @@ package carcrowdsystem.ccs.entitys;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
@@ -20,6 +21,11 @@ public class EstacionamentoEntity {
 
     @NotBlank
     private String numeroEndereco;
+
+    @OneToMany
+    private List<FuncionarioEntity> funcionarios;
+
+    private Boolean statusEstacionamento = true;
 
     private String telefone;
 
@@ -61,5 +67,13 @@ public class EstacionamentoEntity {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public Boolean getStatusEstacionamento() {
+        return statusEstacionamento;
+    }
+
+    public void setStatusEstacionamento(Boolean statusEstacionamento) {
+        this.statusEstacionamento = statusEstacionamento;
     }
 }

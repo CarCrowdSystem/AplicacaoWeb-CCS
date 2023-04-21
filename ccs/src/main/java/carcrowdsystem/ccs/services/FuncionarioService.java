@@ -1,13 +1,16 @@
 package carcrowdsystem.ccs.services;
 
+import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.configuration.security.jwt.GerenciadorTokenJwt;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.mapper.FuncionarioMapper;
+import carcrowdsystem.ccs.repositorys.EstacionamentoRepository;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,12 +21,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 @Service
 public class FuncionarioService {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
+    @Autowired
+    private EstacionamentoRepository estacionamentoRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -32,10 +38,17 @@ public class FuncionarioService {
     private AuthenticationManager authenticationManager;
     private FuncionarioMapper funcionarioMapper = new FuncionarioMapper();
 
-    public FuncionarioDto create(FuncionarioEntity newFunc){
-        newFunc.setSenha(passwordEncoder.encode(newFunc.getSenha()));
-        funcionarioRepository.save(newFunc);
-        return funcionarioMapper.toFuncionarioDto(newFunc);
+    public FuncionarioDto create(Integer idEstacionamento, FuncionarioEntity newFunc){
+        try {
+            EstacionamentoEntity estacionamento =
+                estacionamentoRepository.findById(idEstacionamento).get();
+            newFunc.setSenha(passwordEncoder.encode(newFunc.getSenha()));
+            newFunc.setEstacionamento(estacionamento);
+            funcionarioRepository.save(newFunc);
+            return funcionarioMapper.toFuncionarioDto(newFunc);
+        } catch (NoSuchElementException e) {
+            throw e;
+        }
     }
 
     public FuncionarioTokenDto autenticar(FuncionarioLoginDto funcionarioLoginDto){
@@ -46,19 +59,17 @@ public class FuncionarioService {
 
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
-        FuncionarioEntity funcionarioEntity =
-                funcionarioMapper.toFuncionarioEntity(
-                    funcionarioRepository.findByEmail(funcionarioLoginDto.getEmail())
-                        .orElseThrow(
-                                () -> new ResponseStatusException(404, "Email do usuário não cadastrado", null)
-                        )
+        FuncionarioEntity funcionarioAutenticado =
+            funcionarioRepository.findByEmail(funcionarioLoginDto.getEmail())
+                .orElseThrow(
+                        () -> new ResponseStatusException(404, "Email do usuário não cadastrado", null)
                 );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         final String token = gerenciadorTokenJwt.generateToken(authentication);
 
-        return funcionarioMapper.toFuncionarioTokenDto(funcionarioEntity, token);
+        return funcionarioMapper.toFuncionarioTokenDto(funcionarioAutenticado, token);
     }
 
     public List<FuncionarioDto> getAllFuncs() {
