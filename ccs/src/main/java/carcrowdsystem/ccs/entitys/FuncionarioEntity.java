@@ -28,6 +28,9 @@ public class FuncionarioEntity {
     private String cargo = "Funcionario";
     private Boolean logado = false;
 
+    @ManyToOne
+    private EstacionamentoEntity estacionamento;
+
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
                 id,
@@ -133,5 +136,13 @@ public class FuncionarioEntity {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public EstacionamentoEntity getEstacionamento() {
+        return estacionamento;
+    }
+
+    public void setEstacionamento(EstacionamentoEntity estacionamento) {
+        this.estacionamento = estacionamento;
     }
 }

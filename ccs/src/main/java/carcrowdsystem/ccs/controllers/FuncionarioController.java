@@ -16,19 +16,20 @@ import java.util.List;
 public class FuncionarioController {
     @Autowired
     FuncionarioService funcionarioService;
-    @PostMapping({"/{gerente}",""})
+    @PostMapping("/{idEstacionamento}/{gerente}")
     public ResponseEntity<FuncionarioDto> postUsuario(
+            @PathVariable Integer idEstacionamento,
             @RequestBody FuncionarioEntity funcionario,
             @PathVariable(required = false) String gerente
     ) {
         if(gerente != null) {
             if( gerente.equals("gerente") ) {
                 funcionario.setCargo("gerente");
-                return ResponseEntity.status(201).body(funcionarioService.create(funcionario));
+                return ResponseEntity.status(201).body(funcionarioService.create(idEstacionamento, funcionario));
             }
             return ResponseEntity.status(404).build();
         }
-        return ResponseEntity.status(201).body(funcionarioService.create(funcionario));
+        return ResponseEntity.status(201).body(funcionarioService.create(idEstacionamento, funcionario));
     }
 
     @PostMapping("/login")
