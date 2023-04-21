@@ -48,6 +48,16 @@ public class EstacionamentoService {
         estacionamentoRepository.save(estacionamentoAntigo.get());
     }
 
+    public Boolean deleteEstacionamento(Integer id) {
+        Optional<EstacionamentoEntity> estacionamento = estacionamentoRepository.findById(id);
+        if (estacionamento.isEmpty()){
+            return false;
+        }
+        estacionamento.get().setStatusEstacionamento(false);
+        estacionamentoRepository.save(estacionamento.get());
+        return true;
+    }
+
     private List<EstacionamentoDto> toListDto(List<EstacionamentoEntity> estacionamentos){
         List<EstacionamentoDto> estacionamentoDtos = new ArrayList<>();
         for (EstacionamentoEntity e: estacionamentos){

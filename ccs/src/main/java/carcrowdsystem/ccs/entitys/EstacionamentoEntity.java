@@ -21,6 +21,8 @@ public class EstacionamentoEntity {
     @NotBlank
     private String numeroEndereco;
 
+    private Boolean statusEstacionamento = true;
+
     private String telefone;
 
     public Integer getId() {
@@ -61,5 +63,13 @@ public class EstacionamentoEntity {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public Boolean getStatusEstacionamento() {
+        return statusEstacionamento;
+    }
+
+    public void setStatusEstacionamento(Boolean statusEstacionamento) {
+        this.statusEstacionamento = statusEstacionamento;
     }
 }

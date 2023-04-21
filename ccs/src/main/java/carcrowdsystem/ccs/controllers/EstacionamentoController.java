@@ -35,4 +35,12 @@ public class EstacionamentoController {
         estacionamentoService.patchEstacionamento(id, estacionamento);
         return ResponseEntity.status(201).build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteEstacionamento(@PathVariable Integer id){
+        if (estacionamentoService.deleteEstacionamento(id)){
+            return ResponseEntity.status(200).build();
+        }
+        return ResponseEntity.status(404).build();
+    }
 }
