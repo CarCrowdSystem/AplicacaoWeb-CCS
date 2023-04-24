@@ -6,7 +6,14 @@ public class ErrorResponse {
     private Integer httpCode;
     private String message;
     private String internalCode;
-    private List<FieldErrorResponse> errors = null;
+    private List<FieldErrorResponse> errors;
+
+    public ErrorResponse(Integer httpCode, String message, String internalCode, List<FieldErrorResponse> errors) {
+        this.httpCode = httpCode;
+        this.message = message;
+        this.internalCode = internalCode;
+        this.errors = errors = null;
+    }
 
     public Integer getHttpCode() {
         return httpCode;

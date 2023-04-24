@@ -6,11 +6,11 @@ import carcrowdsystem.ccs.configuration.security.jwt.GerenciadorTokenJwt;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
+import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.FuncionarioMapper;
 import carcrowdsystem.ccs.repositorys.EstacionamentoRepository;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -38,7 +38,7 @@ public class FuncionarioService {
     private AuthenticationManager authenticationManager;
     private FuncionarioMapper funcionarioMapper = new FuncionarioMapper();
 
-    public FuncionarioDto create(Integer idEstacionamento, FuncionarioEntity newFunc){
+    public FuncionarioDto create(Integer idEstacionamento, FuncionarioEntity newFunc) throws MyException {
         try {
             EstacionamentoEntity estacionamento =
                 estacionamentoRepository.findById(idEstacionamento).get();
@@ -46,8 +46,8 @@ public class FuncionarioService {
             newFunc.setEstacionamento(estacionamento);
             funcionarioRepository.save(newFunc);
             return funcionarioMapper.toFuncionarioDto(newFunc);
-        } catch (NoSuchElementException e) {
-            throw e;
+        } catch (NoSuchElementException e){
+            throw new MyException(404, "Id '"+idEstacionamento+"' do estacionamento não existe", "E-001");
         }
     }
 
@@ -72,9 +72,9 @@ public class FuncionarioService {
         return funcionarioMapper.toFuncionarioTokenDto(funcionarioAutenticado, token);
     }
 
-    public List<FuncionarioDto> getAllFuncs() {
+    public List<FuncionarioDto> getAllFuncs() throws MyException {
         if (funcionarioRepository.findAll().isEmpty()){
-            throw new RuntimeException("Não tem nada no banco");
+            throw new MyException(404, "Não existe nada no Banco de Dados", "G-002");
         }
         return listFuncToListFuncDto(funcionarioRepository.findAll());
     }
