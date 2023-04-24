@@ -2,6 +2,7 @@ package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
 import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
+import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.services.EstacionamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class EstacionamentoController {
     @PostMapping
     public ResponseEntity<EstacionamentoDto> postEstacionamento(
             @RequestBody EstacionamentoEntity estacionamento
-    ) {
+    ) throws MyException {
         return ResponseEntity.status(201).body(estacionamentoService.create(estacionamento));
     }
 

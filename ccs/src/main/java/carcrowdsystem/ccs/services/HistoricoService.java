@@ -1,6 +1,7 @@
 package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.entitys.HistoricoEntity;
+import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +25,22 @@ public class HistoricoService {
         return historicoRepository.findAll();
     }
 
-    public static void gravaArquivoCsv(List<HistoricoEntity> lista){
+    public static String gravaArquivoCsv(List<HistoricoEntity> lista) throws MyException {
         FileWriter arq = null;
         Formatter saida = null;
-        Boolean deuRuim = false;
         String nome = LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyyyyHHmmss")) + "-historico.csv";
 
         // Bloc try catch para abrir o arquivo
-
         try {
             arq = new FileWriter(nome);
             saida = new Formatter(arq);
         }
         catch (IOException erro){
             System.out.println("Erro ao abrir o arquivo.");
-            System.out.println(1);
+            throw new MyException(400, "Erro ao abrir o arquivo.", "G-003");
         }
 
         // Bloco try catch para gravar o arquivo
-
         try {
         saida.format("%-15S;%-10S;%-7S;%-7S;%5S;%-14S;%-10S;%7S;%7S;%10S\n",
                 "CLIENTE","MODELO","PLACA","ANDAR","VAGA","TELEFONE","DATA","ENTRADA","SAIDA","VALOR");
@@ -56,19 +54,17 @@ public class HistoricoService {
         }
         catch (FormatterClosedException erro){
             System.out.println("Erro ao gravar o arquivo");
-            deuRuim = true;
+            throw new MyException(400, "Erro ao gravar o arquivo", "G-004");
         }
         finally {
             saida.close();
             try {
                 arq.close();
+                return nome;
             }
             catch (IOException erro){
                 System.out.println("Erro ao fechar o arquivo");
-                deuRuim = true;
-            }
-            if(deuRuim){
-                System.out.println(1);
+                throw new MyException(400, "Erro ao fechar o arquivo", "G-005");
             }
         }
     }
