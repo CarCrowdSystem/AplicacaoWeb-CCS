@@ -17,7 +17,7 @@ import java.util.List;
 public class FuncionarioController {
     @Autowired
     FuncionarioService funcionarioService;
-    @PostMapping("/{idEstacionamento}/{gerente}")
+    @PostMapping({"/{idEstacionamento}","/{idEstacionamento}/{gerente}"})
     public ResponseEntity<FuncionarioDto> postUsuario(
             @PathVariable Integer idEstacionamento,
             @RequestBody FuncionarioEntity funcionario,
