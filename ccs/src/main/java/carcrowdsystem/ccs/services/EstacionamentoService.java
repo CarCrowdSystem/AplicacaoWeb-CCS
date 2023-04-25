@@ -2,6 +2,7 @@ package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
 import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
+import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
 //import carcrowdsystem.ccs.mapper.EstacionamentoUpdateMapper;
 import carcrowdsystem.ccs.repositorys.EstacionamentoRepository;
@@ -19,8 +20,18 @@ public class EstacionamentoService {
 
     private EstacionamentoMapper estacionamentoMapper = new EstacionamentoMapper();
 
-    public EstacionamentoDto create(EstacionamentoEntity estacionamento) {
-        estacionamentoRepository.save(estacionamento);
+    public EstacionamentoDto create(EstacionamentoEntity estacionamento) throws MyException {
+        try {
+            estacionamentoRepository.save(estacionamento);
+        } catch (Exception e){
+            throw new MyException(
+                400,
+                "Nome deve ter pelo menos 3 caracteres; " +
+                "Formato do Cep 00000-000; " +
+                "O numeroEndereco não pode ser: null, '' ou ' '; " +
+                "Formato do telefone 0000-0000",
+                "E-002");
+        }
         return estacionamentoMapper.toEstacionamentoDto(estacionamento);
     }
 
@@ -32,6 +43,7 @@ public class EstacionamentoService {
         Optional<EstacionamentoEntity> estacionamentoAntigo = estacionamentoRepository.findById(id);
         if (estacionamentoAntigo.isEmpty()){
             estacionamentoRepository.save(estacionamento);
+            return;
         }
         if(estacionamento.getNomeEstacionamento() != null){
             estacionamentoAntigo.get().setNomeEstacionamento(estacionamento.getNomeEstacionamento());
