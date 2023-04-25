@@ -42,4 +42,14 @@ public class FuncionarioController {
     public ResponseEntity<List<FuncionarioDto>> getFuncionarios() throws MyException {
         return ResponseEntity.status(200).body(funcionarioService.getAllFuncs());
     }
+
+    @GetMapping("/nome-ordenado")
+    public ResponseEntity<FuncionarioDto[]> getFuncOrdenado(){
+        return ResponseEntity.status(200).body(funcionarioService.getAllFuncsOrderByName());
+    }
+
+    @GetMapping("/busca-nome/{nome}")
+    public ResponseEntity<FuncionarioDto> getFuncByName(@PathVariable String nome){
+        return funcionarioService.binarySearch(nome);
+    }
 }
