@@ -27,6 +27,7 @@ public class FuncionarioEntity {
     private String senha;
     private String cargo = "Funcionario";
     private Boolean logado = false;
+    private Integer idEstacionamento = null;
 
     @ManyToOne
     private EstacionamentoEntity estacionamento;
@@ -144,5 +145,13 @@ public class FuncionarioEntity {
 
     public void setEstacionamento(EstacionamentoEntity estacionamento) {
         this.estacionamento = estacionamento;
+    }
+
+    public Integer getIdEstacionamento() {
+        return idEstacionamento;
+    }
+
+    public void setIdEstacionamento(Integer idEstacionamento) {
+        this.idEstacionamento = idEstacionamento;
     }
 }

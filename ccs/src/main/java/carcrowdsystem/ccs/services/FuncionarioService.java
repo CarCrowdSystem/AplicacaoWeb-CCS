@@ -38,16 +38,16 @@ public class FuncionarioService {
     private AuthenticationManager authenticationManager;
     private FuncionarioMapper funcionarioMapper = new FuncionarioMapper();
 
-    public FuncionarioDto create(Integer idEstacionamento, FuncionarioEntity newFunc) throws MyException {
+    public FuncionarioDto postFuncionario(FuncionarioEntity newFunc) throws MyException {
         try {
             EstacionamentoEntity estacionamento =
-                estacionamentoRepository.findById(idEstacionamento).get();
+                estacionamentoRepository.findById(newFunc.getIdEstacionamento()).get();
             newFunc.setSenha(passwordEncoder.encode(newFunc.getSenha()));
             newFunc.setEstacionamento(estacionamento);
             funcionarioRepository.save(newFunc);
             return funcionarioMapper.toFuncionarioDto(newFunc);
         } catch (NoSuchElementException e){
-            throw new MyException(404, "Id '"+idEstacionamento+"' do estacionamento não existe", "E-001");
+            throw new MyException(404, "Id '"+newFunc.getIdEstacionamento()+"' do estacionamento não existe", "E-001");
         }
     }
 
