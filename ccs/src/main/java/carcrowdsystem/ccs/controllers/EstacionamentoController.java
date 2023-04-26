@@ -6,6 +6,8 @@ import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.models.EnderecoEstacionamento;
 import carcrowdsystem.ccs.services.EstacionamentoService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +29,9 @@ public class EstacionamentoController {
     private EstacionamentoAdapter estacionamentoAdapter = new EstacionamentoAdapter();
 
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Estacionamento cadastrado")
+            @ApiResponse(responseCode = "201", description = "Estacionamento cadastrado"),
+            @ApiResponse(responseCode = "400", description = "Erro ao cadastrar estacionamento",
+                    content = @Content(schema = @Schema(hidden = true)))
     })
     @PostMapping
     public ResponseEntity<EstacionamentoDto> postEstacionamento(
@@ -37,7 +41,9 @@ public class EstacionamentoController {
     }
 
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Lista de estacionamentos")
+            @ApiResponse(responseCode = "200", description = "Lista de estacionamentos"),
+            @ApiResponse(responseCode = "204", description = "Lista vazia",
+                    content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping
     public ResponseEntity<List<EstacionamentoDto>> getAllEstacionamento(){
@@ -45,12 +51,14 @@ public class EstacionamentoController {
     }
 
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Estacionamento alterado")
+            @ApiResponse(responseCode = "201", description = "Estacionamento alterado"),
+            @ApiResponse(responseCode = "400", description = "Erro ao atualizar estacionamento",
+                    content = @Content(schema = @Schema(hidden = true)))
     })
     @PatchMapping("/{id}")
     public ResponseEntity patchEstacionamento(
-        @PathVariable Integer id,
-        @RequestBody EstacionamentoEntity estacionamento
+            @PathVariable Integer id,
+            @RequestBody EstacionamentoEntity estacionamento
     ) throws MyException {
         estacionamentoAdapter.update(id, estacionamento);
         return ResponseEntity.status(201).build();
@@ -68,7 +76,9 @@ public class EstacionamentoController {
     }
 
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Buca endereço por cep")
+            @ApiResponse(responseCode = "200", description = "Busca endereço por cep"),
+            @ApiResponse(responseCode = "404", description = "CEP não encontrado",
+                    content = @Content(schema = @Schema(hidden = true)))
     })
     @GetMapping("{cep}")
     public ResponseEntity<EnderecoEstacionamento> buscarEndereco(@PathVariable String cep){
