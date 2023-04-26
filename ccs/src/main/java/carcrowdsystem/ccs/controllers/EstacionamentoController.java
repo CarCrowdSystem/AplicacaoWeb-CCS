@@ -22,6 +22,7 @@ import java.util.List;
 @RequestMapping("${uri.dev}/estacionamentos")
 @Tag(name = "Estacionamento", description = "Gerencia a entidade estacionamento")
 public class EstacionamentoController {
+
     @Autowired
     private EstacionamentoAdapter estacionamentoAdapter = new EstacionamentoAdapter();
 
@@ -66,6 +67,9 @@ public class EstacionamentoController {
         return ResponseEntity.status(404).build();
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Buca endereço por cep")
+    })
     @GetMapping("{cep}")
     public ResponseEntity<EnderecoEstacionamento> buscarEndereco(@PathVariable String cep){
         ViaCepService viaCepService = new ViaCepService();

@@ -7,7 +7,10 @@ import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -36,5 +39,17 @@ public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, Funcionario
 
     public List<FuncionarioDto> getAllFuncs() throws MyException {
         return service.getAllFuncs();
+    }
+
+    public ResponseEntity<FuncionarioDto> binarySearch(String nome) throws MyException {
+        return service.binarySearch(nome);
+    }
+
+    public FuncionarioDto[] getALLOrdenado() throws MyException {
+        return service.getAllFuncsOrderByName();
+    }
+
+    public ResponseEntity alterarSenha(String email, String novaSenha) {
+        return service.alterarSenha(email, novaSenha);
     }
 }

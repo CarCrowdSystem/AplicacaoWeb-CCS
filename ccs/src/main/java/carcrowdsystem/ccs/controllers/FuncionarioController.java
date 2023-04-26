@@ -63,12 +63,12 @@ public class FuncionarioController {
 
     @GetMapping("/nome-ordenado")
     public ResponseEntity<FuncionarioDto[]> getFuncOrdenado() throws MyException {
-        return ResponseEntity.status(200).body(funcionarioService.getAllFuncsOrderByName());
+        return ResponseEntity.status(200).body(funcionarioAdapter.getALLOrdenado());
     }
 
     @GetMapping("/busca-nome/{nome}")
     public ResponseEntity<FuncionarioDto> getFuncByName(@PathVariable String nome) throws MyException {
-        return funcionarioService.binarySearch(nome);
+        return funcionarioAdapter.binarySearch(nome);
     }
 
     @ApiResponses({
@@ -77,6 +77,6 @@ public class FuncionarioController {
     })
     @PatchMapping("/alterar-senha/{email}/{novaSenha}")
     public ResponseEntity patchSenha(@PathVariable String email, @PathVariable String novaSenha){
-        return funcionarioService.alterarSenha(email, novaSenha);
+        return funcionarioAdapter.alterarSenha(email, novaSenha);
     }
 }
