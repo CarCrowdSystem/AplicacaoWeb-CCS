@@ -11,6 +11,7 @@ import carcrowdsystem.ccs.mapper.FuncionarioMapper;
 import carcrowdsystem.ccs.repositorys.EstacionamentoRepository;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Service
@@ -88,7 +90,7 @@ public class FuncionarioService {
         return funcsDto;
     }
 
-    public FuncionarioDto[] getAllFuncsOrderByName(){
+    public FuncionarioDto[] getAllFuncsOrderByName() throws MyException {
 
       // FuncionarioDto[] funcionarios = {new FuncionarioDto("Rogério", "7824836483", "93847878574", "Funcionario", "fnrunfurn@gmail.com", "1193823938"),
          //       new FuncionarioDto("Carlos", "7824836483", "93847878574", "Funcionario", "fnrunfurn@gmail.com", "1193823938")};
@@ -125,7 +127,7 @@ public class FuncionarioService {
         return funcionarios;
     }
 
-    public ResponseEntity<FuncionarioDto> binarySearch(String name) {
+    public ResponseEntity<FuncionarioDto> binarySearch(String name) throws MyException {
         FuncionarioDto[] funcArray = getAllFuncsOrderByName();
         int inicio = 0;
         int fim = funcArray.length - 1;
@@ -143,5 +145,16 @@ public class FuncionarioService {
         }
 
         return ResponseEntity.status(404).build(); // Funcionário não encontrado
+    }
+
+    public ResponseEntity alterarSenha(String email, String novaSenha){
+        Optional<FuncionarioEntity> emailUser = funcionarioRepository.findByEmail(email);
+        if(emailUser.isPresent()){
+            FuncionarioEntity user = emailUser.get();
+            user.setSenha(passwordEncoder.encode(novaSenha));
+            funcionarioRepository.save(user);
+            return ResponseEntity.status(200).build();
+        }
+        return ResponseEntity.status(404).build();
     }
 }
