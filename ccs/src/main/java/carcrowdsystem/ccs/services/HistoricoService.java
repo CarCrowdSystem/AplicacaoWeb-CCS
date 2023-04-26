@@ -42,8 +42,8 @@ public class HistoricoService {
 
         // Bloco try catch para gravar o arquivo
         try {
-        saida.format("%-15S;%-10S;%-7S;%-7S;%5S;%-14S;%-10S;%7S;%7S;%10S\n",
-                "CLIENTE","MODELO","PLACA","ANDAR","VAGA","TELEFONE","DATA","ENTRADA","SAIDA","VALOR");
+            saida.format("%-15S;%-10S;%-7S;%-7S;%5S;%-14S;%-10S;%7S;%7S;%10S\n",
+                    "CLIENTE","MODELO","PLACA","ANDAR","VAGA","TELEFONE","DATA","ENTRADA","SAIDA","VALOR");
             for (HistoricoEntity h: lista){
                 saida.format("%-15S;%-10S;%-7S;%-7S;%5d;%-10S;%-10S;%7S;%7S;%10.2f\n",
                     h.getNomeCliente(), h.getModelo(), h.getPlaca(),
