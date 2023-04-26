@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.IOException;
 
 /*
+Post func
 {
     "nome": "nome",
     "rg": "rg",
@@ -17,6 +18,14 @@ import java.io.IOException;
     "email": "email@gmail.com",
     "telefone": "telefonea",
     "senha": "senha"
+}
+
+Post estacionamento
+{
+	"nomeEstacionamento": "estacionamento",
+	"cep": "00000-000",
+	"numeroEndereco": "9",
+	"telefone": "2222-2222"
 }
 */
 

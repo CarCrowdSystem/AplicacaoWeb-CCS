@@ -11,23 +11,18 @@ public class EstacionamentoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ID_INIT_100")
     private Integer id;
-
     @NotBlank
     @Size(min = 3)
     private String nomeEstacionamento;
-
     @NotBlank
     private String cep;
-
     @NotBlank
     private String numeroEndereco;
-
+    private String telefone;
     @OneToMany
     private List<FuncionarioEntity> funcionarios;
-
     private Boolean statusEstacionamento = true;
 
-    private String telefone;
 
     public Integer getId() {
         return id;

@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.controllers;
 
+import carcrowdsystem.ccs.adapter.FuncionarioAdapter;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
@@ -20,26 +21,28 @@ import java.util.List;
 @Tag(name = "Funcionário", description = "Gerencia a entidade funcionário")
 public class FuncionarioController {
     @Autowired
-    FuncionarioService funcionarioService;
+    FuncionarioAdapter funcionarioAdapter = new FuncionarioAdapter();
 
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Usuário salvo"),
             @ApiResponse(responseCode = "404", description = "Não encontrado")
     })
-    @PostMapping({"/{idEstacionamento}","/{idEstacionamento}/{gerente}"})
+    @PostMapping({"/{idEstacionamento}","/{idEstacionamento/{gerente}"})
     public ResponseEntity<FuncionarioDto> postUsuario(
             @PathVariable Integer idEstacionamento,
             @RequestBody FuncionarioEntity funcionario,
             @PathVariable(required = false) String gerente
     ) throws MyException {
+        funcionario.setIdEstacionamento(idEstacionamento);
         if(gerente != null) {
             if( gerente.equals("gerente") ) {
                 funcionario.setCargo("gerente");
-                return ResponseEntity.status(201).body(funcionarioService.create(idEstacionamento, funcionario));
+                return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));
             }
             throw new MyException(404, "Uri incorreta '/"+gerente+"'", "G-001");
         }
-        return ResponseEntity.status(201).body(funcionarioService.create(idEstacionamento, funcionario));
+
+        return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));
     }
 
     @ApiResponses({
@@ -47,7 +50,7 @@ public class FuncionarioController {
     })
     @PostMapping("/login")
     public ResponseEntity<FuncionarioTokenDto> login(@RequestBody FuncionarioLoginDto funcionarioLoginDto) {
-        return ResponseEntity.status(200).body(funcionarioService.autenticar(funcionarioLoginDto));
+        return ResponseEntity.status(200).body(funcionarioAdapter.autenticar(funcionarioLoginDto));
     }
 
     @ApiResponses({
@@ -55,17 +58,17 @@ public class FuncionarioController {
     })
     @GetMapping
     public ResponseEntity<List<FuncionarioDto>> getFuncionarios() throws MyException {
-        return ResponseEntity.status(200).body(funcionarioService.getAllFuncs());
+        return ResponseEntity.status(200).body(funcionarioAdapter.getAllFuncs());
     }
 
     @GetMapping("/nome-ordenado")
     public ResponseEntity<FuncionarioDto[]> getFuncOrdenado() throws MyException {
-        return ResponseEntity.status(200).body(funcionarioService.getAllFuncsOrderByName());
+        return ResponseEntity.status(200).body(funcionarioAdapter.getALLOrdenado());
     }
 
     @GetMapping("/busca-nome/{nome}")
     public ResponseEntity<FuncionarioDto> getFuncByName(@PathVariable String nome) throws MyException {
-        return funcionarioService.binarySearch(nome);
+        return funcionarioAdapter.binarySearch(nome);
     }
 
     @ApiResponses({
@@ -74,6 +77,6 @@ public class FuncionarioController {
     })
     @PatchMapping("/alterar-senha/{email}/{novaSenha}")
     public ResponseEntity patchSenha(@PathVariable String email, @PathVariable String novaSenha){
-        return funcionarioService.alterarSenha(email, novaSenha);
+        return funcionarioAdapter.alterarSenha(email, novaSenha);
     }
 }

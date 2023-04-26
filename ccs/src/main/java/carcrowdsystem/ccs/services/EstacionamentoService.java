@@ -20,7 +20,7 @@ public class EstacionamentoService {
 
     private EstacionamentoMapper estacionamentoMapper = new EstacionamentoMapper();
 
-    public EstacionamentoDto create(EstacionamentoEntity estacionamento) throws MyException {
+    public EstacionamentoDto postEstacionamento(EstacionamentoEntity estacionamento) throws MyException {
         try {
             estacionamentoRepository.save(estacionamento);
         } catch (Exception e){
