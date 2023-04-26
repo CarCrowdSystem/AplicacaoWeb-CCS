@@ -3,11 +3,15 @@ package carcrowdsystem.ccs.controllers;
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
 import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.models.EnderecoEstacionamento;
 import carcrowdsystem.ccs.services.EstacionamentoService;
+import carcrowdsystem.ccs.services.ViaCepService;
+import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -43,5 +47,18 @@ public class EstacionamentoController {
             return ResponseEntity.status(200).build();
         }
         return ResponseEntity.status(404).build();
+    }
+
+    @GetMapping("{cep}")
+    public ResponseEntity<EnderecoEstacionamento> buscarEndereco(@PathVariable String cep){
+        ViaCepService viaCepService = new ViaCepService();
+
+        try {
+            EnderecoEstacionamento endereco = viaCepService.getEndereco(cep);
+            return ResponseEntity.status(200).body(endereco);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
