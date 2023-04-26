@@ -27,7 +27,7 @@ public class FuncionarioController {
             @ApiResponse(responseCode = "201", description = "Usuário salvo"),
             @ApiResponse(responseCode = "404", description = "Não encontrado")
     })
-    @PostMapping({"/{idEstacionamento}","/{idEstacionamento/{gerente}"})
+    @PostMapping({"/{idEstacionamento}","/{idEstacionamento}/{gerente}"})
     public ResponseEntity<FuncionarioDto> postUsuario(
             @PathVariable Integer idEstacionamento,
             @RequestBody FuncionarioEntity funcionario,

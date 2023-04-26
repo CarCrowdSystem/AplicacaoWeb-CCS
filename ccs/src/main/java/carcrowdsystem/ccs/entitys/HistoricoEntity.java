@@ -39,6 +39,7 @@ public class HistoricoEntity {
 
     @NotBlank
     private String saida;
+
     private Double valorPago;
 
     public Integer getIdHistorico() {
