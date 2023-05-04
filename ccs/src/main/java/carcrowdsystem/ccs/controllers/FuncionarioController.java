@@ -6,7 +6,6 @@ import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.exception.MyException;
-import carcrowdsystem.ccs.services.FuncionarioService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -39,7 +38,7 @@ public class FuncionarioController {
         funcionario.setIdEstacionamento(idEstacionamento);
         if(gerente != null) {
             if( gerente.equals("gerente") ) {
-                funcionario.setCargo("gerente");
+                funcionario.setAdm("gerente");
                 return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));
             }
             throw new MyException(404, "Uri incorreta '/"+gerente+"'", "G-001");

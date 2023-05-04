@@ -21,8 +21,11 @@ public class EstacionamentoEntity {
     private String telefone;
     @OneToMany
     private List<FuncionarioEntity> funcionarios;
+    @OneToMany
+    private VagaEntity vagas;
+    @OneToMany
+    private ValorEstacionamentoEntity valorEstacionamento;
     private Boolean statusEstacionamento = true;
-
 
     public Integer getId() {
         return id;

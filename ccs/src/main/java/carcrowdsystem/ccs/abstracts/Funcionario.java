@@ -65,7 +65,7 @@ public abstract class Funcionario {
         func.setNome(nome);
         func.setRg(rg);
         func.setCpf(cpf);
-        func.setCargo(cargo);
+        func.setAdm(cargo);
         func.setEmail(email);
         func.setTelefone(telefone);
         func.setSenha(senha);
