@@ -13,6 +13,6 @@ public class GerenteEstacionamento extends Funcionario {
         String senha
     ) {
         super(id, nome, rg, cpf, email, telefone, senha);
-        super.setCargo("Gerente");
+        super.setAdm(true);
     }
 }

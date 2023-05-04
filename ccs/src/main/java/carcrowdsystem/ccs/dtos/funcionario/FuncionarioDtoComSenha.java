@@ -6,7 +6,7 @@ public class FuncionarioDtoComSenha{
     private String nome;
     private String rg;
     private String cpf;
-    private String cargo;
+    private Boolean adm;
     private String email;
     private String senha;
     private String telefone;
@@ -16,23 +16,16 @@ public class FuncionarioDtoComSenha{
         func.setNome(nome);
         func.setRg(rg);
         func.setCpf(cpf);
-        func.setAdm(cargo);
+        func.setAdm(adm);
         func.setEmail(email);
         func.setTelefone(telefone);
         func.setSenha(senha);
 
         return func;
     }
+
     public String getNome() {
         return nome;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public void setNome(String nome) {
@@ -55,12 +48,12 @@ public class FuncionarioDtoComSenha{
         this.cpf = cpf;
     }
 
-    public String getCargo() {
-        return cargo;
+    public Boolean getAdm() {
+        return adm;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setAdm(Boolean adm) {
+        this.adm = adm;
     }
 
     public String getEmail() {
@@ -69,6 +62,14 @@ public class FuncionarioDtoComSenha{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getTelefone() {

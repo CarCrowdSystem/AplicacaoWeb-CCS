@@ -13,6 +13,6 @@ public class FuncionarioEstacionamento extends Funcionario {
         String senha
     ) {
         super(id, nome, rg, cpf, email, telefone, senha);
-        super.setCargo("Funcionário");
+        super.setAdm(false);
     }
 }
