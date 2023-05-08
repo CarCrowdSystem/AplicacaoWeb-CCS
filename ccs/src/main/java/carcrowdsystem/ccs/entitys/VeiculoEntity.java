@@ -1,14 +1,15 @@
 package carcrowdsystem.ccs.entitys;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class VeiculoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    private HistoricoEntity historico;
+    @OneToMany
+    private List<HistoricoEntity> historico;
     private String placa;
     private String modelo;
     private String nomeCliente;
@@ -22,11 +23,11 @@ public class VeiculoEntity {
         this.id = id;
     }
 
-    public HistoricoEntity getHistorico() {
+    public List<HistoricoEntity> getHistorico() {
         return historico;
     }
 
-    public void setHistorico(HistoricoEntity historico) {
+    public void setHistorico(List<HistoricoEntity> historico) {
         this.historico = historico;
     }
 

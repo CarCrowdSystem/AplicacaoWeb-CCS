@@ -9,7 +9,7 @@ spring:
   main:
     allow-circular-references: true
 
-# habilita a impressão dos comando SQL no log
+# habilita a impressï¿½o dos comando SQL no log
   jpa:
     show-sql: true
 
@@ -20,7 +20,7 @@ spring:
         format_sql: true
 
 # Habilita data.sql
-    defer-datasource-initialization: true
+#    defer-datasource-initialization: true
 
 # Habilitando o H2 Console. Num navegador, permite o acesso a http://localhost:8080/h2-console
   h2:

@@ -1,6 +1,7 @@
 package carcrowdsystem.ccs.entitys;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class VagaEntity {
@@ -10,7 +11,7 @@ public class VagaEntity {
     @ManyToOne
     private EstacionamentoEntity estacionamento;
     @OneToMany
-    private HistoricoEntity historicoEntity;
+    private List<HistoricoEntity> historicoEntity;
     private Integer numero;
     private Integer andar;
 
@@ -30,11 +31,11 @@ public class VagaEntity {
         this.estacionamento = estacionamento;
     }
 
-    public HistoricoEntity getHistoricoEntity() {
+    public List<HistoricoEntity> getHistoricoEntity() {
         return historicoEntity;
     }
 
-    public void setHistoricoEntity(HistoricoEntity historicoEntity) {
+    public void setHistoricoEntity(List<HistoricoEntity> historicoEntity) {
         this.historicoEntity = historicoEntity;
     }
 

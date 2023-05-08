@@ -22,9 +22,9 @@ public class EstacionamentoEntity {
     @OneToMany
     private List<FuncionarioEntity> funcionarios;
     @OneToMany
-    private VagaEntity vagas;
+    private List<VagaEntity> vagas;
     @OneToMany
-    private ValorEstacionamentoEntity valorEstacionamento;
+    private List<ValorEstacionamentoEntity> valorEstacionamento;
     private Boolean statusEstacionamento = true;
 
     public Integer getId() {
@@ -65,6 +65,30 @@ public class EstacionamentoEntity {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public List<FuncionarioEntity> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(List<FuncionarioEntity> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
+
+    public List<VagaEntity> getVagas() {
+        return vagas;
+    }
+
+    public void setVagas(List<VagaEntity> vagas) {
+        this.vagas = vagas;
+    }
+
+    public List<ValorEstacionamentoEntity> getValorEstacionamento() {
+        return valorEstacionamento;
+    }
+
+    public void setValorEstacionamento(List<ValorEstacionamentoEntity> valorEstacionamento) {
+        this.valorEstacionamento = valorEstacionamento;
     }
 
     public Boolean getStatusEstacionamento() {

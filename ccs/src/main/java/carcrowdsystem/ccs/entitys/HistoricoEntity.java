@@ -1,7 +1,6 @@
 package carcrowdsystem.ccs.entitys;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,21 +8,21 @@ public class HistoricoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idHistorico;
+    private Integer id;
     @ManyToOne
     private VeiculoEntity veiculo;
-    @OneToMany
+    @ManyToOne
     private VagaEntity vaga;
     private LocalDateTime momentoRegistro;
     private String statusRegistro;
     private Double valorPago;
 
-    public Integer getIdHistorico() {
-        return idHistorico;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdHistorico(Integer idHistorico) {
-        this.idHistorico = idHistorico;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public VeiculoEntity getVeiculo() {
