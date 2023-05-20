@@ -1,125 +1,60 @@
 package carcrowdsystem.ccs.entitys;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class HistoricoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idHistorico;
-
-    @NotBlank
-    private String nomeCliente;
-
-    @NotBlank
-    private String modelo;
-
-    @NotBlank
-    private String placa;
-
-    @NotBlank
-    private String andar;
-
-    @NotBlank
-    private int vaga;
-
-    @NotBlank
-    private String telefone;
-
-    @NotBlank
-    private String data;
-
-    @NotBlank
-    private String entrada;
-
-    @NotBlank
-    private String saida;
-
+    private Integer id;
+    @ManyToOne
+    private VeiculoEntity veiculo;
+    @ManyToOne
+    private VagaEntity vaga;
+    private LocalDateTime momentoRegistro;
+    private String statusRegistro;
     private Double valorPago;
 
-    public Integer getIdHistorico() {
-        return idHistorico;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdHistorico(Integer idHistorico) {
-        this.idHistorico = idHistorico;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public VeiculoEntity getVeiculo() {
+        return veiculo;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
+    public void setVeiculo(VeiculoEntity veiculo) {
+        this.veiculo = veiculo;
     }
 
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public String getPlaca() {
-        return placa;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public String getAndar() {
-        return andar;
-    }
-
-    public void setAndar(String andar) {
-        this.andar = andar;
-    }
-
-    public int getVaga() {
+    public VagaEntity getVaga() {
         return vaga;
     }
 
-    public void setVaga(int vaga) {
+    public void setVaga(VagaEntity vaga) {
         this.vaga = vaga;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public LocalDateTime getMomentoRegistro() {
+        return momentoRegistro;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setMomentoRegistro(LocalDateTime momentoRegistro) {
+        this.momentoRegistro = momentoRegistro;
     }
 
-    public String getData() {
-        return data;
+    public String getStatusRegistro() {
+        return statusRegistro;
     }
 
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public String getEntrada() {
-        return entrada;
-    }
-
-    public void setEntrada(String entrada) {
-        this.entrada = entrada;
-    }
-
-    public String getSaida() {
-        return saida;
-    }
-
-    public void setSaida(String saida) {
-        this.saida = saida;
+    public void setStatusRegistro(String statusRegistro) {
+        this.statusRegistro = statusRegistro;
     }
 
     public Double getValorPago() {

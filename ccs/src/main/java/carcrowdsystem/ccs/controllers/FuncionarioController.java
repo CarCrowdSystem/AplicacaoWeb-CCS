@@ -6,7 +6,6 @@ import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.exception.MyException;
-import carcrowdsystem.ccs.services.FuncionarioService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,19 +29,19 @@ public class FuncionarioController {
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar usuário", content = @Content(schema =
             @Schema(hidden = true)))
     })
-    @PostMapping({"/{idEstacionamento}","/{idEstacionamento}/{gerente}"})
+    @PostMapping({"/{idEstacionamento}","/{idEstacionamento}/{adm}"})
     public ResponseEntity<FuncionarioDto> postUsuario(
             @PathVariable Integer idEstacionamento,
             @RequestBody FuncionarioEntity funcionario,
-            @PathVariable(required = false) String gerente
+            @PathVariable(required = false) Boolean adm
     ) throws MyException {
         funcionario.setIdEstacionamento(idEstacionamento);
-        if(gerente != null) {
-            if( gerente.equals("gerente") ) {
-                funcionario.setCargo("gerente");
+        if(adm != null) {
+            if(adm) {
+                funcionario.setAdm(true);
                 return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));
             }
-            throw new MyException(404, "Uri incorreta '/"+gerente+"'", "G-001");
+            throw new MyException(404, "Uri incorreta '/"+adm+"'", "G-001");
         }
 
         return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));

@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.sql.Blob;
 
 @Entity
 @SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
@@ -18,19 +19,19 @@ public class FuncionarioEntity {
     @NotBlank
     @Size(min = 3)
     private String nome;
-    private String rg;
-    private String cpf;
+    private Blob foto;
     @Email
     private String email;
+    private String rg;
+    private String cpf;
+    private String senha;
     @Size(min = 9, max = 11)
     private String telefone;
-    private String senha;
-    private String cargo = "Funcionario";
-    private Boolean logado = false;
-    private Integer idEstacionamento = null;
-
+    private Boolean loginHabilitado = false;
+    private Boolean adm = false;
     @ManyToOne
     private EstacionamentoEntity estacionamento;
+    private Integer idEstacionamento;
 
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
@@ -61,18 +62,10 @@ public class FuncionarioEntity {
                 nome,
                 rg,
                 cpf,
-                cargo,
+                adm,
                 email,
                 telefone
         );
-    }
-
-    public Boolean getLogado() {
-        return logado;
-    }
-
-    public void setLogado(Boolean logado) {
-        this.logado = logado;
     }
 
     public Integer getId() {
@@ -91,6 +84,22 @@ public class FuncionarioEntity {
         this.nome = nome;
     }
 
+    public Blob getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Blob foto) {
+        this.foto = foto;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getRg() {
         return rg;
     }
@@ -107,20 +116,12 @@ public class FuncionarioEntity {
         this.cpf = cpf;
     }
 
-    public String getCargo() {
-        return cargo;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getTelefone() {
@@ -131,12 +132,20 @@ public class FuncionarioEntity {
         this.telefone = telefone;
     }
 
-    public String getSenha() {
-        return senha;
+    public Boolean getLoginHabilitado() {
+        return loginHabilitado;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setLoginHabilitado(Boolean loginHabilitado) {
+        this.loginHabilitado = loginHabilitado;
+    }
+
+    public Boolean getAdm() {
+        return adm;
+    }
+
+    public void setAdm(Boolean adm) {
+        this.adm = adm;
     }
 
     public EstacionamentoEntity getEstacionamento() {

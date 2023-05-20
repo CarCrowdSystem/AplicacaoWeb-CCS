@@ -1,16 +1,10 @@
 package carcrowdsystem.ccs.dtos.funcionario;
 
-import carcrowdsystem.ccs.abstracts.Funcionario;
-import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
-import carcrowdsystem.ccs.models.GerenteEstacionamento;
-
-import java.time.LocalDateTime;
-
 public class FuncionarioDto {
     private String nome;
     private String rg;
     private String cpf;
-    private String cargo;
+    private Boolean adm;
     private String email;
     private String telefone;
 
@@ -18,14 +12,14 @@ public class FuncionarioDto {
         String nome,
         String rg,
         String cpf,
-        String cargo,
+        Boolean adm,
         String email,
         String telefone
     ) {
         this.nome = nome;
         this.rg = rg;
         this.cpf = cpf;
-        this.cargo = cargo;
+        this.adm = adm;
         this.email = email;
         this.telefone = telefone;
     }
@@ -54,12 +48,12 @@ public class FuncionarioDto {
         this.cpf = cpf;
     }
 
-    public String getCargo() {
-        return cargo;
+    public Boolean getAdm() {
+        return adm;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setAdm(Boolean adm) {
+        this.adm = adm;
     }
 
     public String getEmail() {

@@ -5,15 +5,18 @@ import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
 
+import java.sql.Blob;
+
 public abstract class Funcionario {
     private Integer id;
     private String nome;
+    private Blob foto;
     private String email;
     private String rg;
     private String cpf;
-    private String cargo;
     private String senha;
     private String telefone;
+    private Boolean adm;
 
     public Funcionario(Integer id, String nome, String rg, String cpf, String email, String telefone, String senha) {
         this.nome = nome;
@@ -22,7 +25,7 @@ public abstract class Funcionario {
         this.email = email;
         this.telefone = telefone;
         this.senha = senha;
-        this.cargo = null;
+        this.adm = null;
     }
 
     public FuncionarioEstacionamento toFuncionario(){
@@ -54,7 +57,7 @@ public abstract class Funcionario {
                 nome,
                 rg,
                 cpf,
-                cargo,
+                adm,
                 email,
                 telefone
         );
@@ -65,7 +68,7 @@ public abstract class Funcionario {
         func.setNome(nome);
         func.setRg(rg);
         func.setCpf(cpf);
-        func.setCargo(cargo);
+        func.setAdm(adm);
         func.setEmail(email);
         func.setTelefone(telefone);
         func.setSenha(senha);
@@ -105,12 +108,12 @@ public abstract class Funcionario {
         this.cpf = cpf;
     }
 
-    public String getCargo() {
-        return cargo;
+    public Boolean getAdm() {
+        return adm;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setAdm(Boolean adm) {
+        this.adm = adm;
     }
 
     public String getEmail() {

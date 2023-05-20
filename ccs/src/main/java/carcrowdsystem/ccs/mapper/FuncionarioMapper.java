@@ -48,7 +48,7 @@ public class FuncionarioMapper {
                 f.getNome(),
                 f.getRg(),
                 f.getCpf(),
-                f.getCargo(),
+                f.getAdm(),
                 f.getEmail(),
                 f.getTelefone()
         );
@@ -58,7 +58,7 @@ public class FuncionarioMapper {
                 f.getNome(),
                 f.getRg(),
                 f.getCpf(),
-                f.getCargo(),
+                f.getAdm(),
                 f.getEmail(),
                 f.getTelefone()
         );
@@ -69,7 +69,7 @@ public class FuncionarioMapper {
         func.setNome(f.getNome());
         func.setRg(f.getRg());
         func.setCpf(f.getCpf());
-        func.setCargo(f.getCargo());
+        func.setAdm(f.getAdm());
         func.setEmail(f.getEmail());
         func.setTelefone(f.getTelefone());
         func.setSenha(f.getSenha());

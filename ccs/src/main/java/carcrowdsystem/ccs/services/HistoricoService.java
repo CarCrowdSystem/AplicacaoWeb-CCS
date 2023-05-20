@@ -1,6 +1,8 @@
 package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.entitys.HistoricoEntity;
+import carcrowdsystem.ccs.entitys.VagaEntity;
+import carcrowdsystem.ccs.entitys.VeiculoEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -9,7 +11,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Formatter;
 import java.util.FormatterClosedException;
@@ -30,6 +35,7 @@ public class HistoricoService {
         Formatter saida = null;
         String nome = LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyyyyHHmmss")) + "-historico.csv";
 
+
         // Bloc try catch para abrir o arquivo
         try {
             arq = new FileWriter(nome);
@@ -43,13 +49,17 @@ public class HistoricoService {
         // Bloco try catch para gravar o arquivo
         try {
             saida.format("%-15S;%-10S;%-7S;%-7S;%5S;%-14S;%-10S;%7S;%7S;%10S\n",
-                    "CLIENTE","MODELO","PLACA","ANDAR","VAGA","TELEFONE","DATA","ENTRADA","SAIDA","VALOR");
+                    "CLIENTE","MODELO","PLACA","ANDAR","VAGA","TELEFONE","DATA","HORA","STATUS","VALOR");
             for (HistoricoEntity h: lista){
+                VeiculoEntity veiculo = h.getVeiculo();
+                VagaEntity vaga = h.getVaga();
+                LocalDate data = h.getMomentoRegistro().toLocalDate();
+                LocalTime hora = h.getMomentoRegistro().toLocalTime();
                 saida.format("%-15S;%-10S;%-7S;%-7S;%5d;%-10S;%-10S;%7S;%7S;%10.2f\n",
-                    h.getNomeCliente(), h.getModelo(), h.getPlaca(),
-                    h.getAndar(), h.getVaga(), h.getTelefone(),
-                    h.getData(), h.getEntrada(), h.getSaida(),
-                    h.getValorPago());
+                veiculo.getNomeCliente(), veiculo.getModelo(), veiculo.getPlaca(),
+                vaga.getAndar(), vaga.getNumero(), veiculo.getTelefoneCliente(),
+                data, hora, h.getStatusRegistro(),
+                h.getValorPago());
             }
         }
         catch (FormatterClosedException erro){
