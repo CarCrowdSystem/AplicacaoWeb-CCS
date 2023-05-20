@@ -1,4 +1,4 @@
-package carcrowdsystem.ccs.dtos;
+package carcrowdsystem.ccs.dtos.vaga;
 
 public class VagaDto {
     private Integer numero;
