@@ -1,7 +1,6 @@
 package carcrowdsystem.ccs.controllers;
 
-import carcrowdsystem.ccs.dtos.VagaDto;
-import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
+import carcrowdsystem.ccs.dtos.vaga.VagaDto;
 import carcrowdsystem.ccs.entitys.VagaEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.services.VagaService;

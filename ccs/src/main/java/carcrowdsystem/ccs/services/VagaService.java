@@ -1,12 +1,11 @@
 package carcrowdsystem.ccs.services;
 
-import carcrowdsystem.ccs.dtos.VagaDto;
+import carcrowdsystem.ccs.dtos.vaga.VagaDto;
 import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
 import carcrowdsystem.ccs.entitys.VagaEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
 import carcrowdsystem.ccs.repositorys.VagaRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +28,7 @@ public class VagaService {
         vaga.setAndar(novaVaga.getAndar());
         vaga.setNumero(novaVaga.getNumero());
         vaga.setEstacionamento(
-            estacionamentoService.findById(id)
+            estacionamento
         );
         repository.save(vaga);
     }
