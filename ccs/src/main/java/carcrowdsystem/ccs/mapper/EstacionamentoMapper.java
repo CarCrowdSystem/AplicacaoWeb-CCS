@@ -2,6 +2,7 @@ package carcrowdsystem.ccs.mapper;
 
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
 import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
+import carcrowdsystem.ccs.exception.MyException;
 
 public class EstacionamentoMapper {
     public EstacionamentoDto toEstacionamentoDto(EstacionamentoEntity estacionamento){
@@ -14,13 +15,17 @@ public class EstacionamentoMapper {
         return estacionamentoDto;
     }
 
-    public EstacionamentoEntity toEstacionamentoEntity(EstacionamentoDto estacionamento){
-        EstacionamentoEntity estacionamentoEntity = new EstacionamentoEntity();
-        estacionamentoEntity.setNomeEstacionamento(estacionamento.getNomeEstacionamento());
-        estacionamentoEntity.setTelefone(estacionamento.getTelefone());
-        estacionamentoEntity.setCep(estacionamento.getCep());
-        estacionamentoEntity.setNumeroEndereco(estacionamento.getNumeroEndereco());
+    public EstacionamentoEntity toEstacionamentoEntity(EstacionamentoDto estacionamento) throws MyException {
+        try{
+            EstacionamentoEntity estacionamentoEntity = new EstacionamentoEntity();
+            estacionamentoEntity.setNomeEstacionamento(estacionamento.getNomeEstacionamento());
+            estacionamentoEntity.setTelefone(estacionamento.getTelefone());
+            estacionamentoEntity.setCep(estacionamento.getCep());
+            estacionamentoEntity.setNumeroEndereco(estacionamento.getNumeroEndereco());
 
-        return estacionamentoEntity;
+            return estacionamentoEntity;
+        }catch (Exception e){
+            throw new MyException(e.hashCode(), e.getMessage(), "EM001");
+        }
     }
 }

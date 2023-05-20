@@ -28,6 +28,10 @@ public class EstacionamentoAdapter implements DbAdapter<EstacionamentoDto, Estac
         return service.deleteEstacionamento(id);
     }
 
+    public EstacionamentoEntity getEstacionamentoPorId(Integer id) throws MyException {
+        return service.findById(id);
+    }
+
     public List<EstacionamentoDto> getAll() {
         return service.getAllEstacionamento();
     }

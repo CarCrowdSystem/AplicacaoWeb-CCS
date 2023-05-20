@@ -6,19 +6,19 @@ import javax.persistence.*;
 public class ValorEstacionamentoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idV;
+    private Integer idValor;
     @ManyToOne
     private EstacionamentoEntity estacionamento;
     private Double primeiraHora;
     private Double horaAdicional;
     private Double diaria;
 
-    public Integer getIdV() {
-        return idV;
+    public Integer getIdValor() {
+        return idValor;
     }
 
-    public void setIdV(Integer idV) {
-        this.idV = idV;
+    public void setIdValor(Integer idValor) {
+        this.idValor = idValor;
     }
 
     public EstacionamentoEntity getEstacionamento() {

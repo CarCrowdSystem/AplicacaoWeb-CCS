@@ -77,4 +77,12 @@ public class EstacionamentoService {
         }
         return estacionamentoDtos;
     }
+
+    public EstacionamentoEntity findById(Integer id) throws MyException {
+        try {
+            return estacionamentoRepository.findById(id).get();
+        } catch (Exception e) {
+            throw new MyException(404, "Id não existente", "E005");
+        }
+    }
 }

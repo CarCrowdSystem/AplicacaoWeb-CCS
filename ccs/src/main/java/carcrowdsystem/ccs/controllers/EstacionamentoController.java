@@ -4,6 +4,7 @@ import carcrowdsystem.ccs.adapter.EstacionamentoAdapter;
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
 import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
 import carcrowdsystem.ccs.models.EnderecoEstacionamento;
 import carcrowdsystem.ccs.services.EstacionamentoService;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,7 +27,18 @@ import java.util.List;
 public class EstacionamentoController {
 
     @Autowired
-    private EstacionamentoAdapter estacionamentoAdapter = new EstacionamentoAdapter();
+    private final EstacionamentoAdapter estacionamentoAdapter = new EstacionamentoAdapter();
+
+    private final EstacionamentoMapper estacionamentoMapper = new EstacionamentoMapper();
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EstacionamentoDto> getEstacionamentoPorId(
+            @PathVariable Integer id
+    ) throws MyException {
+        return ResponseEntity.status(201).body(
+            estacionamentoMapper.toEstacionamentoDto(estacionamentoAdapter.getEstacionamentoPorId(id))
+        );
+    }
 
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Estacionamento cadastrado"),
