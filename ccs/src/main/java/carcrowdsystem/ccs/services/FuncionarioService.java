@@ -31,7 +31,7 @@ public class FuncionarioService {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
     @Autowired
-    private EstacionamentoRepository estacionamentoRepository;
+    private EstacionamentoService estacionamentoService;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -43,7 +43,7 @@ public class FuncionarioService {
     public FuncionarioDto postFuncionario(FuncionarioEntity newFunc) throws MyException {
         try {
             EstacionamentoEntity estacionamento =
-                estacionamentoRepository.findById(newFunc.getIdEstacionamento()).get();
+                    estacionamentoService.findById(newFunc.getIdEstacionamento());
             newFunc.setSenha(passwordEncoder.encode(newFunc.getSenha()));
             newFunc.setEstacionamento(estacionamento);
             funcionarioRepository.save(newFunc);
