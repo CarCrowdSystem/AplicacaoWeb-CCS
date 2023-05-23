@@ -40,4 +40,10 @@ public class VagaService {
     public void deleteVaga(Integer id) {
         repository.deleteById(id);
     }
+
+    public VagaEntity findById(Integer idVaga) throws MyException {
+        return repository.findById(idVaga).orElseThrow(
+            () -> new MyException(404, "Vaga não existe", "V-001")
+        );
+    }
 }

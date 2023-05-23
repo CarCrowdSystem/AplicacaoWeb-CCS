@@ -1,6 +1,7 @@
 package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.veiculo.VeiculoRequest;
+import carcrowdsystem.ccs.entitys.VeiculoEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.services.VeiculoService;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,14 @@ public class VeiculoController {
 
     @PostMapping
     public ResponseEntity postVeiculo(
-            @RequestBody VeiculoRequest newVeiculo
+        @RequestBody VeiculoRequest newVeiculo
     ) throws MyException {
         return ResponseEntity.ok(service.postVeiculo(newVeiculo));
+    }
+
+    public ResponseEntity<VeiculoEntity> getVeiculoById(
+        @RequestParam Integer idVeiculo
+    ) throws MyException {
+        return ResponseEntity.ok(service.findById(idVeiculo));
     }
 }

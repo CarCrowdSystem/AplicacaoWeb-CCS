@@ -27,7 +27,13 @@ public class VeiculoService {
             repository.save(veiculo);
             return newVeiculo;
         } catch (Exception e) {
-            throw new MyException(e.hashCode(), "Body incorreto", "V0001");
+            throw new MyException(e.hashCode(), "Body incorreto", "VE-001");
         }
+    }
+
+    public VeiculoEntity findById(Integer idVeiculo) throws MyException {
+        return repository.findById(idVeiculo).orElseThrow(
+            () -> new MyException(404, "Ve  iculo não existe", "VE-002")
+        );
     }
 }
