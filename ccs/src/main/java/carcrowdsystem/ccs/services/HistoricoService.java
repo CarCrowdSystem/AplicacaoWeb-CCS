@@ -1,17 +1,18 @@
 package carcrowdsystem.ccs.services;
 
+import carcrowdsystem.ccs.controllers.VagaController;
+import carcrowdsystem.ccs.controllers.VeiculoController;
+import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
 import carcrowdsystem.ccs.entitys.HistoricoEntity;
 import carcrowdsystem.ccs.entitys.VagaEntity;
 import carcrowdsystem.ccs.entitys.VeiculoEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -22,12 +23,22 @@ import java.util.List;
 
 @Service
 public class HistoricoService {
+    private final HistoricoRepository repository;
+    private final VeiculoController veiculoController;
+    private final VagaController vagaController;
 
-    @Autowired
-    private HistoricoRepository historicoRepository;
+    public HistoricoService(
+        HistoricoRepository repository,
+        VeiculoController veiculoController,
+        VagaController vagaController
+    ) {
+        this.repository = repository;
+        this.veiculoController = veiculoController;
+        this.vagaController = vagaController;
+    }
 
     public List<HistoricoEntity> getAllHistorico(){
-        return historicoRepository.findAll();
+        return repository.findAll();
     }
 
     public static String gravaArquivoCsv(List<HistoricoEntity> lista) throws MyException {
@@ -43,7 +54,7 @@ public class HistoricoService {
         }
         catch (IOException erro){
             System.out.println("Erro ao abrir o arquivo.");
-            throw new MyException(400, "Erro ao abrir o arquivo.", "G-003");
+            throw new MyException(400, "Erro ao abrir o arquivo.", "H-001");
         }
 
         // Bloco try catch para gravar o arquivo
@@ -64,7 +75,7 @@ public class HistoricoService {
         }
         catch (FormatterClosedException erro){
             System.out.println("Erro ao gravar o arquivo");
-            throw new MyException(400, "Erro ao gravar o arquivo", "G-004");
+            throw new MyException(400, "Erro ao gravar o arquivo", "H-002");
         }
         finally {
             saida.close();
@@ -74,14 +85,31 @@ public class HistoricoService {
             }
             catch (IOException erro){
                 System.out.println("Erro ao fechar o arquivo");
-                throw new MyException(400, "Erro ao fechar o arquivo", "G-005");
+                throw new MyException(400, "Erro ao fechar o arquivo", "H-003");
             }
         }
     }
 
     public HistoricoEntity findById(Integer id) throws MyException {
-        return historicoRepository.findById(id).orElseThrow(
-            () -> new MyException(404, "Historico não existe", "H0001")
+        return repository.findById(id).orElseThrow(
+            () -> new MyException(404, "Historico não existe", "H-004")
         );
+    }
+
+    public ResponseEntity postHistorico(HistoricoDto newHistorico, Integer idVeiculo, Integer idVaga) throws MyException {
+        try {
+            VagaEntity vaga = vagaController.getVagaById(idVaga).getBody();
+            VeiculoEntity veiculo = veiculoController.getVeiculoById(idVeiculo).getBody();
+            HistoricoEntity historico = new HistoricoEntity();
+            historico.setVaga(vaga);
+            historico.setVeiculo(veiculo);
+            historico.setValorPago(newHistorico.getValorPago());
+            historico.setStatusRegistro(newHistorico.getStatusRegistro());
+            historico.setMomentoRegistro(newHistorico.getMomentoRegistro());
+            repository.save(historico);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            throw new MyException(e.hashCode(), e.getMessage(), "H-005");
+        }
     }
 }

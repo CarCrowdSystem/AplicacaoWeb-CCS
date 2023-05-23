@@ -27,14 +27,19 @@ public class VagaController {
         return ResponseEntity.status(201).build();
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<VagaEntity>> getVagas(){
-        return ResponseEntity.status(200).body(service.getVagas());
+        return ResponseEntity.ok(service.getVagas());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<List<VagaEntity>> deleteVaga(@PathVariable Integer id){
         service.deleteVaga(id);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<VagaEntity> getVagaById(@RequestParam Integer idVaga) throws MyException {
+        return ResponseEntity.ok(service.findById(idVaga));
     }
 }
