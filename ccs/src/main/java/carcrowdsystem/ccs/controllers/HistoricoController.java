@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,19 +21,24 @@ import java.util.List;
 public class HistoricoController {
 
     @Autowired
-    private HistoricoService historicoService;
+    private HistoricoService service;
 
     private List<HistoricoEntity> getAllHistorico() {
-        return historicoService.getAllHistorico();
+        return service.getAllHistorico();
+    }
+
+    @GetMapping
+    public ResponseEntity<HistoricoEntity> getHistoricoById(@RequestParam Integer id) throws MyException {
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Arquivo criado")
     })
-    @GetMapping
+    @GetMapping("/gerar-csv")
     public ResponseEntity gerarCsv() throws MyException {
         List<HistoricoEntity> listaHistorico = getAllHistorico();
-        String nome = historicoService.gravaArquivoCsv(listaHistorico);
+        String nome = service.gravaArquivoCsv(listaHistorico);
         return ResponseEntity.status(200).body("Arquivo '"+nome+"' criado com sucesso");
     }
 }

@@ -27,7 +27,6 @@ Post estacionamento
 
 @SpringBootApplication
 public class CcsApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(CcsApplication.class, args);
 	}
