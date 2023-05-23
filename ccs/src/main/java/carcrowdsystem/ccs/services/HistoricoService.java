@@ -78,4 +78,10 @@ public class HistoricoService {
             }
         }
     }
+
+    public HistoricoEntity findById(Integer id) throws MyException {
+        return historicoRepository.findById(id).orElseThrow(
+            () -> new MyException(404, "Historico não existe", "H0001")
+        );
+    }
 }
