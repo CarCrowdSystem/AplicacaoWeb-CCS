@@ -32,6 +32,16 @@ public class FuncionarioEntity {
     @ManyToOne
     private EstacionamentoEntity estacionamento;
 
+    public Integer getIdEstacionamento() {
+        return idEstacionamento;
+    }
+
+    public void setIdEstacionamento(Integer idEstacionamento) {
+        this.idEstacionamento = idEstacionamento;
+    }
+
+    private Integer idEstacionamento;
+
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
                 id,

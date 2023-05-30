@@ -52,8 +52,4 @@ public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, Funcionario
     public ResponseEntity alterarSenha(String email, String novaSenha) {
         return service.alterarSenha(email, novaSenha);
     }
-
-    public FuncionarioEntity createId(FuncionarioEntity funcionario, Integer idEstacionamento) {
-        return service.postFuncionario(funcionario, idEstacionamento);
-    }
 }

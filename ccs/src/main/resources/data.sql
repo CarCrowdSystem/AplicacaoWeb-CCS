@@ -17,17 +17,9 @@ INSERT INTO VEICULO_ENTITY
 (3, 'bla3', 'victoria', 'aaa0003','11999871783'),
 (4, 'bla4', 'mary', 'aaa0004','11999871784');
 
-INSERT INTO VALOR_ESTACIONAMENTO_ENTITY
-(id, diaria, hora_adicional, primeira_hora, estacionamento_id) VALUES
-(1, 30.00, 5.0, 10.0, 1),
-(2, 50.00, 7.0, 15.0, 2);
-
 INSERT INTO HISTORICO_ENTITY
 (id, momento_registro, status_registro, valor_pago, vaga_id, veiculo_id) VALUES
 (1, '2023-12-03T10:15:30', 'Entrada', 00.00, 1, 1),
 (2, '2023-12-03T10:15:30', 'Entrada', 00.00, 2, 2),
 (3, '2023-12-03T10:15:30', 'Saída', 25.00, 1, 1),
 (4, '2023-12-03T10:15:30', 'Saída', 35.00, 2, 2);
-
-INSERT INTO FUNCIONARIO_ENTITY
-(id, adm, cpf, email, id_estacionamento, )

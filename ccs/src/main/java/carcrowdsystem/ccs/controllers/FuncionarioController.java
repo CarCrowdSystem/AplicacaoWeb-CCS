@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,8 @@ import java.util.List;
 @RequestMapping("${uri.dev}/funcionarios")
 @Tag(name = "Funcionário", description = "Gerencia a entidade funcionário")
 public class FuncionarioController {
-    private final FuncionarioAdapter funcionarioAdapter = new FuncionarioAdapter();
+    @Autowired
+    FuncionarioAdapter funcionarioAdapter = new FuncionarioAdapter();
 
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Usuário salvo"),
@@ -33,15 +35,16 @@ public class FuncionarioController {
             @RequestBody FuncionarioEntity funcionario,
             @PathVariable(required = false) Boolean adm
     ) throws MyException {
+        funcionario.setIdEstacionamento(idEstacionamento);
         if(adm != null) {
             if(adm) {
                 funcionario.setAdm(true);
-                return ResponseEntity.status(201).body(funcionarioAdapter.createId(funcionario, idEstacionamento));
+                return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));
             }
             throw new MyException(404, "Uri incorreta '/"+adm+"'", "G-001");
         }
 
-        return ResponseEntity.status(201).body(funcionarioAdapter.createId(funcionario, idEstacionamento));
+        return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));
     }
 
     @ApiResponses({

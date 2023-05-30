@@ -40,7 +40,7 @@ public class FuncionarioService {
     private AuthenticationManager authenticationManager;
     private FuncionarioMapper funcionarioMapper = new FuncionarioMapper();
 
-    public FuncionarioDto postFuncionario(FuncionarioEntity newFunc, Integer id) throws MyException {
+    public FuncionarioDto postFuncionario(FuncionarioEntity newFunc) throws MyException {
         try {
             EstacionamentoEntity estacionamento =
                     estacionamentoService.findById(newFunc.getIdEstacionamento());
