@@ -15,7 +15,7 @@
 	<description>Estacionar com facilidade e segurança é o nosso compromisso,  vamos cuidar do seu estacionamento enquanto você cuida dos seus negócios.</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
