@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,14 +31,29 @@ public class HistoricoController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @PostMapping
-    public ResponseEntity postHistorico(
+    @PostMapping("/checkin")
+    public ResponseEntity checkin(
             @RequestBody HistoricoDto newHistorico,
             @RequestParam Integer idVeiculo,
             @RequestParam Integer idVaga
-        ) throws MyException {
+    ) throws MyException {
+        newHistorico.setStatusRegistro("Entrada");
         return service.postHistorico(newHistorico, idVeiculo, idVaga);
     }
+
+    @PostMapping("/checkout")
+    public ResponseEntity checkout(
+            @RequestBody HistoricoDto newHistorico,
+            @RequestParam Integer idVeiculo
+    ) throws MyException {
+        HttpStatus momento = pegarMomentoByIdVeiculo(idVeiculo).getStatusCode();
+        if(momento.value() == 200) {
+            newHistorico.setStatusRegistro("Saída");
+            return service.postHistorico(newHistorico, idVeiculo, 1);
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Arquivo criado")
@@ -47,6 +63,17 @@ public class HistoricoController {
         List<HistoricoEntity> listaHistorico = getAllHistorico();
         String nome = service.gravaArquivoCsv(listaHistorico);
         return ResponseEntity.status(200).body("Arquivo '"+nome+"' criado com sucesso");
+    }
+
+    @GetMapping("/pegar-momento")
+    public ResponseEntity<List<HistoricoEntity>> pegarMomento(){
+        return ResponseEntity.ok(service.pegarMomento());
+    }
+    @GetMapping("/pegar-momento-id")
+    public ResponseEntity<HistoricoEntity> pegarMomentoByIdVeiculo(
+        @RequestParam Integer idVeiculo
+    ){
+        return ResponseEntity.ok().body(service.pegarMomentoByIdVeiculo(idVeiculo));
     }
 }
 

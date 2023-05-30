@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +20,7 @@ import java.util.List;
 @RequestMapping("${uri.dev}/funcionarios")
 @Tag(name = "Funcionário", description = "Gerencia a entidade funcionário")
 public class FuncionarioController {
-    @Autowired
-    FuncionarioAdapter funcionarioAdapter = new FuncionarioAdapter();
+    private final FuncionarioAdapter funcionarioAdapter = new FuncionarioAdapter();
 
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Usuário salvo"),
@@ -35,16 +33,15 @@ public class FuncionarioController {
             @RequestBody FuncionarioEntity funcionario,
             @PathVariable(required = false) Boolean adm
     ) throws MyException {
-        funcionario.setIdEstacionamento(idEstacionamento);
         if(adm != null) {
             if(adm) {
                 funcionario.setAdm(true);
-                return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));
+                return ResponseEntity.status(201).body(funcionarioAdapter.createId(funcionario, idEstacionamento));
             }
             throw new MyException(404, "Uri incorreta '/"+adm+"'", "G-001");
         }
 
-        return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));
+        return ResponseEntity.status(201).body(funcionarioAdapter.createId(funcionario, idEstacionamento));
     }
 
     @ApiResponses({
@@ -93,7 +90,7 @@ public class FuncionarioController {
             @Schema(hidden = true)))
     })
     @PatchMapping("/alterar-senha/{email}/{novaSenha}")
-    public ResponseEntity patchSenha(@PathVariable String email, @PathVariable String novaSenha){
+    public ResponseEntity patchSenha(@RequestParam String email, @RequestParam String novaSenha){
         return funcionarioAdapter.alterarSenha(email, novaSenha);
     }
 }
