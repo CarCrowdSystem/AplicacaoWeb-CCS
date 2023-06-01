@@ -12,18 +12,14 @@ public abstract class Funcionario {
     private String nome;
     private Blob foto;
     private String email;
-    private String rg;
     private String cpf;
     private String senha;
-    private String telefone;
     private Boolean adm;
 
-    public Funcionario(Integer id, String nome, String rg, String cpf, String email, String telefone, String senha) {
+    public Funcionario(Integer id, String nome,  String cpf, String email, String senha) {
         this.nome = nome;
-        this.rg = rg;
         this.cpf = cpf;
         this.email = email;
-        this.telefone = telefone;
         this.senha = senha;
         this.adm = null;
     }
@@ -32,10 +28,8 @@ public abstract class Funcionario {
         return new FuncionarioEstacionamento(
                 id,
                 nome,
-                rg,
                 cpf,
                 email,
-                telefone,
                 senha
         );
     }
@@ -44,10 +38,8 @@ public abstract class Funcionario {
         return new GerenteEstacionamento(
                 id,
                 nome,
-                rg,
                 cpf,
                 email,
-                telefone,
                 senha
         );
     }
@@ -55,22 +47,18 @@ public abstract class Funcionario {
     public FuncionarioDto toFuncionarioDto(){
         return new FuncionarioDto(
                 nome,
-                rg,
                 cpf,
                 adm,
-                email,
-                telefone
+                email
         );
     }
 
     public FuncionarioEntity toFuncionarioEntity(){
         FuncionarioEntity func = new FuncionarioEntity();
         func.setNome(nome);
-        func.setRg(rg);
         func.setCpf(cpf);
         func.setAdm(adm);
         func.setEmail(email);
-        func.setTelefone(telefone);
         func.setSenha(senha);
 
         return func;
@@ -90,14 +78,6 @@ public abstract class Funcionario {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
     }
 
     public String getCpf() {
@@ -122,14 +102,6 @@ public abstract class Funcionario {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
     }
 
     public String getSenha() {

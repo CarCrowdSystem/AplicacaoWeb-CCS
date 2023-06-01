@@ -2,6 +2,7 @@ package carcrowdsystem.ccs.dtos.estacionamento;
 
 public class EstacionamentoDto {
     private String nomeEstacionamento;
+    private String cnpj;
     private String cep;
     private String numeroEndereco;
     private String telefone;
@@ -12,6 +13,14 @@ public class EstacionamentoDto {
 
     public void setNomeEstacionamento(String nomeEstacionamento) {
         this.nomeEstacionamento = nomeEstacionamento;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getCep() {

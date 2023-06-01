@@ -22,11 +22,8 @@ public class FuncionarioEntity {
     private Blob foto;
     @Email
     private String email;
-    private String rg;
     private String cpf;
     private String senha;
-    @Size(min = 9, max = 11)
-    private String telefone;
     private Boolean loginHabilitado = false;
     private Boolean adm = false;
     @ManyToOne
@@ -46,10 +43,8 @@ public class FuncionarioEntity {
         return new FuncionarioEstacionamento(
                 id,
                 nome,
-                rg,
                 cpf,
                 email,
-                telefone,
                 senha
         );
     }
@@ -58,10 +53,8 @@ public class FuncionarioEntity {
         return new GerenteEstacionamento(
                 id,
                 nome,
-                rg,
                 cpf,
                 email,
-                telefone,
                 senha
         );
     }
@@ -69,11 +62,9 @@ public class FuncionarioEntity {
     public FuncionarioDto toFuncionarioDto(){
         return new FuncionarioDto(
                 nome,
-                rg,
                 cpf,
                 adm,
-                email,
-                telefone
+                email
         );
     }
 
@@ -108,15 +99,6 @@ public class FuncionarioEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
-
     public String getCpf() {
         return cpf;
     }
@@ -131,14 +113,6 @@ public class FuncionarioEntity {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
     }
 
     public Boolean getLoginHabilitado() {

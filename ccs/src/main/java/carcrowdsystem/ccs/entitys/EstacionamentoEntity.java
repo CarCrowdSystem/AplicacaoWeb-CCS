@@ -1,6 +1,8 @@
 package carcrowdsystem.ccs.entitys;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -11,6 +13,10 @@ public class EstacionamentoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ID_INIT_100")
     private Integer id;
+
+    @NotBlank
+    @Size(min = 14, max = 14)
+    private String cnpj;
     @NotBlank
     @Size(min = 3)
     private String nomeEstacionamento;
@@ -41,6 +47,14 @@ public class EstacionamentoEntity {
 
     public void setNomeEstacionamento(String nomeEstacionamento) {
         this.nomeEstacionamento = nomeEstacionamento;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getCep() {
