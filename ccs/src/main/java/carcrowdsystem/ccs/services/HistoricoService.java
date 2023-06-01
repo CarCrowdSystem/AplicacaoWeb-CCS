@@ -96,7 +96,11 @@ public class HistoricoService {
         );
     }
 
-    public ResponseEntity postHistorico(HistoricoDto newHistorico, Integer idVeiculo, Integer idVaga) throws MyException {
+    public ResponseEntity postHistorico(
+        HistoricoDto newHistorico,
+        Integer idVeiculo,
+        Integer idVaga
+    ) throws MyException {
         try {
             VagaEntity vaga = vagaController.getVagaById(idVaga).getBody();
             VeiculoEntity veiculo = veiculoController.getVeiculoById(idVeiculo).getBody();
@@ -111,5 +115,13 @@ public class HistoricoService {
         } catch (Exception e){
             throw new MyException(e.hashCode(), e.getMessage(), "H-005");
         }
+    }
+
+    public List<HistoricoEntity> pegarMomento() {
+        return repository.pegarMomento();
+    }
+
+    public HistoricoEntity pegarMomentoByIdVeiculo(Integer idVeiculo) {
+        return repository.pegarMomentoByIdVeiculo(idVeiculo);
     }
 }

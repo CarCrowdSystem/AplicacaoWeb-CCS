@@ -31,6 +31,15 @@ public class FuncionarioEntity {
     private Boolean adm = false;
     @ManyToOne
     private EstacionamentoEntity estacionamento;
+
+    public Integer getIdEstacionamento() {
+        return idEstacionamento;
+    }
+
+    public void setIdEstacionamento(Integer idEstacionamento) {
+        this.idEstacionamento = idEstacionamento;
+    }
+
     private Integer idEstacionamento;
 
     public FuncionarioEstacionamento toFuncionario(){
@@ -156,11 +165,4 @@ public class FuncionarioEntity {
         this.estacionamento = estacionamento;
     }
 
-    public Integer getIdEstacionamento() {
-        return idEstacionamento;
-    }
-
-    public void setIdEstacionamento(Integer idEstacionamento) {
-        this.idEstacionamento = idEstacionamento;
-    }
 }

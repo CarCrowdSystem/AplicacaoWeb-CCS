@@ -50,7 +50,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/ccs-dev/funcionarios**"),
             new AntPathRequestMatcher("/configuration/security"),
             new AntPathRequestMatcher("/api/public/authenticate"),
-            new AntPathRequestMatcher("/ccs-dev/funcionarios/**")
+            new AntPathRequestMatcher("/ccs-dev/funcionarios/**"),
+            new AntPathRequestMatcher("/ccs-dev/checkin/mensagem/**")
     };
 
     @Bean
