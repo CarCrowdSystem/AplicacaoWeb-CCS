@@ -7,6 +7,7 @@ import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.CadastroInicialRequest;
 import carcrowdsystem.ccs.request.dtos.VagaDtoRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,7 @@ public class DistribuicaoController {
         this.funcionarioController = funcionarioController;
     }
 
+    @PostMapping
     public ResponseEntity CadastroInicial (
             @RequestBody CadastroInicialRequest cad
     ) throws MyException {
@@ -38,10 +40,9 @@ public class DistribuicaoController {
 
         Integer idEstacionamento =
                 estacionamentoController.getEstacionamentoPorCnpj(cad.getCnpjEmpresa()).getBody().getId();
-
-
-
+        
         FuncionarioEntity funcionario = new FuncionarioEntity();
+        funcionario.setIdEstacionamento(idEstacionamento);
         funcionario.setCpf(cad.getCpfUsuario());
         funcionario.setNome(cad.getNomeUsuario());
         funcionario.setEmail(cad.getEmailUsuario());

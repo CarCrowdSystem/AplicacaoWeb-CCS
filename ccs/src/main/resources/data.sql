@@ -1,9 +1,9 @@
 INSERT INTO ESTACIONAMENTO_ENTITY
-(id, cep, nome_estacionamento, cnpj, numero_endereco, status_estacionamento, telefone) VALUES
-(1, '00000-001', 'estacionamento1', '12345678912345', '001', 0, '99999-9991'),
-(2, '00000-002', 'estacionamento2', '12345678912345', '002', 1, '99999-9992'),
-(3, '00000-003', 'estacionamento3', '12345678912345', '003', 1, '99999-9993'),
-(4, '00000-004', 'estacionamento4', '12345678912345', '004', 0, '99999-9994');
+(cep, nome_estacionamento, cnpj, numero_endereco, status_estacionamento, telefone) VALUES
+('00000-001', 'estacionamento1', '12345678912345', '001', 0, '99999-9991'),
+('00000-002', 'estacionamento2', '12345678912345', '002', 1, '99999-9992'),
+('00000-003', 'estacionamento3', '12345678912345', '003', 1, '99999-9993'),
+('00000-004', 'estacionamento4', '12345678912345', '004', 0, '99999-9994');
 
 INSERT INTO VAGA_ENTITY
 (id, andar, numero, estacionamento_id) values
