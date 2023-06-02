@@ -85,4 +85,12 @@ public class EstacionamentoService {
             throw new MyException(404, "Id não existente", "E005");
         }
     }
+
+    public EstacionamentoEntity findByCnpj(String cnpj) throws MyException {
+        try {
+            return estacionamentoRepository.findByCnpj(cnpj).get();
+        } catch (Exception e) {
+            throw new MyException(404, "Cnpj não existente", "E006");
+        }
+    }
 }

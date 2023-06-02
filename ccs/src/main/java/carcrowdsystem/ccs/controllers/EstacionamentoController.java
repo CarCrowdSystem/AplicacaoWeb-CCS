@@ -40,6 +40,15 @@ public class EstacionamentoController {
         );
     }
 
+    @GetMapping("/cnpj/{cnpj}")
+    public ResponseEntity<EstacionamentoEntity> getEstacionamentoPorCnpj(
+            @PathVariable String cnpj
+    ) throws MyException {
+        return ResponseEntity.status(201).body(
+                estacionamentoAdapter.getEstacionamentoPorCnpj(cnpj)
+        );
+    }
+
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Estacionamento cadastrado"),
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar estacionamento",
