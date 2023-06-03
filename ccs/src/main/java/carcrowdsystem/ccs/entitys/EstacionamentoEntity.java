@@ -8,10 +8,11 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
+//@SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
+// generator = "ID_INIT_100"
 public class EstacionamentoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ID_INIT_100")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotBlank

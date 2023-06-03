@@ -11,15 +11,14 @@ import javax.validation.constraints.Size;
 import java.sql.Blob;
 
 @Entity
-@SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
 public class FuncionarioEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ID_INIT_100")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotBlank
     @Size(min = 3)
     private String nome;
-    private Blob foto;
+    private Blob foto = null;
     @Email
     private String email;
     private String cpf;
