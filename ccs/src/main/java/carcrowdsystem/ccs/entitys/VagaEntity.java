@@ -13,7 +13,7 @@ public class VagaEntity {
     @OneToMany
     private List<HistoricoEntity> historicoEntity;
     private Integer numero;
-    private Integer andar;
+    private String andar;
 
     public Integer getId() {
         return id;
@@ -47,11 +47,11 @@ public class VagaEntity {
         this.numero = numero;
     }
 
-    public Integer getAndar() {
+    public String getAndar() {
         return andar;
     }
 
-    public void setAndar(Integer andar) {
+    public void setAndar(String andar) {
         this.andar = andar;
     }
 }

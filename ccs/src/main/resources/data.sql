@@ -6,20 +6,20 @@ INSERT INTO ESTACIONAMENTO_ENTITY
 ('00000-004', 'estacionamento4', '12345678912345', '004', 0, '99999-9994');
 
 INSERT INTO VAGA_ENTITY
-(id, andar, numero, estacionamento_id) values
-(1, 0, 1, 1),
-(2, 0, 2, 1);
+(andar, numero, estacionamento_id) values
+(0, 1, 1),
+(0, 2, 1);
 
 INSERT INTO VEICULO_ENTITY
-(id, modelo, nome_cliente, placa, telefone_cliente) values
-(1, 'bla1', 'diogo', 'aaa0001','11999871781'),
-(2, 'bla2', 'romao', 'aaa0002','11999871782'),
-(3, 'bla3', 'victoria', 'aaa0003','11999871783'),
-(4, 'bla4', 'mary', 'aaa0004','11999871784');
+(modelo, nome_cliente, placa, telefone_cliente) values
+('bla1', 'diogo', 'aaa0001','11999871781'),
+('bla2', 'romao', 'aaa0002','11999871782'),
+('bla3', 'victoria', 'aaa0003','11999871783'),
+('bla4', 'mary', 'aaa0004','11999871784');
 
 INSERT INTO HISTORICO_ENTITY
-(id, momento_registro, status_registro, valor_pago, vaga_id, veiculo_id) VALUES
-(1, '2023-12-03T10:15:30', 'Entrada', 00.00, 1, 1),
-(2, '2023-12-03T10:15:30', 'Entrada', 00.00, 2, 2),
-(3, '2023-12-03T10:15:30', 'Saída', 25.00, 1, 1),
-(4, '2023-12-03T10:15:30', 'Saída', 35.00, 2, 2);
+(momento_registro, status_registro, valor_pago, vaga_id, veiculo_id) VALUES
+('2023-12-03T10:15:30', 'Entrada', 00.00, 1, 1),
+('2023-12-03T10:15:30', 'Entrada', 00.00, 2, 2),
+('2023-12-03T10:15:30', 'Saída', 25.00, 1, 1),
+('2023-12-03T10:15:30', 'Saída', 35.00, 2, 2);

@@ -2,9 +2,9 @@ package carcrowdsystem.ccs.dtos.vaga;
 
 public class VagaDto {
     private Integer numero;
-    private Integer andar;
+    private String andar;
 
-    public VagaDto(Integer numero, Integer andar) {
+    public VagaDto(Integer numero, String andar) {
         this.numero = numero;
         this.andar = andar;
     }
@@ -17,11 +17,11 @@ public class VagaDto {
         this.numero = numero;
     }
 
-    public Integer getAndar() {
+    public String getAndar() {
         return andar;
     }
 
-    public void setAndar(Integer andar) {
+    public void setAndar(String andar) {
         this.andar = andar;
     }
 }
