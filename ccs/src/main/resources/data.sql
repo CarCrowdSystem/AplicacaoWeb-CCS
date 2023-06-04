@@ -8,21 +8,27 @@ INSERT INTO ESTACIONAMENTO_ENTITY
 INSERT INTO VAGA_ENTITY
 (andar, numero, estacionamento_id) values
 (0, 1, 1),
-(0, 2, 1);
+(0, 2, 1),
+(0, 1, 2),
+(0, 2, 2);
 
 INSERT INTO VEICULO_ENTITY
 (modelo, nome_cliente, placa, telefone_cliente) values
 ('bla1', 'diogo', 'aaa0001','11999871781'),
 ('bla2', 'romao', 'aaa0002','11999871782'),
 ('bla3', 'victoria', 'aaa0003','11999871783'),
-('bla4', 'mary', 'aaa0004','11999871784');
+('fantasma', 'fantasma', 'aaa0000','11999871784');
 
 INSERT INTO HISTORICO_ENTITY
 (momento_registro, status_registro, valor_pago, vaga_id, veiculo_id) VALUES
-('2023-12-03T10:15:30', 'Entrada', 00.00, 1, 1),
-('2023-12-03T10:15:30', 'Entrada', 00.00, 2, 2),
-('2023-12-03T10:15:30', 'Saída', 25.00, 1, 1),
-('2023-12-03T10:15:30', 'Saída', 35.00, 2, 2);
+('2023-12-03T10:15:30', 0, 00.00, 1, 1),
+('2023-12-03T10:15:35', 0, 00.00, 2, 2),
+('2023-12-03T11:18:30', 1, 45.00, 1, 1),
+('2023-12-03T10:19:30', 1, 35.00, 2, 2),
+('2023-12-04T10:12:30', 0, 00.00, 2, 2),
+('2023-12-03T10:15:30', 0, 00.00, 3, 3),
+('2023-12-03T10:17:30', 1, 35.00, 3, 3),
+('2023-12-04T10:12:30', 0, 00.00, 3, 3);
 
 INSERT INTO FUNCIONARIO_ENTITY
 (cpf, email, id_estacionamento, nome, senha, estacionamento_id) VALUES
