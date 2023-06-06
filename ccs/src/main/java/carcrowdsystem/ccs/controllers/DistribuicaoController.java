@@ -48,13 +48,13 @@ public class DistribuicaoController {
 
         FuncionarioRequest funcionario = new FuncionarioRequest(
                 cad.getNomeUsuario(),
-                null,
                 cad.getEmailUsuario(),
                 cad.getCpfUsuario(),
                 cad.getSenha(),
                 true,
                 idEstacionamento
         );
+        funcionario.setAdm(true);
         funcionarioController.postUsuario(idEstacionamento, funcionario, true);
 
         VeiculoEntity veiculoFantasma = veiculoController.getVeiculoById(4).getBody();

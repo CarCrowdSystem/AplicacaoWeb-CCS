@@ -14,9 +14,8 @@ public class FuncionarioRequest {
     private Boolean adm = false;
     private Integer idEstacionamento;
 
-    public FuncionarioRequest(String nome, Blob foto, String email, String cpf, String senha, Boolean adm, Integer idEstacionamento) {
+    public FuncionarioRequest(String nome, String email, String cpf, String senha, Boolean adm, Integer idEstacionamento) {
         this.nome = nome;
-        this.foto = foto;
         this.email = email;
         this.cpf = cpf;
         this.senha = senha;
