@@ -1,13 +1,12 @@
 package carcrowdsystem.ccs.entitys;
 
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
-@Entity
+@Entity(name = "estacionamento")
 //@SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
 // generator = "ID_INIT_100"
 public class EstacionamentoEntity {

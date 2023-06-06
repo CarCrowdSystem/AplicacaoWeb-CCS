@@ -2,7 +2,7 @@ package carcrowdsystem.ccs.entitys;
 
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity

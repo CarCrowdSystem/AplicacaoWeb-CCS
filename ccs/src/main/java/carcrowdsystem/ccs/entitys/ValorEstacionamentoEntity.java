@@ -1,6 +1,9 @@
 package carcrowdsystem.ccs.entitys;
 
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 
 @Entity
 public class ValorEstacionamentoEntity {
