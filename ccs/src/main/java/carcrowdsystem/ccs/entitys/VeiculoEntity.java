@@ -4,16 +4,20 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "checkin_veiculo")
 public class VeiculoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_checkin")
     private Integer id;
-    @OneToMany
-    private List<HistoricoEntity> historico;
     private String placa;
     private String modelo;
+    @Column(name = "nome_cliente")
     private String nomeCliente;
+    @Column(name = "telefone_cliente")
     private String telefoneCliente;
+    @OneToMany
+    private List<HistoricoEntity> historico;
 
     public Integer getId() {
         return id;

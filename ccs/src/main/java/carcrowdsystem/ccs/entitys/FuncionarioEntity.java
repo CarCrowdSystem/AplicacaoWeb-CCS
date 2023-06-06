@@ -11,6 +11,7 @@ import jakarta.validation.constraints.Size;
 import java.sql.Blob;
 
 @Entity
+@Table(name = "funcionario")
 public class FuncionarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

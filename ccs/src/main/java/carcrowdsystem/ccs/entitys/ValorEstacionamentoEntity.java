@@ -6,15 +6,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "valor_estacionamento")
 public class ValorEstacionamentoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_preco")
     private Integer id;
-    @ManyToOne
-    private EstacionamentoEntity estacionamento;
+    @Column(name = "primeira_hora")
     private Double primeiraHora;
+    @Column(name = "hora_adicional")
     private Double horaAdicional;
     private Double diaria;
+    @ManyToOne
+    private EstacionamentoEntity estacionamento;
 
     public Integer getId() {
         return id;
