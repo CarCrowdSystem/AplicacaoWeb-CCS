@@ -14,29 +14,23 @@ import java.sql.Blob;
 public class FuncionarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_funcionario")
     private Integer id;
     @NotBlank
     @Size(min = 3)
+    @Column(name = "nome_funcionario")
     private String nome;
     private Blob foto = null;
     @Email
     private String email;
     private String cpf;
     private String senha;
+    @Column(name = "login_Habilitado")
     private Boolean loginHabilitado = false;
+    @Column(name = "usuario_adm")
     private Boolean adm = false;
     @ManyToOne
     private EstacionamentoEntity estacionamento;
-
-    public Integer getIdEstacionamento() {
-        return idEstacionamento;
-    }
-
-    public void setIdEstacionamento(Integer idEstacionamento) {
-        this.idEstacionamento = idEstacionamento;
-    }
-
-    private Integer idEstacionamento;
 
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(

@@ -5,6 +5,7 @@ import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.request.FuncionarioRequest;
 import carcrowdsystem.ccs.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,17 +16,17 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
-public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, FuncionarioEntity>{
+public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, FuncionarioRequest>{
     @Autowired
     private FuncionarioService service;
 
     @Override
-    public FuncionarioDto create(FuncionarioEntity entrada) throws MyException {
+    public FuncionarioDto create(FuncionarioRequest entrada) throws MyException {
         return service.postFuncionario(entrada);
     }
 
     @Override
-    public void update(Integer id, FuncionarioEntity entrada) {
+    public void update(Integer id, FuncionarioRequest entrada) {
     }
 
     @Override

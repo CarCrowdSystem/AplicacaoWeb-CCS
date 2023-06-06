@@ -5,6 +5,7 @@ import carcrowdsystem.ccs.entitys.*;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.CadastroInicialRequest;
+import carcrowdsystem.ccs.request.FuncionarioRequest;
 import carcrowdsystem.ccs.request.dtos.VagaDtoRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,12 +46,15 @@ public class DistribuicaoController {
         Integer idEstacionamento =
                 estacionamentoController.getEstacionamentoPorCnpj(cad.getCnpjEmpresa()).getBody().getId();
 
-        FuncionarioEntity funcionario = new FuncionarioEntity();
-        funcionario.setIdEstacionamento(idEstacionamento);
-        funcionario.setCpf(cad.getCpfUsuario());
-        funcionario.setNome(cad.getNomeUsuario());
-        funcionario.setEmail(cad.getEmailUsuario());
-        funcionario.setSenha(cad.getSenha());
+        FuncionarioRequest funcionario = new FuncionarioRequest(
+                cad.getNomeUsuario(),
+                null,
+                cad.getEmailUsuario(),
+                cad.getCpfUsuario(),
+                cad.getSenha(),
+                true,
+                idEstacionamento
+        );
         funcionarioController.postUsuario(idEstacionamento, funcionario, true);
 
         VeiculoEntity veiculoFantasma = veiculoController.getVeiculoById(4).getBody();
