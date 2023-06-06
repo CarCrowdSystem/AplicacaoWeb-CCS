@@ -11,6 +11,7 @@ public class EstacionamentoMapper {
         estacionamentoDto.setTelefone(estacionamento.getTelefone());
         estacionamentoDto.setCep(estacionamento.getCep());
         estacionamentoDto.setNumeroEndereco(estacionamento.getNumeroEndereco());
+        estacionamentoDto.setCnpj(estacionamento.getNumeroEndereco());
 
         return estacionamentoDto;
     }

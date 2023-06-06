@@ -6,12 +6,14 @@ import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
-@Entity(name = "estacionamento")
+@Entity
+@Table(name = "estacionamento")
 //@SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
 // generator = "ID_INIT_100"
 public class EstacionamentoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_estacionamento")
     private Integer id;
 
     @NotBlank
@@ -19,10 +21,12 @@ public class EstacionamentoEntity {
     private String cnpj;
     @NotBlank
     @Size(min = 3)
+    @Column(name = "nome_estacionamento")
     private String nomeEstacionamento;
     @NotBlank
     private String cep;
     @NotBlank
+    @Column(name = "numero_endereco")
     private String numeroEndereco;
     private String telefone;
     @OneToMany

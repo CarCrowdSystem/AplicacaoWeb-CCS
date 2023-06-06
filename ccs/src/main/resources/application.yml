@@ -22,13 +22,13 @@ spring:
     defer-datasource-initialization: true
 
 # Habilitando o H2 Console. Num navegador, permite o acesso a http://localhost:8080/h2-console
-  h2:
-    console:
-      enabled: true
-  datasource:
-    url: jdbc:h2:mem:ccs-dev
-  jackson:
-    default-property-inclusion: non_null
+#  h2:
+#    console:
+#      enabled: true
+#  datasource:
+#    url: jdbc:h2:mem:ccs-dev
+#  jackson:
+#    default-property-inclusion: non_null
 
 uri.prod: /ccs-prod
 uri.dev: /ccs-dev
