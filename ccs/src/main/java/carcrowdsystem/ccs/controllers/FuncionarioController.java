@@ -29,6 +29,7 @@ public class FuncionarioController {
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar usuário", content = @Content(schema =
             @Schema(hidden = true)))
     })
+
     @PostMapping({"/{idEstacionamento}","/{idEstacionamento}/{adm}"})
     public ResponseEntity<FuncionarioDto> postUsuario(
             @PathVariable Integer idEstacionamento,
@@ -93,7 +94,7 @@ public class FuncionarioController {
             @Schema(hidden = true)))
     })
     @PatchMapping("/alterar-senha/{email}/{novaSenha}")
-    public ResponseEntity patchSenha(@PathVariable String email, @PathVariable String novaSenha){
+    public ResponseEntity patchSenha(@RequestParam String email, @RequestParam String novaSenha){
         return funcionarioAdapter.alterarSenha(email, novaSenha);
     }
 }

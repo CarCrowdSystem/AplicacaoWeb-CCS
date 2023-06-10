@@ -21,16 +21,16 @@ public class VagaService {
         this.estacionamentoService = estacionamentoService;
     }
 
-    public void postVaga(VagaDto novaVaga, Integer id) throws MyException {
+    public VagaEntity postVaga(VagaDto novaVaga, Integer id) throws MyException {
         EstacionamentoEntity estacionamento =
                 estacionamentoService.findById(id);
         VagaEntity vaga = new VagaEntity();
         vaga.setAndar(novaVaga.getAndar());
         vaga.setNumero(novaVaga.getNumero());
         vaga.setEstacionamento(
-            estacionamento
+                estacionamento
         );
-        repository.save(vaga);
+        return repository.save(vaga);
     }
 
     public List<VagaEntity> getVagas() {

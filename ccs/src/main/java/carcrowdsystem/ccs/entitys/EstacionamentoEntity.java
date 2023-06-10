@@ -1,16 +1,23 @@
 package carcrowdsystem.ccs.entitys;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
+//@SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
+// generator = "ID_INIT_100"
 public class EstacionamentoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ID_INIT_100")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotBlank
+    @Size(min = 14, max = 14)
+    private String cnpj;
     @NotBlank
     @Size(min = 3)
     private String nomeEstacionamento;
@@ -41,6 +48,14 @@ public class EstacionamentoEntity {
 
     public void setNomeEstacionamento(String nomeEstacionamento) {
         this.nomeEstacionamento = nomeEstacionamento;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getCep() {

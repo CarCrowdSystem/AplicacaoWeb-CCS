@@ -35,4 +35,8 @@ public class EstacionamentoAdapter implements DbAdapter<EstacionamentoDto, Estac
     public List<EstacionamentoDto> getAll() {
         return service.getAllEstacionamento();
     }
+
+    public EstacionamentoEntity getEstacionamentoPorCnpj(String cnpj) throws MyException {
+        return service.findByCnpj(cnpj);
+    }
 }

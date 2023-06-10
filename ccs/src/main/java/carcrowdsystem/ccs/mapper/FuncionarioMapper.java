@@ -12,10 +12,8 @@ public class FuncionarioMapper {
         return new FuncionarioEstacionamento(
                 f.getId(),
                 f.getNome(),
-                f.getRg(),
                 f.getCpf(),
                 f.getEmail(),
-                f.getTelefone(),
                 f.getSenha()
         );
     }
@@ -24,10 +22,8 @@ public class FuncionarioMapper {
         return new GerenteEstacionamento(
                 f.getId(),
                 f.getNome(),
-                f.getRg(),
                 f.getCpf(),
                 f.getEmail(),
-                f.getTelefone(),
                 f.getSenha()
         );
     }
@@ -35,10 +31,8 @@ public class FuncionarioMapper {
         return new GerenteEstacionamento(
                 f.getId(),
                 f.getNome(),
-                f.getRg(),
                 f.getCpf(),
                 f.getEmail(),
-                f.getTelefone(),
                 f.getSenha()
         );
     }
@@ -46,32 +40,26 @@ public class FuncionarioMapper {
     public FuncionarioDto toFuncionarioDto(Funcionario f){
         return new FuncionarioDto(
                 f.getNome(),
-                f.getRg(),
                 f.getCpf(),
                 f.getAdm(),
-                f.getEmail(),
-                f.getTelefone()
+                f.getEmail()
         );
     }
     public FuncionarioDto toFuncionarioDto(FuncionarioEntity f){
         return new FuncionarioDto(
                 f.getNome(),
-                f.getRg(),
                 f.getCpf(),
                 f.getAdm(),
-                f.getEmail(),
-                f.getTelefone()
+                f.getEmail()
         );
     }
 
     public FuncionarioEntity toFuncionarioEntity(Funcionario f){
         FuncionarioEntity func = new FuncionarioEntity();
         func.setNome(f.getNome());
-        func.setRg(f.getRg());
         func.setCpf(f.getCpf());
         func.setAdm(f.getAdm());
         func.setEmail(f.getEmail());
-        func.setTelefone(f.getTelefone());
         func.setSenha(f.getSenha());
 
         return func;

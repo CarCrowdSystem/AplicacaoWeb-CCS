@@ -19,6 +19,13 @@
 	</properties>
 	<dependencies>
 		<dependency>
+
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>9.2.5</version>
+		</dependency>
+  
+    <dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
 			<version>12.2.0.jre11</version>

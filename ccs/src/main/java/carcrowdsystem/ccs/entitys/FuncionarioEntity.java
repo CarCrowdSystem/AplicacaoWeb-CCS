@@ -11,36 +11,39 @@ import javax.validation.constraints.Size;
 import java.sql.Blob;
 
 @Entity
-@SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
 public class FuncionarioEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ID_INIT_100")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotBlank
     @Size(min = 3)
     private String nome;
-    private Blob foto;
+    private Blob foto = null;
     @Email
     private String email;
-    private String rg;
     private String cpf;
     private String senha;
-    @Size(min = 9, max = 11)
-    private String telefone;
     private Boolean loginHabilitado = false;
     private Boolean adm = false;
     @ManyToOne
     private EstacionamentoEntity estacionamento;
+
+    public Integer getIdEstacionamento() {
+        return idEstacionamento;
+    }
+
+    public void setIdEstacionamento(Integer idEstacionamento) {
+        this.idEstacionamento = idEstacionamento;
+    }
+
     private Integer idEstacionamento;
 
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
                 id,
                 nome,
-                rg,
                 cpf,
                 email,
-                telefone,
                 senha
         );
     }
@@ -49,10 +52,8 @@ public class FuncionarioEntity {
         return new GerenteEstacionamento(
                 id,
                 nome,
-                rg,
                 cpf,
                 email,
-                telefone,
                 senha
         );
     }
@@ -60,11 +61,9 @@ public class FuncionarioEntity {
     public FuncionarioDto toFuncionarioDto(){
         return new FuncionarioDto(
                 nome,
-                rg,
                 cpf,
                 adm,
-                email,
-                telefone
+                email
         );
     }
 
@@ -99,15 +98,6 @@ public class FuncionarioEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
-
     public String getCpf() {
         return cpf;
     }
@@ -122,14 +112,6 @@ public class FuncionarioEntity {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
     }
 
     public Boolean getLoginHabilitado() {
@@ -156,11 +138,4 @@ public class FuncionarioEntity {
         this.estacionamento = estacionamento;
     }
 
-    public Integer getIdEstacionamento() {
-        return idEstacionamento;
-    }
-
-    public void setIdEstacionamento(Integer idEstacionamento) {
-        this.idEstacionamento = idEstacionamento;
-    }
 }

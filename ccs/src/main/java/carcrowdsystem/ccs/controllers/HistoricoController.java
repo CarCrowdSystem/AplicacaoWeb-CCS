@@ -2,7 +2,9 @@ package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
 import carcrowdsystem.ccs.entitys.HistoricoEntity;
+import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
 import carcrowdsystem.ccs.services.HistoricoService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -30,13 +32,33 @@ public class HistoricoController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @PostMapping
-    public ResponseEntity postHistorico(
+    @PostMapping("/checkin")
+    public ResponseEntity checkin(
             @RequestBody HistoricoDto newHistorico,
             @RequestParam Integer idVeiculo,
             @RequestParam Integer idVaga
-        ) throws MyException {
-        return service.postHistorico(newHistorico, idVeiculo, idVaga);
+    ) throws MyException {
+        HistoricoEntity ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Saida)) {
+            newHistorico.setStatusRegistro(StatusVagaEnum.Entrada);
+            return service.postHistorico(newHistorico, idVeiculo, idVaga);
+        } else {
+            return ResponseEntity.status(400).body("O veiculo já está no estacionamento");
+        }
+    }
+
+    @PostMapping("/checkout")
+    public ResponseEntity checkout(
+            @RequestBody HistoricoDto newHistorico,
+            @RequestParam Integer idVeiculo
+    ) throws MyException {
+        HistoricoEntity ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Entrada)) {
+            newHistorico.setStatusRegistro(StatusVagaEnum.Saida);
+            return service.postHistorico(newHistorico, idVeiculo, ultimoHistorico.getVaga().getId());
+        } else {
+            return ResponseEntity.status(400).body("O veiculo não está no estacionamento");
+        }
     }
 
     @ApiResponses({
@@ -47,6 +69,30 @@ public class HistoricoController {
         List<HistoricoEntity> listaHistorico = getAllHistorico();
         String nome = service.gravaArquivoCsv(listaHistorico);
         return ResponseEntity.status(200).body("Arquivo '"+nome+"' criado com sucesso");
+    }
+
+    @GetMapping("/pegar-momento")
+    public ResponseEntity<List<HistoricoEntity>> pegarMomento(){
+        return ResponseEntity.ok(service.pegarMomento());
+    }
+    @GetMapping("/pegar-momento-idVeiculo")
+    public ResponseEntity<HistoricoEntity> pegarMomentoByIdVeiculo(
+        @RequestParam Integer idVeiculo
+    ){
+        return ResponseEntity.ok().body(service.pegarMomentoByIdVeiculo(idVeiculo));
+    }
+
+    @GetMapping("/pegar-momento-idEstacionamento")
+    public ResponseEntity<List<UltimoHistoricoVagaDtoResponse>> pegarMomentoByIdEstacionamento(
+            @RequestParam Integer idEstacionamento
+    ){
+        return ResponseEntity.ok().body(service.pegarMomentoByIdEstacionamento(idEstacionamento));
+    }
+
+    public void gerarHistoricoInicial(
+        HistoricoEntity historicoInicial
+    ){
+        service.postHistoricoInicial(historicoInicial);
     }
 }
 

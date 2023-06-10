@@ -101,7 +101,7 @@ public class FuncionarioService {
          // Imprime antes de ordenar
          System.out.println("Antes de ordenar: \n");
         for (FuncionarioDto func : funcionarios){
-            System.out.printf("\nNome: %s - RG: %s - CPF: %s - cargo: %s - Email: %s - Telefone: %s", func.getNome(), func.getRg(), func.getCpf(), func.getAdm(), func.getEmail(), func.getTelefone());
+            System.out.printf("\nNome: %s - CPF: %s - cargo: %s - Email: %s", func.getNome(), func.getCpf(), func.getAdm(), func.getEmail());
         }
 
         // Algoritmo de oredenação
@@ -122,7 +122,7 @@ public class FuncionarioService {
         // Imprime resultado
         System.out.println("Exibindo lista ordenada:");
         for (FuncionarioDto func : funcionarios){
-            System.out.printf("\nNome: %s - RG: %s - CPF: %s - cargo: %s - Email: %s - Telefone: %s", func.getNome(), func.getRg(), func.getCpf(), func.getAdm(), func.getEmail(), func.getTelefone());
+            System.out.printf("\nNome: %s - CPF: %s - cargo: %s - Email: %s", func.getNome(),func.getCpf(), func.getAdm(), func.getEmail());
         }
         return funcionarios;
     }

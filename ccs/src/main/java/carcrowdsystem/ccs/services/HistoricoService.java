@@ -8,6 +8,7 @@ import carcrowdsystem.ccs.entitys.VagaEntity;
 import carcrowdsystem.ccs.entitys.VeiculoEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
+import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.FormatterClosedException;
 import java.util.List;
@@ -96,7 +98,11 @@ public class HistoricoService {
         );
     }
 
-    public ResponseEntity postHistorico(HistoricoDto newHistorico, Integer idVeiculo, Integer idVaga) throws MyException {
+    public ResponseEntity postHistorico(
+        HistoricoDto newHistorico,
+        Integer idVeiculo,
+        Integer idVaga
+    ) throws MyException {
         try {
             VagaEntity vaga = vagaController.getVagaById(idVaga).getBody();
             VeiculoEntity veiculo = veiculoController.getVeiculoById(idVeiculo).getBody();
@@ -111,5 +117,33 @@ public class HistoricoService {
         } catch (Exception e){
             throw new MyException(e.hashCode(), e.getMessage(), "H-005");
         }
+    }
+
+    public void postHistoricoInicial(
+        HistoricoEntity historicoEntity
+    ){
+        repository.save(historicoEntity);
+    }
+
+    public List<HistoricoEntity> pegarMomento() {
+        return repository.pegarMomento();
+    }
+
+    public HistoricoEntity pegarMomentoByIdVeiculo(Integer idVeiculo) {
+        return repository.pegarMomentoByIdVeiculo(idVeiculo);
+    }
+
+    public List<UltimoHistoricoVagaDtoResponse> pegarMomentoByIdEstacionamento(Integer idEstacionamento) {
+        List<HistoricoEntity> listHistorico =
+                repository.pegarMomentoByIdEstacionamento(idEstacionamento);
+        List<UltimoHistoricoVagaDtoResponse> listHistoricoDto = new ArrayList();
+        for (HistoricoEntity h: listHistorico){
+            listHistoricoDto.add(new UltimoHistoricoVagaDtoResponse(
+                h.getVaga().getNumero(),
+                h.getVaga().getAndar(),
+                h.getStatusRegistro()
+            ));
+        }
+        return listHistoricoDto;
     }
 }

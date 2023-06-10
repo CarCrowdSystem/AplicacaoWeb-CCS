@@ -1,13 +1,15 @@
 package carcrowdsystem.ccs.dtos.historico;
 
+import carcrowdsystem.ccs.enums.StatusVagaEnum;
+
 import java.time.LocalDateTime;
 
 public class HistoricoDto {
     private LocalDateTime momentoRegistro = LocalDateTime.now();
-    private String statusRegistro;
+    private StatusVagaEnum statusRegistro;
     private Double valorPago;
 
-    public HistoricoDto(String statusRegistro, Double valorPago) {
+    public HistoricoDto(StatusVagaEnum statusRegistro, Double valorPago) {
         this.statusRegistro = statusRegistro;
         this.valorPago = valorPago;
     }
@@ -20,11 +22,11 @@ public class HistoricoDto {
         this.momentoRegistro = momentoRegistro;
     }
 
-    public String getStatusRegistro() {
+    public StatusVagaEnum getStatusRegistro() {
         return statusRegistro;
     }
 
-    public void setStatusRegistro(String statusRegistro) {
+    public void setStatusRegistro(StatusVagaEnum statusRegistro) {
         this.statusRegistro = statusRegistro;
     }
 

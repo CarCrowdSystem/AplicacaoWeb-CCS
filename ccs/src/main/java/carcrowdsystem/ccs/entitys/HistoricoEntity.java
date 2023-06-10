@@ -1,5 +1,7 @@
 package carcrowdsystem.ccs.entitys;
 
+import carcrowdsystem.ccs.enums.StatusVagaEnum;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -13,8 +15,8 @@ public class HistoricoEntity {
     private VeiculoEntity veiculo;
     @ManyToOne
     private VagaEntity vaga;
-    private LocalDateTime momentoRegistro;
-    private String statusRegistro;
+    private LocalDateTime momentoRegistro = LocalDateTime.now();
+    private StatusVagaEnum statusRegistro;
     private Double valorPago;
 
     public Integer getId() {
@@ -49,11 +51,11 @@ public class HistoricoEntity {
         this.momentoRegistro = momentoRegistro;
     }
 
-    public String getStatusRegistro() {
+    public StatusVagaEnum getStatusRegistro() {
         return statusRegistro;
     }
 
-    public void setStatusRegistro(String statusRegistro) {
+    public void setStatusRegistro(StatusVagaEnum statusRegistro) {
         this.statusRegistro = statusRegistro;
     }
 
