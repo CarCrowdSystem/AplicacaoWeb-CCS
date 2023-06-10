@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">  
   <modelVersion>4.0.0</modelVersion>  
   <parent> 
@@ -27,7 +26,12 @@
       <groupId>org.apache.httpcomponents.client5</groupId>  
       <artifactId>httpclient5</artifactId>  
       <version>5.2.1</version> 
-    </dependency>  
+    </dependency>
+    <dependency>
+      <groupId>com.azure</groupId>
+      <artifactId>azure-data-appconfiguration</artifactId>
+      <version>1.4.5</version>
+    </dependency>
     <dependency> 
       <groupId>com.google.code.gson</groupId>  
       <artifactId>gson</artifactId>  
@@ -103,7 +107,13 @@
     <dependency> 
       <groupId>com.azure.spring</groupId>  
       <artifactId>spring-cloud-azure-starter</artifactId> 
-    </dependency> 
+    </dependency>
+    <dependency>
+      <groupId>com.microsoft.azure</groupId>
+      <artifactId>azure-webapp-maven-plugin</artifactId>
+      <version>2.11.0</version>
+    </dependency>
+
   </dependencies>  
   <dependencyManagement> 
     <dependencies> 
@@ -113,7 +123,7 @@
         <version>4.8.0</version>  
         <type>pom</type>  
         <scope>import</scope> 
-      </dependency> 
+      </dependency>
     </dependencies> 
   </dependencyManagement>  
   <build> 
@@ -121,40 +131,40 @@
       <plugin> 
         <groupId>org.springframework.boot</groupId>  
         <artifactId>spring-boot-maven-plugin</artifactId> 
-      </plugin>  
-      <plugin> 
-        <groupId>com.microsoft.azure</groupId>  
-        <artifactId>azure-webapp-maven-plugin</artifactId>  
-        <version>1.9.0</version>  
-        <configuration>
-          <schemaVersion>V2</schemaVersion>
-          <resourceGroup>ccs-1686418143643-rg</resourceGroup>
-          <appName>ccs-1686418143643</appName>
-          <pricingTier>P1v2</pricingTier>
-          <region>centralus</region>
-          <runtime>
-            <os>linux</os>
-            <javaVersion>jre8</javaVersion>
-            <webContainer>jre8</webContainer>
-          </runtime>
-          <appSettings>
-            <property>
-              <name>JAVA_OPTS</name>
-              <value>-Dserver.port=80</value>
-            </property>
-          </appSettings>
-          <deployment>
-            <resources>
-              <resource>
-                <directory>${project.basedir}/target</directory>
-                <includes>
-                  <include>*.jar</include>
-                </includes>
-              </resource>
-            </resources>
-          </deployment>
-        </configuration>
-      </plugin> 
+      </plugin>
+      <plugin>
+        <groupId>com.microsoft.azure</groupId>
+        <artifactId>azure-webapp-maven-plugin</artifactId>
+        <version>2.11.0</version>
+          <configuration>
+              <schemaVersion>v2</schemaVersion>
+              <resourceGroup>ccs-1686432983512-rg</resourceGroup>
+              <appName>ccs-1686432983512</appName>
+              <pricingTier>P1v2</pricingTier>
+              <region>centralus</region>
+              <runtime>
+                  <os>Linux</os>
+                  <javaVersion>Java 17</javaVersion>
+                  <webContainer>Java SE</webContainer>
+              </runtime>
+              <appSettings>
+                <property>
+                  <name>JAVA_OPTS</name>
+                  <value>-Dserver.port=80</value>
+                </property>
+              </appSettings>
+              <deployment>
+                  <resources>
+                      <resource>
+                          <directory>${project.basedir}/target</directory>
+                          <includes>
+                              <include>*.jar</include>
+                          </includes>
+                      </resource>
+                  </resources>
+              </deployment>
+          </configuration>
+      </plugin>
     </plugins> 
   </build> 
 </project>
