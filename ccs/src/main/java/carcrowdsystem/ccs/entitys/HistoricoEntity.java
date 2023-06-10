@@ -2,22 +2,27 @@ package carcrowdsystem.ccs.entitys;
 
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "historico")
 public class HistoricoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_historico")
     private Integer id;
+    @Column(name = "momento_registro")
+    private LocalDateTime momentoRegistro = LocalDateTime.now();
+    @Column(name = "status_registro")
+    private StatusVagaEnum statusRegistro;
+    @Column(name = "valor_pago")
+    private Double valorPago;
     @ManyToOne
     private VeiculoEntity veiculo;
     @ManyToOne
     private VagaEntity vaga;
-    private LocalDateTime momentoRegistro = LocalDateTime.now();
-    private StatusVagaEnum statusRegistro;
-    private Double valorPago;
 
     public Integer getId() {
         return id;

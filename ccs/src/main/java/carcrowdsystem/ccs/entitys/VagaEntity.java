@@ -1,19 +1,21 @@
 package carcrowdsystem.ccs.entitys;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "vaga")
 public class VagaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_vaga")
     private Integer id;
+    private Integer numero;
+    private String andar;
     @ManyToOne
     private EstacionamentoEntity estacionamento;
     @OneToMany
     private List<HistoricoEntity> historicoEntity;
-    private Integer numero;
-    private String andar;
 
     public Integer getId() {
         return id;
