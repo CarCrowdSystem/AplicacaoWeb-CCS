@@ -12,11 +12,17 @@ spring:
 # habilita a impress�o dos comando SQL no log
   jpa:
     show-sql: true
+    hibernate: 
+      ddl-auto: update
+      naming: 
+      physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandartImpl
 
 # formata os SQL (quebra linha, identa etc)
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+    database-platform: org.hibernate.dialect.SQLServer2012Dialect
 
 # Habilita data.sql
     defer-datasource-initialization: true
