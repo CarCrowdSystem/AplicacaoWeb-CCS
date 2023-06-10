@@ -18,6 +18,7 @@ public class ValorEstacionamentoEntity {
     private Double horaAdicional;
     private Double diaria;
     @ManyToOne
+    @JoinColumn(name = "fk_estacionamento")
     private EstacionamentoEntity estacionamento;
 
     public Integer getId() {

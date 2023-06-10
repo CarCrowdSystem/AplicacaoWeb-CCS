@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.services;
 
+import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
 import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.configuration.security.jwt.GerenciadorTokenJwt;
@@ -49,7 +50,6 @@ public class FuncionarioService {
             funcionario.setEmail(newFunc.getEmail());
             funcionario.setAdm(newFunc.getAdm());
             funcionario.setSenha(passwordEncoder.encode(newFunc.getSenha()));
-
             EstacionamentoEntity estacionamento =
                     estacionamentoService.findById(newFunc.getIdEstacionamento());
             funcionario.setEstacionamento(estacionamento);

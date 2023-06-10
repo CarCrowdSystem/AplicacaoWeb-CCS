@@ -31,6 +31,7 @@ public class FuncionarioEntity {
     @Column(name = "usuario_adm")
     private Boolean adm = false;
     @ManyToOne
+    @JoinColumn(name = "fk_estacionamento")
     private EstacionamentoEntity estacionamento;
 
     public FuncionarioEstacionamento toFuncionario(){

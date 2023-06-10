@@ -57,8 +57,8 @@ public class FuncionarioController {
             @Schema(hidden = true)))
     })
     @PostMapping("/login")
-    public ResponseEntity<FuncionarioTokenDto> login(@RequestBody FuncionarioLoginDto funcionarioLoginDto) {
-        return ResponseEntity.status(200).body(funcionarioAdapter.autenticar(funcionarioLoginDto));
+    public ResponseEntity<String> login(@RequestBody FuncionarioLoginDto funcionarioLoginDto) {
+        return ResponseEntity.status(200).body(funcionarioAdapter.autenticar(funcionarioLoginDto).getToken());
     }
 
     @ApiResponses({

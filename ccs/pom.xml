@@ -13,37 +13,15 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ccs</name>
 	<description>Estacionar com facilidade e segurança é o nosso compromisso,  vamos cuidar do seu estacionamento enquanto você cuida dos seus negócios.</description>
-
 	<properties>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
-
 			<groupId>com.twilio.sdk</groupId>
 			<artifactId>twilio</artifactId>
 			<version>9.2.5</version>
 		</dependency>
-  
-    <dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<version>12.2.0.jre11</version>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.azure</groupId>
-			<artifactId>azure-core</artifactId>
-			<version>1.35.0</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.apache.httpcomponents.client5</groupId>
 			<artifactId>httpclient5</artifactId>
@@ -63,8 +41,8 @@
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.1.0</version>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.7.0</version>
 		</dependency>
 
 		<dependency>

@@ -14,7 +14,7 @@ public class FuncionarioRequest {
     private Boolean adm = false;
     private Integer idEstacionamento;
 
-    public FuncionarioRequest(String nome, String email, String cpf, String senha, Boolean adm, Integer idEstacionamento) {
+    public FuncionarioRequest(String nome, String email, String cpf, String senha, Boolean adm , Integer idEstacionamento) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;

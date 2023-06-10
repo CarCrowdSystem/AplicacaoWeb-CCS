@@ -20,8 +20,10 @@ public class HistoricoEntity {
     @Column(name = "valor_pago")
     private Double valorPago;
     @ManyToOne
+    @JoinColumn(name = "fk_veiculo")
     private VeiculoEntity veiculo;
     @ManyToOne
+    @JoinColumn(name = "fk_vaga")
     private VagaEntity vaga;
 
     public Integer getId() {

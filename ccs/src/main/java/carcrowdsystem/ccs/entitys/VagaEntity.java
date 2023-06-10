@@ -13,6 +13,7 @@ public class VagaEntity {
     private Integer numero;
     private String andar;
     @ManyToOne
+    @JoinColumn(name = "fk_estacionamento")
     private EstacionamentoEntity estacionamento;
     @OneToMany
     private List<HistoricoEntity> historicoEntity;

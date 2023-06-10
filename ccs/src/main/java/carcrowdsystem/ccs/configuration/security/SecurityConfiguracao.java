@@ -43,7 +43,6 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/swagger-ui/**"),
             new AntPathRequestMatcher("/h2-console/**"),
             new AntPathRequestMatcher("/api/public/**"),
-            new AntPathRequestMatcher("/swagger-ui/**"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/configuration/ui"),
             new AntPathRequestMatcher("/swagger-resources"),
@@ -52,6 +51,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/configuration/security"),
             new AntPathRequestMatcher("/api/public/authenticate"),
             new AntPathRequestMatcher("/ccs-dev/funcionarios/**"),
+            new AntPathRequestMatcher("/ccs-dev/estacionamentos/**"),
             new AntPathRequestMatcher("/ccs-dev/checkin/mensagem/**")
     };
 
