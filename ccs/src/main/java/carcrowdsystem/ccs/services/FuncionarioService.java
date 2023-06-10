@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.services;
 
+import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
 import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.configuration.security.jwt.GerenciadorTokenJwt;
@@ -10,6 +11,7 @@ import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.FuncionarioMapper;
 import carcrowdsystem.ccs.repositorys.EstacionamentoRepository;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
+import carcrowdsystem.ccs.request.FuncionarioRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,14 +42,20 @@ public class FuncionarioService {
     private AuthenticationManager authenticationManager;
     private FuncionarioMapper funcionarioMapper = new FuncionarioMapper();
 
-    public FuncionarioDto postFuncionario(FuncionarioEntity newFunc) throws MyException {
+    public FuncionarioDto postFuncionario(FuncionarioRequest newFunc) throws MyException {
+        FuncionarioEntity funcionario = new FuncionarioEntity();
         try {
+            funcionario.setNome(newFunc.getNome());
+            funcionario.setCpf(newFunc.getCpf());
+            funcionario.setEmail(newFunc.getEmail());
+            funcionario.setAdm(newFunc.getAdm());
+            funcionario.setSenha(passwordEncoder.encode(newFunc.getSenha()));
             EstacionamentoEntity estacionamento =
                     estacionamentoService.findById(newFunc.getIdEstacionamento());
-            newFunc.setSenha(passwordEncoder.encode(newFunc.getSenha()));
-            newFunc.setEstacionamento(estacionamento);
-            funcionarioRepository.save(newFunc);
-            return funcionarioMapper.toFuncionarioDto(newFunc);
+            funcionario.setEstacionamento(estacionamento);
+
+            funcionarioRepository.save(funcionario);
+            return funcionarioMapper.toFuncionarioDto(funcionario);
         } catch (NoSuchElementException e){
             throw new MyException(404, "Id '"+newFunc.getIdEstacionamento()+"' do estacionamento não existe", "E-001");
         }

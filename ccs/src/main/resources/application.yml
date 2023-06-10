@@ -1,40 +1,29 @@
 # validade do token
 jwt:
   validity: 3600000
-
-# palavra passe do token (segredo) necessita de no minimo 32 caracteres
+  # palavra passe do token (segredo) necessita de no minimo 32 caracteres
   secret: MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEAzOdTKauy39sdxVBias33nuv4c+Z2+JvU4AoCeNoxFJGqKIQBR0XDgOxw0f+7ujUzMZnPRpsaXBejSRsJcLgOhQIDAQABAkEAu6ko+0MrYeYWT/4dBOB6ZuyK8esjDvH5du7z8Kc0yDY05IZsMpA4FHp7GjG6KsrWU0Ac2Ed9E/NIID31Wm/cQQIhAOid9kROf/SyzRTRxSlwOjLV
-
 spring:
   main:
     allow-circular-references: true
-
-# habilita a impress�o dos comando SQL no log
+  # habilita a impress�o dos comando SQL no log
   jpa:
     show-sql: true
-    hibernate: 
-      ddl-auto: update
-      naming: 
-      physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandartImpl
-
-# formata os SQL (quebra linha, identa etc)
+    # formata os SQL (quebra linha, identa etc)
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.SQLServer2012Dialect
-    database-platform: org.hibernate.dialect.SQLServer2012Dialect
-
-# Habilita data.sql
+    # Habilita data.sql
     defer-datasource-initialization: true
 
 # Habilitando o H2 Console. Num navegador, permite o acesso a http://localhost:8080/h2-console
-  h2:
-    console:
-      enabled: true
-  datasource:
-    url: jdbc:sqlserver://servidor-ccs.database.windows.net:1433;database=bd-ccs;user=admin-ccs@servidor-ccs;password=#Gfgrupo1;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-  jackson:
-    default-property-inclusion: non_null
+#  h2:
+#    console:
+#      enabled: true
+#  datasource:
+#    url: jdbc:h2:mem:ccs-dev
+#  jackson:
+#    default-property-inclusion: non_null
 
 uri.prod: /ccs-prod
 uri.dev: /ccs-dev

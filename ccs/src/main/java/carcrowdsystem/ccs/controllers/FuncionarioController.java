@@ -6,6 +6,7 @@ import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.request.FuncionarioRequest;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,7 +34,7 @@ public class FuncionarioController {
     @PostMapping({"/{idEstacionamento}","/{idEstacionamento}/{adm}"})
     public ResponseEntity<FuncionarioDto> postUsuario(
             @PathVariable Integer idEstacionamento,
-            @RequestBody FuncionarioEntity funcionario,
+            @RequestBody FuncionarioRequest funcionario,
             @PathVariable(required = false) Boolean adm
     ) throws MyException {
         funcionario.setIdEstacionamento(idEstacionamento);
@@ -56,8 +57,8 @@ public class FuncionarioController {
             @Schema(hidden = true)))
     })
     @PostMapping("/login")
-    public ResponseEntity<FuncionarioTokenDto> login(@RequestBody FuncionarioLoginDto funcionarioLoginDto) {
-        return ResponseEntity.status(200).body(funcionarioAdapter.autenticar(funcionarioLoginDto));
+    public ResponseEntity<String> login(@RequestBody FuncionarioLoginDto funcionarioLoginDto) {
+        return ResponseEntity.status(200).body(funcionarioAdapter.autenticar(funcionarioLoginDto).getToken());
     }
 
     @ApiResponses({

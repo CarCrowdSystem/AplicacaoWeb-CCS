@@ -4,39 +4,35 @@ import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.sql.Blob;
 
 @Entity
+@Table(name = "funcionario")
 public class FuncionarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_funcionario")
     private Integer id;
     @NotBlank
     @Size(min = 3)
+    @Column(name = "nome_funcionario")
     private String nome;
     private Blob foto = null;
     @Email
     private String email;
     private String cpf;
     private String senha;
+    @Column(name = "login_Habilitado")
     private Boolean loginHabilitado = false;
+    @Column(name = "usuario_adm")
     private Boolean adm = false;
     @ManyToOne
+    @JoinColumn(name = "fk_estacionamento")
     private EstacionamentoEntity estacionamento;
-
-    public Integer getIdEstacionamento() {
-        return idEstacionamento;
-    }
-
-    public void setIdEstacionamento(Integer idEstacionamento) {
-        this.idEstacionamento = idEstacionamento;
-    }
-
-    private Integer idEstacionamento;
 
     public FuncionarioEstacionamento toFuncionario(){
         return new FuncionarioEstacionamento(
