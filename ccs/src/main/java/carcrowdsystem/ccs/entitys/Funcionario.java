@@ -27,9 +27,9 @@ public class Funcionario {
     private String cpf;
     private String senha;
     @Column(name = "login_Habilitado")
-    private Boolean loginHabilitado = false;
+    private Boolean loginHabilitado = true;
     @Column(name = "usuario_adm")
-    private Boolean usuarioAdm = false;
+    private Boolean usuarioAdm;
     @ManyToOne
     @JoinColumn(name = "fk_estacionamento")
     private Estacionamento estacionamento;

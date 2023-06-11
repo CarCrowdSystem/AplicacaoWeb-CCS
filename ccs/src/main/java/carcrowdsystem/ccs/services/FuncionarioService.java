@@ -46,6 +46,7 @@ public class FuncionarioService {
             funcionario.setNome(newFunc.getNomeUsuario());
             funcionario.setCpf(newFunc.getCpfUsuario());
             funcionario.setEmail(newFunc.getEmailUsuario());
+            funcionario.setUsuarioAdm(newFunc.getAdm());
             funcionario.setSenha(passwordEncoder.encode(newFunc.getSenha()));
             Estacionamento estacionamento =
                     estacionamentoService.findById(newFunc.getIdEstacionamento());

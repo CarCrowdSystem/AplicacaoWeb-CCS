@@ -11,7 +11,7 @@ public class FuncionarioRequest {
     private String emailUsuario;
     private String cpfUsuario;
     private String senha;
-    private Boolean adm = false;
+    private Boolean adm;
     private Integer idEstacionamento;
 
     public FuncionarioRequest(String nomeUsuario, String emailUsuario, String cpfUsuario, String senha, Boolean adm , Integer idEstacionamento) {
