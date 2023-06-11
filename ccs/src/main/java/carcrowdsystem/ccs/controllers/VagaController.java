@@ -16,13 +16,10 @@ import java.util.List;
 @RequestMapping("${uri.dev}/vagas")
 public class VagaController {
     private final VagaService service;
-    private final VeiculoController veiculoController;
-    private final HistoricoController historicoController;
 
-    public VagaController(VagaService service, VeiculoController veiculoController, HistoricoController historicoController) {
+
+    public VagaController(VagaService service) {
         this.service = service;
-        this.veiculoController = veiculoController;
-        this.historicoController = historicoController;
     }
 
     @PostMapping("/{idEstacionamento}")
@@ -30,7 +27,6 @@ public class VagaController {
         @RequestBody VagaRequest novasVagas,
         @PathVariable Integer idEstacionamento
     ) throws MyException {
-        Veiculo veiculoFantasma = veiculoController.getVeiculoById(4).getBody();
         for (VagaDtoRequest v: novasVagas.getVagas()) {
             for (int i = 0; i < v.getQtdVagas(); i++) {
                 VagaDto novaVaga = new VagaDto(i, v.getAndarVaga());
