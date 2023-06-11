@@ -97,11 +97,6 @@ public class FuncionarioService {
     }
 
     public FuncionarioDto[] getAllFuncsOrderByName() throws MyException {
-
-      // FuncionarioDto[] funcionarios = {new FuncionarioDto("Rogério", "7824836483", "93847878574", "Funcionario", "fnrunfurn@gmail.com", "1193823938"),
-         //       new FuncionarioDto("Carlos", "7824836483", "93847878574", "Funcionario", "fnrunfurn@gmail.com", "1193823938")};
-
-        //Transforma em Array
         FuncionarioDto[] funcionarios = getAllFuncs().toArray(new FuncionarioDto[0]);
 
          // Imprime antes de ordenar

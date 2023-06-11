@@ -29,7 +29,6 @@ public class FuncionarioController {
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar usuário", content = @Content(schema =
             @Schema(hidden = true)))
     })
-
     @PostMapping
     public ResponseEntity<FuncionarioDto> postUsuario(
             @RequestBody FuncionarioRequest funcionario
@@ -62,9 +61,23 @@ public class FuncionarioController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Ordenação feita com sucesso"),
     })
-    @GetMapping("/nome-ordenado")
-    public ResponseEntity<FuncionarioDto[]> getFuncOrdenado() throws MyException {
+    @GetMapping("/nome-ordenado-a")
+    public ResponseEntity<FuncionarioDto[]> getFuncOrdenadoA() throws MyException {
         return ResponseEntity.status(200).body(funcionarioAdapter.getALLOrdenado());
+    }
+
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Ordenação feita com sucesso"),
+    })
+    @GetMapping("/nome-ordenado-z")
+    public ResponseEntity<FuncionarioDto[]> getFuncOrdenadoZ() throws MyException {
+        FuncionarioDto[] allOrdenadoA = funcionarioAdapter.getALLOrdenado();
+        FuncionarioDto[] allOrdenadoZ = new FuncionarioDto[allOrdenadoA.length];
+        int j = 0;
+        for (int i = allOrdenadoA.length - 1; i >= 0; i--, j++){
+            allOrdenadoZ[j] = allOrdenadoA[i];
+        }
+        return ResponseEntity.status(200).body(allOrdenadoZ);
     }
 
     @ApiResponses({
