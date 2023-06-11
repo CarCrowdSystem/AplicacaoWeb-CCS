@@ -85,9 +85,14 @@ public class EstacionamentoController {
     @PatchMapping("/{id}")
     public ResponseEntity patchEstacionamento(
             @PathVariable Integer id,
-            @RequestBody Estacionamento estacionamento
+            @RequestBody EstacionamentoRequest estacionamento
     ) throws MyException {
-        estacionamentoAdapter.update(id, estacionamento);
+        Estacionamento newEstacionamento = new Estacionamento();
+        newEstacionamento.setCep(estacionamento.getCepEmpresa());
+        newEstacionamento.setNomeEstacionamento(estacionamento.getNomeEmpresa());
+        newEstacionamento.setTelefone(estacionamento.getTelefoneEmpresa());
+        newEstacionamento.setNumeroEndereco(estacionamento.getEnderecoEmpresa());
+        estacionamentoAdapter.update(id, newEstacionamento);
         return ResponseEntity.status(201).build();
     }
 
