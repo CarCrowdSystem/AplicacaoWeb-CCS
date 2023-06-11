@@ -1,6 +1,6 @@
 package carcrowdsystem.ccs.dtos.funcionario;
 
-import carcrowdsystem.ccs.entitys.FuncionarioEntity;
+import carcrowdsystem.ccs.entitys.Funcionario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,7 +10,7 @@ public class FuncionarioDetailsDto implements UserDetails {
     private String nome;
     private String email;
     private String senha;
-    public FuncionarioDetailsDto(FuncionarioEntity funcionario) {
+    public FuncionarioDetailsDto(Funcionario funcionario) {
         this.nome = funcionario.getNome();
         this.email = funcionario.getEmail();
         this.senha = funcionario.getSenha();

@@ -5,19 +5,19 @@ import jakarta.validation.constraints.Email;
 import java.sql.Blob;
 
 public class FuncionarioRequest {
-    private String nome;
+    private String nomeUsuario;
     private Blob foto = null;
     @Email
-    private String email;
-    private String cpf;
+    private String emailUsuario;
+    private String cpfUsuario;
     private String senha;
     private Boolean adm = false;
     private Integer idEstacionamento;
 
-    public FuncionarioRequest(String nome, String email, String cpf, String senha, Boolean adm , Integer idEstacionamento) {
-        this.nome = nome;
-        this.email = email;
-        this.cpf = cpf;
+    public FuncionarioRequest(String nomeUsuario, String emailUsuario, String cpfUsuario, String senha, Boolean adm , Integer idEstacionamento) {
+        this.nomeUsuario = nomeUsuario;
+        this.emailUsuario = emailUsuario;
+        this.cpfUsuario = cpfUsuario;
         this.senha = senha;
         this.adm = adm;
         this.idEstacionamento = idEstacionamento;
@@ -31,12 +31,12 @@ public class FuncionarioRequest {
         this.adm = adm;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeUsuario() {
+        return nomeUsuario;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
     }
 
     public Blob getFoto() {
@@ -47,20 +47,20 @@ public class FuncionarioRequest {
         this.foto = foto;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailUsuario() {
+        return emailUsuario;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmailUsuario(String emailUsuario) {
+        this.emailUsuario = emailUsuario;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getCpfUsuario() {
+        return cpfUsuario;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setCpfUsuario(String cpfUsuario) {
+        this.cpfUsuario = cpfUsuario;
     }
 
     public String getSenha() {

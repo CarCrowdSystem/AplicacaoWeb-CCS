@@ -29,11 +29,11 @@ public class Estacionamento {
     private String numeroEndereco;
     private String telefone;
     @OneToMany
-    private List<FuncionarioEntity> funcionarios;
+    private List<Funcionario> funcionarios;
     @OneToMany
-    private List<VagaEntity> vagas;
+    private List<Vaga> vagas;
     @OneToMany
-    private List<ValorEstacionamentoEntity> valorEstacionamento;
+    private List<ValorEstacionamento> valorEstacionamento;
     private Boolean statusEstacionamento = true;
 
     public Integer getId() {
@@ -84,27 +84,27 @@ public class Estacionamento {
         this.telefone = telefone;
     }
 
-    public List<FuncionarioEntity> getFuncionarios() {
+    public List<Funcionario> getFuncionarios() {
         return funcionarios;
     }
 
-    public void setFuncionarios(List<FuncionarioEntity> funcionarios) {
+    public void setFuncionarios(List<Funcionario> funcionarios) {
         this.funcionarios = funcionarios;
     }
 
-    public List<VagaEntity> getVagas() {
+    public List<Vaga> getVagas() {
         return vagas;
     }
 
-    public void setVagas(List<VagaEntity> vagas) {
+    public void setVagas(List<Vaga> vagas) {
         this.vagas = vagas;
     }
 
-    public List<ValorEstacionamentoEntity> getValorEstacionamento() {
+    public List<ValorEstacionamento> getValorEstacionamento() {
         return valorEstacionamento;
     }
 
-    public void setValorEstacionamento(List<ValorEstacionamentoEntity> valorEstacionamento) {
+    public void setValorEstacionamento(List<ValorEstacionamento> valorEstacionamento) {
         this.valorEstacionamento = valorEstacionamento;
     }
 

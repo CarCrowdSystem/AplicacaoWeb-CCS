@@ -1,7 +1,7 @@
 package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.valorEstacionamento.ValorEstacionamentoDto;
-import carcrowdsystem.ccs.entitys.ValorEstacionamentoEntity;
+import carcrowdsystem.ccs.entitys.ValorEstacionamento;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.services.ValorEstacionamentoService;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class ValorEstacionamentoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ValorEstacionamentoEntity>> getValores(){
+    public ResponseEntity<List<ValorEstacionamento>> getValores(){
         return ResponseEntity.status(200).body(valorEstacionamentoService.findAll());
     }
 

@@ -6,6 +6,7 @@ import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
 //import carcrowdsystem.ccs.mapper.EstacionamentoUpdateMapper;
 import carcrowdsystem.ccs.repositorys.EstacionamentoRepository;
+import carcrowdsystem.ccs.request.EstacionamentoRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

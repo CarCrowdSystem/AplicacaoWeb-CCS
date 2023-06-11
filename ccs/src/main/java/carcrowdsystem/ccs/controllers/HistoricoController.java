@@ -1,7 +1,7 @@
 package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
-import carcrowdsystem.ccs.entitys.HistoricoEntity;
+import carcrowdsystem.ccs.entitys.Historico;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
@@ -23,12 +23,12 @@ public class HistoricoController {
     @Autowired
     private HistoricoService service;
 
-    private List<HistoricoEntity> getAllHistorico() {
+    private List<Historico> getAllHistorico() {
         return service.getAllHistorico();
     }
 
     @GetMapping
-    public ResponseEntity<HistoricoEntity> getHistoricoById(@RequestParam Integer id) throws MyException {
+    public ResponseEntity<Historico> getHistoricoById(@RequestParam Integer id) throws MyException {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -38,7 +38,7 @@ public class HistoricoController {
             @RequestParam Integer idVeiculo,
             @RequestParam Integer idVaga
     ) throws MyException {
-        HistoricoEntity ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        Historico ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
         if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Saida)) {
             newHistorico.setStatusRegistro(StatusVagaEnum.Entrada);
             return service.postHistorico(newHistorico, idVeiculo, idVaga);
@@ -52,7 +52,7 @@ public class HistoricoController {
             @RequestBody HistoricoDto newHistorico,
             @RequestParam Integer idVeiculo
     ) throws MyException {
-        HistoricoEntity ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        Historico ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
         if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Entrada)) {
             newHistorico.setStatusRegistro(StatusVagaEnum.Saida);
             return service.postHistorico(newHistorico, idVeiculo, ultimoHistorico.getVaga().getId());
@@ -66,17 +66,17 @@ public class HistoricoController {
     })
     @GetMapping("/gerar-csv")
     public ResponseEntity gerarCsv() throws MyException {
-        List<HistoricoEntity> listaHistorico = getAllHistorico();
+        List<Historico> listaHistorico = getAllHistorico();
         String nome = service.gravaArquivoCsv(listaHistorico);
         return ResponseEntity.status(200).body("Arquivo '"+nome+"' criado com sucesso");
     }
 
     @GetMapping("/pegar-momento")
-    public ResponseEntity<List<HistoricoEntity>> pegarMomento(){
+    public ResponseEntity<List<Historico>> pegarMomento(){
         return ResponseEntity.ok(service.pegarMomento());
     }
     @GetMapping("/pegar-momento-idVeiculo")
-    public ResponseEntity<HistoricoEntity> pegarMomentoByIdVeiculo(
+    public ResponseEntity<Historico> pegarMomentoByIdVeiculo(
         @RequestParam Integer idVeiculo
     ){
         return ResponseEntity.ok().body(service.pegarMomentoByIdVeiculo(idVeiculo));
@@ -90,7 +90,7 @@ public class HistoricoController {
     }
 
     public void gerarHistoricoInicial(
-        HistoricoEntity historicoInicial
+        Historico historicoInicial
     ){
         service.postHistoricoInicial(historicoInicial);
     }

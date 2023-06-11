@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "checkin_veiculo")
-public class VeiculoEntity {
+public class Veiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_checkin")
@@ -17,7 +17,7 @@ public class VeiculoEntity {
     @Column(name = "telefone_cliente")
     private String telefoneCliente;
     @OneToMany
-    private List<HistoricoEntity> historico;
+    private List<Historico> historico;
 
     public Integer getId() {
         return id;
@@ -27,11 +27,11 @@ public class VeiculoEntity {
         this.id = id;
     }
 
-    public List<HistoricoEntity> getHistorico() {
+    public List<Historico> getHistorico() {
         return historico;
     }
 
-    public void setHistorico(List<HistoricoEntity> historico) {
+    public void setHistorico(List<Historico> historico) {
         this.historico = historico;
     }
 

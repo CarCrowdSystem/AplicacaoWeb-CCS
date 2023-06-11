@@ -1,6 +1,6 @@
 package carcrowdsystem.ccs.dtos.funcionario;
 
-import carcrowdsystem.ccs.entitys.FuncionarioEntity;
+import carcrowdsystem.ccs.entitys.Funcionario;
 
 public class FuncionarioDtoComSenha{
     private String nome;
@@ -11,8 +11,8 @@ public class FuncionarioDtoComSenha{
     private String senha;
     private String telefone;
 
-    public FuncionarioEntity toFuncionarioEntity(){
-        FuncionarioEntity func = new FuncionarioEntity();
+    public Funcionario toFuncionarioEntity(){
+        Funcionario func = new Funcionario();
         func.setNome(nome);
         func.setCpf(cpf);
         func.setUsuarioAdm(adm);

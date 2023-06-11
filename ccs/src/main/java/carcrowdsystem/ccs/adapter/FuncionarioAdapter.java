@@ -3,15 +3,12 @@ package carcrowdsystem.ccs.adapter;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
-import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.FuncionarioRequest;
 import carcrowdsystem.ccs.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 

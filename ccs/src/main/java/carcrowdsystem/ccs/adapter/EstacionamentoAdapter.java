@@ -3,6 +3,7 @@ package carcrowdsystem.ccs.adapter;
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
 import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.request.EstacionamentoRequest;
 import carcrowdsystem.ccs.services.EstacionamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

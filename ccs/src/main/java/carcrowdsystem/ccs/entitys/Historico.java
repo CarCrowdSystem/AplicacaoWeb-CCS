@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "historico")
-public class HistoricoEntity {
+public class Historico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +21,10 @@ public class HistoricoEntity {
     private Double valorPago;
     @ManyToOne
     @JoinColumn(name = "fk_veiculo")
-    private VeiculoEntity veiculo;
+    private Veiculo veiculo;
     @ManyToOne
     @JoinColumn(name = "fk_vaga")
-    private VagaEntity vaga;
+    private Vaga vaga;
 
     public Integer getId() {
         return id;
@@ -34,19 +34,19 @@ public class HistoricoEntity {
         this.id = id;
     }
 
-    public VeiculoEntity getVeiculo() {
+    public Veiculo getVeiculo() {
         return veiculo;
     }
 
-    public void setVeiculo(VeiculoEntity veiculo) {
+    public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
     }
 
-    public VagaEntity getVaga() {
+    public Vaga getVaga() {
         return vaga;
     }
 
-    public void setVaga(VagaEntity vaga) {
+    public void setVaga(Vaga vaga) {
         this.vaga = vaga;
     }
 

@@ -12,7 +12,7 @@ import java.sql.Blob;
 
 @Entity
 @Table(name = "funcionario")
-public class FuncionarioEntity {
+public class Funcionario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_funcionario")

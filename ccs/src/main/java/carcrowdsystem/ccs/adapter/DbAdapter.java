@@ -1,6 +1,5 @@
 package carcrowdsystem.ccs.adapter;
 
-import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.exception.MyException;
 
 public interface DbAdapter<T, N> {

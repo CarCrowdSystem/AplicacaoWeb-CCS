@@ -2,7 +2,7 @@ package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.dtos.valorEstacionamento.ValorEstacionamentoDto;
 import carcrowdsystem.ccs.entitys.Estacionamento;
-import carcrowdsystem.ccs.entitys.ValorEstacionamentoEntity;
+import carcrowdsystem.ccs.entitys.ValorEstacionamento;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.ValorEstacionamentoRepository;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class ValorEstacionamentoService {
         this.estacionamentoService = estacionamentoService;
     }
 
-    public List<ValorEstacionamentoEntity> findAll() {
+    public List<ValorEstacionamento> findAll() {
         return repository.findAll();
     }
 
@@ -29,7 +29,7 @@ public class ValorEstacionamentoService {
     ) throws MyException {
         Estacionamento estacionamento =
                 estacionamentoService.findById(idEstacionamento);
-        ValorEstacionamentoEntity valor = new ValorEstacionamentoEntity();
+        ValorEstacionamento valor = new ValorEstacionamento();
         valor.setDiaria(valorEstacionamentoDto.getDiaria());
         valor.setHoraAdicional(valorEstacionamentoDto.getHoraAdicional());
         valor.setPrimeiraHora(valorEstacionamentoDto.getPrimeiraHora());

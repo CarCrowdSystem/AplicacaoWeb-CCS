@@ -6,6 +6,7 @@ import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
 import carcrowdsystem.ccs.models.EnderecoEstacionamento;
+import carcrowdsystem.ccs.request.EstacionamentoRequest;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -55,9 +56,15 @@ public class EstacionamentoController {
     })
     @PostMapping
     public ResponseEntity<EstacionamentoDto> postEstacionamento(
-            @RequestBody Estacionamento estacionamento
+            @RequestBody EstacionamentoRequest estacionamento
     ) throws MyException {
-        return ResponseEntity.status(201).body(estacionamentoAdapter.create(estacionamento));
+        Estacionamento newEstacionamento = new Estacionamento();
+        newEstacionamento.setCnpj(estacionamento.getCnpjEmpresa());
+        newEstacionamento.setCep(estacionamento.getCepEmpresa());
+        newEstacionamento.setNomeEstacionamento(estacionamento.getNomeEmpresa());
+        newEstacionamento.setTelefone(estacionamento.getTelefoneEmpresa());
+        newEstacionamento.setNumeroEndereco(estacionamento.getEnderecoEmpresa());
+        return ResponseEntity.status(201).body(estacionamentoAdapter.create(newEstacionamento));
     }
 
     @ApiResponses({

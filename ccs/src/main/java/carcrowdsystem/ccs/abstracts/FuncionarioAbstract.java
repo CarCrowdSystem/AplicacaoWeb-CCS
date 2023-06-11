@@ -1,6 +1,6 @@
 package carcrowdsystem.ccs.abstracts;
 
-import carcrowdsystem.ccs.entitys.FuncionarioEntity;
+import carcrowdsystem.ccs.entitys.Funcionario;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.models.FuncionarioAbstractEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
@@ -53,8 +53,8 @@ public abstract class FuncionarioAbstract {
         );
     }
 
-    public FuncionarioEntity toFuncionarioEntity(){
-        FuncionarioEntity func = new FuncionarioEntity();
+    public Funcionario toFuncionarioEntity(){
+        Funcionario func = new Funcionario();
         func.setNome(nome);
         func.setCpf(cpf);
         func.setUsuarioAdm(adm);

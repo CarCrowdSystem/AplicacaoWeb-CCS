@@ -3,9 +3,9 @@ package carcrowdsystem.ccs.services;
 import carcrowdsystem.ccs.controllers.VagaController;
 import carcrowdsystem.ccs.controllers.VeiculoController;
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
-import carcrowdsystem.ccs.entitys.HistoricoEntity;
-import carcrowdsystem.ccs.entitys.VagaEntity;
-import carcrowdsystem.ccs.entitys.VeiculoEntity;
+import carcrowdsystem.ccs.entitys.Historico;
+import carcrowdsystem.ccs.entitys.Vaga;
+import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
 import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
@@ -39,11 +39,11 @@ public class HistoricoService {
         this.vagaController = vagaController;
     }
 
-    public List<HistoricoEntity> getAllHistorico(){
+    public List<Historico> getAllHistorico(){
         return repository.findAll();
     }
 
-    public static String gravaArquivoCsv(List<HistoricoEntity> lista) throws MyException {
+    public static String gravaArquivoCsv(List<Historico> lista) throws MyException {
         FileWriter arq = null;
         Formatter saida = null;
         String nome = LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyyyyHHmmss")) + "-historico.csv";
@@ -63,9 +63,9 @@ public class HistoricoService {
         try {
             saida.format("%-15S;%-10S;%-7S;%-7S;%5S;%-14S;%-10S;%7S;%7S;%10S\n",
                     "CLIENTE","MODELO","PLACA","ANDAR","VAGA","TELEFONE","DATA","HORA","STATUS","VALOR");
-            for (HistoricoEntity h: lista){
-                VeiculoEntity veiculo = h.getVeiculo();
-                VagaEntity vaga = h.getVaga();
+            for (Historico h: lista){
+                Veiculo veiculo = h.getVeiculo();
+                Vaga vaga = h.getVaga();
                 LocalDate data = h.getMomentoRegistro().toLocalDate();
                 LocalTime hora = h.getMomentoRegistro().toLocalTime();
                 saida.format("%-15S;%-10S;%-7S;%-7S;%5d;%-10S;%-10S;%7S;%7S;%10.2f\n",
@@ -92,7 +92,7 @@ public class HistoricoService {
         }
     }
 
-    public HistoricoEntity findById(Integer id) throws MyException {
+    public Historico findById(Integer id) throws MyException {
         return repository.findById(id).orElseThrow(
             () -> new MyException(404, "Historico não existe", "H-004")
         );
@@ -104,9 +104,9 @@ public class HistoricoService {
         Integer idVaga
     ) throws MyException {
         try {
-            VagaEntity vaga = vagaController.getVagaById(idVaga).getBody();
-            VeiculoEntity veiculo = veiculoController.getVeiculoById(idVeiculo).getBody();
-            HistoricoEntity historico = new HistoricoEntity();
+            Vaga vaga = vagaController.getVagaById(idVaga).getBody();
+            Veiculo veiculo = veiculoController.getVeiculoById(idVeiculo).getBody();
+            Historico historico = new Historico();
             historico.setVaga(vaga);
             historico.setVeiculo(veiculo);
             historico.setValorPago(newHistorico.getValorPago());
@@ -120,24 +120,24 @@ public class HistoricoService {
     }
 
     public void postHistoricoInicial(
-        HistoricoEntity historicoEntity
+        Historico historico
     ){
-        repository.save(historicoEntity);
+        repository.save(historico);
     }
 
-    public List<HistoricoEntity> pegarMomento() {
+    public List<Historico> pegarMomento() {
         return repository.pegarMomento();
     }
 
-    public HistoricoEntity pegarMomentoByIdVeiculo(Integer idVeiculo) {
+    public Historico pegarMomentoByIdVeiculo(Integer idVeiculo) {
         return repository.pegarMomentoByIdVeiculo(idVeiculo);
     }
 
     public List<UltimoHistoricoVagaDtoResponse> pegarMomentoByIdEstacionamento(Integer idEstacionamento) {
-        List<HistoricoEntity> listHistorico =
+        List<Historico> listHistorico =
                 repository.pegarMomentoByIdEstacionamento(idEstacionamento);
         List<UltimoHistoricoVagaDtoResponse> listHistoricoDto = new ArrayList();
-        for (HistoricoEntity h: listHistorico){
+        for (Historico h: listHistorico){
             listHistoricoDto.add(new UltimoHistoricoVagaDtoResponse(
                 h.getVaga().getNumero(),
                 h.getVaga().getAndar(),

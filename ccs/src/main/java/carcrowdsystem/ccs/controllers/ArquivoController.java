@@ -1,6 +1,6 @@
 package carcrowdsystem.ccs.controllers;
 
-import carcrowdsystem.ccs.entitys.ArquivoEntity;
+import carcrowdsystem.ccs.entitys.Arquivo;
 import carcrowdsystem.ccs.repositorys.ArquivoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class ArquivoController {
   private Path diretorioBase = Path.of(System.getProperty("java.io.tmpdir") + "/arquivos"); // temporario
 
   @PostMapping("/upload")
-  public ResponseEntity<ArquivoEntity> upload(@RequestParam("arquivo") MultipartFile file) {
+  public ResponseEntity<Arquivo> upload(@RequestParam("arquivo") MultipartFile file) {
 
     if (file.isEmpty()){
       return ResponseEntity.status(400).build();
@@ -46,32 +46,32 @@ public class ArquivoController {
       throw new ResponseStatusException(422, "Não foi possível salvar o arquivo", null);
     }
 
-    ArquivoEntity arquivoEntity = new ArquivoEntity();
-    arquivoEntity.setDataUpload(LocalDate.now());
-    arquivoEntity.setNomeArquivoOriginal(file.getOriginalFilename());
-    arquivoEntity.setNomeArquivoSalvo(nomeArquivoFormatado);
-    ArquivoEntity arquivoEntityBanco = arquivoRepository.save(arquivoEntity);
+    Arquivo arquivo = new Arquivo();
+    arquivo.setDataUpload(LocalDate.now());
+    arquivo.setNomeArquivoOriginal(file.getOriginalFilename());
+    arquivo.setNomeArquivoSalvo(nomeArquivoFormatado);
+    Arquivo arquivoBanco = arquivoRepository.save(arquivo);
 
-    return ResponseEntity.status(200).body(arquivoEntityBanco);
+    return ResponseEntity.status(200).body(arquivoBanco);
   }
 
   @GetMapping("/download/{id}")
   public ResponseEntity<byte[]> download(@PathVariable Integer id){
-    Optional  <ArquivoEntity> arquivoOptional = arquivoRepository.findById(id);
+    Optional  <Arquivo> arquivoOptional = arquivoRepository.findById(id);
 
     if (arquivoOptional.isEmpty()) {
       return ResponseEntity.status(404).build();
     }
 
-    ArquivoEntity arquivoEntityBanco = arquivoOptional.get();
+    Arquivo arquivoBanco = arquivoOptional.get();
 
-    File file = this.diretorioBase.resolve(arquivoEntityBanco.getNomeArquivoSalvo()).toFile();
+    File file = this.diretorioBase.resolve(arquivoBanco.getNomeArquivoSalvo()).toFile();
     try {
       InputStream fileInputStream = new FileInputStream(file);
 
       return ResponseEntity.status(200)
               .header("Content-Disposition",
-                      "attachment; filename=" + arquivoEntityBanco.getNomeArquivoOriginal())
+                      "attachment; filename=" + arquivoBanco.getNomeArquivoOriginal())
               .body(fileInputStream.readAllBytes());
     } catch (FileNotFoundException e) {
       e.printStackTrace();

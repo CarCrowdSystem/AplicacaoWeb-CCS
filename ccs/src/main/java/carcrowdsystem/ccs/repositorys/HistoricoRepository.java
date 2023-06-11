@@ -1,24 +1,24 @@
 package carcrowdsystem.ccs.repositorys;
 
-import carcrowdsystem.ccs.entitys.HistoricoEntity;
+import carcrowdsystem.ccs.entitys.Historico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface HistoricoRepository extends JpaRepository<HistoricoEntity, Integer> {
+public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
     @Query(
         nativeQuery = true,
         value = "SELECT distinct fk_veiculo, * from HISTORICO" +
         " order by status_registro  desc limit (SELECT count(distinct fk_veiculo) from HISTORICO)"
     )
-    List<HistoricoEntity> pegarMomento();
+    List<Historico> pegarMomento();
 
     @Query(
         nativeQuery = true,
         value = "SELECT * FROM HISTORICO_ENTITY where fk_veiculo = ? order by id desc limit 1"
     )
-    HistoricoEntity pegarMomentoByIdVeiculo(Integer idVeiculo);
+    Historico pegarMomentoByIdVeiculo(Integer idVeiculo);
 
     @Query(
             nativeQuery = true,
@@ -41,7 +41,7 @@ public interface HistoricoRepository extends JpaRepository<HistoricoEntity, Inte
                     "    ) AS subquery\n" +
                     ") ROWS ONLY"
     )
-    List<HistoricoEntity> pegarMomentoByIdEstacionamento(Integer idEstacionamento);
+    List<Historico> pegarMomentoByIdEstacionamento(Integer idEstacionamento);
 }
 
 // SELECT h.MOMENTO_REGISTRO, STATUS_REGISTRO, VALOR_PAGO, VAGA_ID, VEICULO_ID FROM HISTORICO_ENTITY h

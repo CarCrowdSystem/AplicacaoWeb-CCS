@@ -1,13 +1,12 @@
 package carcrowdsystem.ccs.repositorys;
 
-import carcrowdsystem.ccs.entitys.FuncionarioEntity;
+import carcrowdsystem.ccs.entitys.Funcionario;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface FuncionarioRepository extends JpaRepository<FuncionarioEntity, Integer> {
-    Optional<FuncionarioEntity> findByEmail(String username);
+public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
+    Optional<Funcionario> findByEmail(String username);
 //
 //    @Override
 //    @Query(value = "insert into funcionario " +

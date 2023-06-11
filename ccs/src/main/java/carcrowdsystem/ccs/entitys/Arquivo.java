@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
-public class ArquivoEntity {
+public class Arquivo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

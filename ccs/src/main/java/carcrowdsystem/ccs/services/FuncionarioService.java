@@ -1,7 +1,7 @@
 package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.entitys.Estacionamento;
-import carcrowdsystem.ccs.entitys.FuncionarioEntity;
+import carcrowdsystem.ccs.entitys.Funcionario;
 import carcrowdsystem.ccs.configuration.security.jwt.GerenciadorTokenJwt;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
@@ -41,11 +41,11 @@ public class FuncionarioService {
     private FuncionarioMapper funcionarioMapper = new FuncionarioMapper();
 
     public FuncionarioDto postFuncionario(FuncionarioRequest newFunc) throws MyException {
-        FuncionarioEntity funcionario = new FuncionarioEntity();
+        Funcionario funcionario = new Funcionario();
         try {
-            funcionario.setNome(newFunc.getNome());
-            funcionario.setCpf(newFunc.getCpf());
-            funcionario.setEmail(newFunc.getEmail());
+            funcionario.setNome(newFunc.getNomeUsuario());
+            funcionario.setCpf(newFunc.getCpfUsuario());
+            funcionario.setEmail(newFunc.getEmailUsuario());
             funcionario.setSenha(passwordEncoder.encode(newFunc.getSenha()));
             Estacionamento estacionamento =
                     estacionamentoService.findById(newFunc.getIdEstacionamento());
@@ -66,7 +66,7 @@ public class FuncionarioService {
 
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
-        FuncionarioEntity funcionarioAutenticado =
+        Funcionario funcionarioAutenticado =
             funcionarioRepository.findByEmail(funcionarioLoginDto.getEmail())
                 .orElseThrow(
                         () -> new ResponseStatusException(404, "Email do usuário não cadastrado", null)
@@ -87,9 +87,9 @@ public class FuncionarioService {
     }
 
     // Pega uma lista de funcionarioEntity e transforma em lista de funcionarioDto
-    private List<FuncionarioDto> listFuncToListFuncDto(List<FuncionarioEntity> funcs){
+    private List<FuncionarioDto> listFuncToListFuncDto(List<Funcionario> funcs){
         List<FuncionarioDto> funcsDto = new ArrayList<>();
-        for(FuncionarioEntity f: funcs){
+        for(Funcionario f: funcs){
             funcsDto.add(funcionarioMapper.toFuncionarioDto(f));
         }
         return funcsDto;
@@ -153,9 +153,9 @@ public class FuncionarioService {
     }
 
     public ResponseEntity alterarSenha(String email, String novaSenha){
-        Optional<FuncionarioEntity> emailUser = funcionarioRepository.findByEmail(email);
+        Optional<Funcionario> emailUser = funcionarioRepository.findByEmail(email);
         if(emailUser.isPresent()){
-            FuncionarioEntity user = emailUser.get();
+            Funcionario user = emailUser.get();
             user.setSenha(passwordEncoder.encode(novaSenha));
             funcionarioRepository.save(user);
             return ResponseEntity.status(200).build();

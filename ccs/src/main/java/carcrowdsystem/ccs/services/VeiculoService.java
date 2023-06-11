@@ -1,12 +1,9 @@
 package carcrowdsystem.ccs.services;
 
-import carcrowdsystem.ccs.controllers.HistoricoController;
 import carcrowdsystem.ccs.dtos.veiculo.VeiculoRequest;
-import carcrowdsystem.ccs.entitys.HistoricoEntity;
-import carcrowdsystem.ccs.entitys.VeiculoEntity;
+import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.VeiculoRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +16,7 @@ public class VeiculoService {
 
     public VeiculoRequest postVeiculo(VeiculoRequest newVeiculo) throws MyException {
         try {
-            VeiculoEntity veiculo = new VeiculoEntity();
+            Veiculo veiculo = new Veiculo();
             veiculo.setModelo(newVeiculo.getModelo());
             veiculo.setPlaca(newVeiculo.getPlaca());
             veiculo.setNomeCliente(newVeiculo.getNomeCliente());
@@ -31,7 +28,7 @@ public class VeiculoService {
         }
     }
 
-    public VeiculoEntity findById(Integer idVeiculo) throws MyException {
+    public Veiculo findById(Integer idVeiculo) throws MyException {
         return repository.findById(idVeiculo).orElseThrow(
             () -> new MyException(404, "Ve  iculo não existe", "VE-002")
         );

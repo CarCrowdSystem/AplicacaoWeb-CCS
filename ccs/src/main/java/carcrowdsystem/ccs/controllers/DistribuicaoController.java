@@ -1,13 +1,13 @@
 package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.vaga.VagaDto;
-import carcrowdsystem.ccs.entitys.Estacionamento;
-import carcrowdsystem.ccs.entitys.HistoricoEntity;
-import carcrowdsystem.ccs.entitys.VagaEntity;
-import carcrowdsystem.ccs.entitys.VeiculoEntity;
+import carcrowdsystem.ccs.entitys.Historico;
+import carcrowdsystem.ccs.entitys.Vaga;
+import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.CadastroInicialRequest;
+import carcrowdsystem.ccs.request.EstacionamentoRequest;
 import carcrowdsystem.ccs.request.FuncionarioRequest;
 import carcrowdsystem.ccs.request.dtos.VagaDtoRequest;
 import org.springframework.http.ResponseEntity;
@@ -39,12 +39,12 @@ public class DistribuicaoController {
             @RequestBody CadastroInicialRequest cad
     ) throws MyException {
         try {
-            Estacionamento estacionamento = new Estacionamento();
-            estacionamento.setCep(cad.getCepEmpresa());
-            estacionamento.setCnpj(cad.getCnpjEmpresa());
-            estacionamento.setNomeEstacionamento(cad.getNomeEmpresa());
-            estacionamento.setNumeroEndereco(cad.getEnderecoEmpresa());
-            estacionamento.setTelefone(cad.getTelefoneEmpresa());
+            EstacionamentoRequest estacionamento = new EstacionamentoRequest();
+            estacionamento.setCepEmpresa(cad.getCepEmpresa());
+            estacionamento.setCnpjEmpresa(cad.getCnpjEmpresa());
+            estacionamento.setNomeEmpresa(cad.getNomeEmpresa());
+            estacionamento.setEnderecoEmpresa(cad.getEnderecoEmpresa());
+            estacionamento.setTelefoneEmpresa(cad.getTelefoneEmpresa());
             estacionamentoController.postEstacionamento(estacionamento);
         } catch (Exception e){
             throw new MyException(404, "Erro ao cadastrar Estacionamento", "D-001");
@@ -65,16 +65,16 @@ public class DistribuicaoController {
             throw new MyException(404, "Erro ao cadastrar Funcionario", "D-002");
         }
         try {
-            VeiculoEntity veiculoFantasma = veiculoController.getVeiculoById(4).getBody();
+            Veiculo veiculoFantasma = veiculoController.getVeiculoById(4).getBody();
 
             for (int i = 0; i < cad.getVagas().size(); i++){
                 VagaDtoRequest vaga = cad.getVagas().get(i);
                 for (int j = 1; j <= vaga.getQtdVagas(); j++){
                     VagaDto novaVaga = new VagaDto(j, vaga.getAndarVaga());
 
-                    VagaEntity vagaSave = vagaController.postVaga(novaVaga, idEstacionamento).getBody();
+                    Vaga vagaSave = vagaController.postVaga(novaVaga, idEstacionamento).getBody();
 
-                    HistoricoEntity historico = new HistoricoEntity();
+                    Historico historico = new Historico();
                     historico.setVaga(vagaSave);
                     historico.setStatusRegistro(StatusVagaEnum.Saida);
                     historico.setValorPago(00.00);
