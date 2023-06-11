@@ -18,12 +18,16 @@ public class VagaController {
         this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity<Vaga> postVaga(
-        @RequestBody VagaDto novaVaga,
-        @RequestParam Integer idEstacionamento
+    @PostMapping("/{idEstacionamento}")
+    public ResponseEntity postVaga(
+        @RequestBody List<VagaDto> novasVagas,
+        @PathVariable Integer idEstacionamento
     ) throws MyException {
-        return ResponseEntity.status(201).body(service.postVaga(novaVaga, idEstacionamento));
+
+        for (VagaDto v: novasVagas) {
+            service.postVaga(v, idEstacionamento);
+        }
+        return ResponseEntity.status(201).build();
     }
 
     @GetMapping("/all")

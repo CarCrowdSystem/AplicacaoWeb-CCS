@@ -67,21 +67,21 @@ public class DistribuicaoController {
         try {
             Veiculo veiculoFantasma = veiculoController.getVeiculoById(4).getBody();
 
-            for (int i = 0; i < cad.getVagas().size(); i++){
-                VagaDtoRequest vaga = cad.getVagas().get(i);
-                for (int j = 1; j <= vaga.getQtdVagas(); j++){
-                    VagaDto novaVaga = new VagaDto(j, vaga.getAndarVaga());
-
-                    Vaga vagaSave = vagaController.postVaga(novaVaga, idEstacionamento).getBody();
-
-                    Historico historico = new Historico();
-                    historico.setVaga(vagaSave);
-                    historico.setStatusRegistro(StatusVagaEnum.Saida);
-                    historico.setValorPago(00.00);
-                    historico.setVeiculo(veiculoFantasma);
-                    historicoController.gerarHistoricoInicial(historico);
-                }
-            }
+//            for (int i = 0; i < cad.getVagas().size(); i++){
+//                VagaDtoRequest vaga = cad.getVagas().get(i);
+//                for (int j = 1; j <= vaga.getQtdVagas(); j++){
+//                    VagaDto novaVaga = new VagaDto(j, vaga.getAndarVaga());
+//
+//                    Vaga vagaSave = vagaController.postVaga(novaVaga, idEstacionamento).getBody();
+//
+//                    Historico historico = new Historico();
+//                    historico.setVaga(vagaSave);
+//                    historico.setStatusRegistro(StatusVagaEnum.Saida);
+//                    historico.setValorPago(00.00);
+//                    historico.setVeiculo(veiculoFantasma);
+//                    historicoController.gerarHistoricoInicial(historico);
+//                }
+//            }
         } catch (Exception e){
             throw new MyException(404, "Erro ao cadastrar Vaga", "D-003");
         }
