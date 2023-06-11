@@ -2,7 +2,9 @@ package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.vaga.VagaDto;
 import carcrowdsystem.ccs.entitys.Vaga;
+import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.request.VagaRequest;
 import carcrowdsystem.ccs.request.dtos.VagaDtoRequest;
 import carcrowdsystem.ccs.services.VagaService;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +16,22 @@ import java.util.List;
 @RequestMapping("${uri.dev}/vagas")
 public class VagaController {
     private final VagaService service;
+    private final VeiculoController veiculoController;
+    private final HistoricoController historicoController;
 
-    public VagaController(VagaService service) {
+    public VagaController(VagaService service, VeiculoController veiculoController, HistoricoController historicoController) {
         this.service = service;
+        this.veiculoController = veiculoController;
+        this.historicoController = historicoController;
     }
 
     @PostMapping("/{idEstacionamento}")
     public ResponseEntity postVaga(
-        @RequestBody List<VagaDtoRequest> novasVagas,
+        @RequestBody VagaRequest novasVagas,
         @PathVariable Integer idEstacionamento
     ) throws MyException {
-
-        for (VagaDtoRequest v: novasVagas) {
+        Veiculo veiculoFantasma = veiculoController.getVeiculoById(4).getBody();
+        for (VagaDtoRequest v: novasVagas.getVagas()) {
             for (int i = 0; i < v.getQtdVagas(); i++) {
                 VagaDto novaVaga = new VagaDto(i, v.getAndarVaga());
                 service.postVaga(novaVaga, idEstacionamento);
