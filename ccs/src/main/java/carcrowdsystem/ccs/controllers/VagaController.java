@@ -3,6 +3,7 @@ package carcrowdsystem.ccs.controllers;
 import carcrowdsystem.ccs.dtos.vaga.VagaDto;
 import carcrowdsystem.ccs.entitys.Vaga;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.request.dtos.VagaDtoRequest;
 import carcrowdsystem.ccs.services.VagaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,15 @@ public class VagaController {
 
     @PostMapping("/{idEstacionamento}")
     public ResponseEntity postVaga(
-        @RequestBody List<VagaDto> novasVagas,
+        @RequestBody List<VagaDtoRequest> novasVagas,
         @PathVariable Integer idEstacionamento
     ) throws MyException {
 
-        for (VagaDto v: novasVagas) {
-            service.postVaga(v, idEstacionamento);
+        for (VagaDtoRequest v: novasVagas) {
+            for (int i = 0; i < v.getQtdVagas(); i++) {
+                VagaDto novaVaga = new VagaDto(i, v.getAndarVaga());
+                service.postVaga(novaVaga, idEstacionamento);
+            }
         }
         return ResponseEntity.status(201).build();
     }
