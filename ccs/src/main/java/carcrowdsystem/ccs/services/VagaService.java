@@ -1,7 +1,7 @@
 package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.dtos.vaga.VagaDto;
-import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
+import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.entitys.VagaEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
@@ -22,7 +22,7 @@ public class VagaService {
     }
 
     public VagaEntity postVaga(VagaDto novaVaga, Integer id) throws MyException {
-        EstacionamentoEntity estacionamento =
+        Estacionamento estacionamento =
                 estacionamentoService.findById(id);
         VagaEntity vaga = new VagaEntity();
         vaga.setAndar(novaVaga.getAndar());

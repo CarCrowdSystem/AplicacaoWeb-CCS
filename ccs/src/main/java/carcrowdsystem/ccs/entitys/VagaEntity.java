@@ -14,7 +14,7 @@ public class VagaEntity {
     private String andar;
     @ManyToOne
     @JoinColumn(name = "fk_estacionamento")
-    private EstacionamentoEntity estacionamento;
+    private Estacionamento estacionamento;
     @OneToMany
     private List<HistoricoEntity> historicoEntity;
 
@@ -26,11 +26,11 @@ public class VagaEntity {
         this.id = id;
     }
 
-    public EstacionamentoEntity getEstacionamento() {
+    public Estacionamento getEstacionamento() {
         return estacionamento;
     }
 
-    public void setEstacionamento(EstacionamentoEntity estacionamento) {
+    public void setEstacionamento(Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 

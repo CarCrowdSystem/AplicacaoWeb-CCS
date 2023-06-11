@@ -1,13 +1,15 @@
 package carcrowdsystem.ccs.repositorys;
 
-import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
+import carcrowdsystem.ccs.entitys.Estacionamento;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface EstacionamentoRepository extends JpaRepository<EstacionamentoEntity, Integer> {
-    Optional<EstacionamentoEntity> findByCnpj(String cnpj);
+public interface EstacionamentoRepository extends JpaRepository<Estacionamento, Integer> {
+    Optional<Estacionamento> findByCnpj(String cnpj);
 
+    @Query( nativeQuery = true,
+            value = "SELECT top(1) * FROM estacionamento order by id_estacionamento desc")
+    Estacionamento findTopByOrderByIdEstacionamentoDesc();
 }

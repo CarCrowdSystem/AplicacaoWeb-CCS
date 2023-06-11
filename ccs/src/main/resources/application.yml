@@ -14,7 +14,7 @@ spring:
       hibernate:
         format_sql: true
     # Habilita data.sql
-    defer-datasource-initialization: true
+#    defer-datasource-initialization: true
 
 # Habilitando o H2 Console. Num navegador, permite o acesso a http://localhost:8080/h2-console
 #  h2:

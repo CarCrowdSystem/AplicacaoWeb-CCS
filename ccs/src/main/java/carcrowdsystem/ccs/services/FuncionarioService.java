@@ -1,7 +1,6 @@
 package carcrowdsystem.ccs.services;
 
-import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
-import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
+import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.configuration.security.jwt.GerenciadorTokenJwt;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
@@ -9,7 +8,6 @@ import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.FuncionarioMapper;
-import carcrowdsystem.ccs.repositorys.EstacionamentoRepository;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
 import carcrowdsystem.ccs.request.FuncionarioRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +46,8 @@ public class FuncionarioService {
             funcionario.setNome(newFunc.getNome());
             funcionario.setCpf(newFunc.getCpf());
             funcionario.setEmail(newFunc.getEmail());
-            funcionario.setAdm(newFunc.getAdm());
             funcionario.setSenha(passwordEncoder.encode(newFunc.getSenha()));
-            EstacionamentoEntity estacionamento =
+            Estacionamento estacionamento =
                     estacionamentoService.findById(newFunc.getIdEstacionamento());
             funcionario.setEstacionamento(estacionamento);
 

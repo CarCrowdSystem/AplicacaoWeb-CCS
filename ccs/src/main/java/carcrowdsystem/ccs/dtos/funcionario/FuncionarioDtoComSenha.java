@@ -15,7 +15,7 @@ public class FuncionarioDtoComSenha{
         FuncionarioEntity func = new FuncionarioEntity();
         func.setNome(nome);
         func.setCpf(cpf);
-        func.setAdm(adm);
+        func.setUsuarioAdm(adm);
         func.setEmail(email);
         func.setSenha(senha);
 

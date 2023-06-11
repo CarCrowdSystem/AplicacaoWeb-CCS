@@ -10,14 +10,13 @@ import java.util.List;
 @Table(name = "estacionamento")
 //@SequenceGenerator(name = "ID_INIT_100", sequenceName = "FUNCIONARIO_SEQ", initialValue = 100)
 // generator = "ID_INIT_100"
-public class EstacionamentoEntity {
+public class Estacionamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_estacionamento")
     private Integer id;
 
     @NotBlank
-    @Size(min = 14, max = 14)
     private String cnpj;
     @NotBlank
     @Size(min = 3)

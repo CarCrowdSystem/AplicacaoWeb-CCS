@@ -2,11 +2,10 @@ package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.adapter.EstacionamentoAdapter;
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
-import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
+import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
 import carcrowdsystem.ccs.models.EnderecoEstacionamento;
-import carcrowdsystem.ccs.services.EstacionamentoService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -41,7 +40,7 @@ public class EstacionamentoController {
     }
 
     @GetMapping("/cnpj/{cnpj}")
-    public ResponseEntity<EstacionamentoEntity> getEstacionamentoPorCnpj(
+    public ResponseEntity<Estacionamento> getEstacionamentoPorCnpj(
             @PathVariable String cnpj
     ) throws MyException {
         return ResponseEntity.status(201).body(
@@ -56,7 +55,7 @@ public class EstacionamentoController {
     })
     @PostMapping
     public ResponseEntity<EstacionamentoDto> postEstacionamento(
-            @RequestBody EstacionamentoEntity estacionamento
+            @RequestBody Estacionamento estacionamento
     ) throws MyException {
         return ResponseEntity.status(201).body(estacionamentoAdapter.create(estacionamento));
     }
@@ -79,7 +78,7 @@ public class EstacionamentoController {
     @PatchMapping("/{id}")
     public ResponseEntity patchEstacionamento(
             @PathVariable Integer id,
-            @RequestBody EstacionamentoEntity estacionamento
+            @RequestBody Estacionamento estacionamento
     ) throws MyException {
         estacionamentoAdapter.update(id, estacionamento);
         return ResponseEntity.status(201).build();
@@ -112,5 +111,9 @@ public class EstacionamentoController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public Estacionamento pegarUltimoEstacionamento(){
+        return estacionamentoAdapter.pegarUltimoEstacionamento();
     }
 }

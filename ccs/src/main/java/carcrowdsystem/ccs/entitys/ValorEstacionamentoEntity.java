@@ -19,7 +19,7 @@ public class ValorEstacionamentoEntity {
     private Double diaria;
     @ManyToOne
     @JoinColumn(name = "fk_estacionamento")
-    private EstacionamentoEntity estacionamento;
+    private Estacionamento estacionamento;
 
     public Integer getId() {
         return id;
@@ -29,11 +29,11 @@ public class ValorEstacionamentoEntity {
         this.id = id;
     }
 
-    public EstacionamentoEntity getEstacionamento() {
+    public Estacionamento getEstacionamento() {
         return estacionamento;
     }
 
-    public void setEstacionamento(EstacionamentoEntity estacionamento) {
+    public void setEstacionamento(Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 

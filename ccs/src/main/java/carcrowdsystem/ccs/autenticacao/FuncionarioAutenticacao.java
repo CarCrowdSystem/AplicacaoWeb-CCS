@@ -1,6 +1,5 @@
 package carcrowdsystem.ccs.autenticacao;
 
-import carcrowdsystem.ccs.abstracts.Funcionario;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDetailsDto;
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;

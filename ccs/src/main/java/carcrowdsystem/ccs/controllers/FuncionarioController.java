@@ -31,21 +31,10 @@ public class FuncionarioController {
             @Schema(hidden = true)))
     })
 
-    @PostMapping({"/{idEstacionamento}","/{idEstacionamento}/{adm}"})
+    @PostMapping
     public ResponseEntity<FuncionarioDto> postUsuario(
-            @PathVariable Integer idEstacionamento,
-            @RequestBody FuncionarioRequest funcionario,
-            @PathVariable(required = false) Boolean adm
+            @RequestBody FuncionarioRequest funcionario
     ) throws MyException {
-        funcionario.setIdEstacionamento(idEstacionamento);
-        if(adm != null) {
-            if(adm) {
-                funcionario.setAdm(true);
-                return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));
-            }
-            throw new MyException(404, "Uri incorreta '/"+adm+"'", "G-001");
-        }
-
         return ResponseEntity.status(201).body(funcionarioAdapter.create(funcionario));
     }
 

@@ -2,12 +2,12 @@ package carcrowdsystem.ccs.abstracts;
 
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
-import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
+import carcrowdsystem.ccs.models.FuncionarioAbstractEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
 
 import java.sql.Blob;
 
-public abstract class Funcionario {
+public abstract class FuncionarioAbstract {
     private Integer id;
     private String nome;
     private Blob foto;
@@ -16,7 +16,7 @@ public abstract class Funcionario {
     private String senha;
     private Boolean adm;
 
-    public Funcionario(Integer id, String nome,  String cpf, String email, String senha) {
+    public FuncionarioAbstract(Integer id, String nome, String cpf, String email, String senha) {
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
@@ -24,8 +24,8 @@ public abstract class Funcionario {
         this.adm = null;
     }
 
-    public FuncionarioEstacionamento toFuncionario(){
-        return new FuncionarioEstacionamento(
+    public FuncionarioAbstractEstacionamento toFuncionario(){
+        return new FuncionarioAbstractEstacionamento(
                 id,
                 nome,
                 cpf,
@@ -57,7 +57,7 @@ public abstract class Funcionario {
         FuncionarioEntity func = new FuncionarioEntity();
         func.setNome(nome);
         func.setCpf(cpf);
-        func.setAdm(adm);
+        func.setUsuarioAdm(adm);
         func.setEmail(email);
         func.setSenha(senha);
 

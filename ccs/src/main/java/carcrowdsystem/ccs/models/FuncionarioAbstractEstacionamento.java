@@ -1,9 +1,9 @@
 package carcrowdsystem.ccs.models;
 
-import carcrowdsystem.ccs.abstracts.Funcionario;
+import carcrowdsystem.ccs.abstracts.FuncionarioAbstract;
 
-public class FuncionarioEstacionamento extends Funcionario {
-    public FuncionarioEstacionamento(
+public class FuncionarioAbstractEstacionamento extends FuncionarioAbstract {
+    public FuncionarioAbstractEstacionamento(
         Integer id,
         String nome,
         String cpf,

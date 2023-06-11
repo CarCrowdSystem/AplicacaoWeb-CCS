@@ -1,7 +1,7 @@
 package carcrowdsystem.ccs.adapter;
 
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
-import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
+import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.services.EstacionamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +10,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EstacionamentoAdapter implements DbAdapter<EstacionamentoDto, EstacionamentoEntity>{
+public class EstacionamentoAdapter implements DbAdapter<EstacionamentoDto, Estacionamento>{
     @Autowired
     private EstacionamentoService service;
     @Override
-    public EstacionamentoDto create(EstacionamentoEntity entrada) throws MyException {
+    public EstacionamentoDto create(Estacionamento entrada) throws MyException {
         return service.postEstacionamento(entrada);
     }
 
     @Override
-    public void update(Integer id, EstacionamentoEntity entrada) throws MyException {
+    public void update(Integer id, Estacionamento entrada) throws MyException {
         service.patchEstacionamento(id, entrada);
     }
 
@@ -28,7 +28,7 @@ public class EstacionamentoAdapter implements DbAdapter<EstacionamentoDto, Estac
         return service.deleteEstacionamento(id);
     }
 
-    public EstacionamentoEntity getEstacionamentoPorId(Integer id) throws MyException {
+    public Estacionamento getEstacionamentoPorId(Integer id) throws MyException {
         return service.findById(id);
     }
 
@@ -36,7 +36,11 @@ public class EstacionamentoAdapter implements DbAdapter<EstacionamentoDto, Estac
         return service.getAllEstacionamento();
     }
 
-    public EstacionamentoEntity getEstacionamentoPorCnpj(String cnpj) throws MyException {
+    public Estacionamento getEstacionamentoPorCnpj(String cnpj) throws MyException {
         return service.findByCnpj(cnpj);
+    }
+
+    public Estacionamento pegarUltimoEstacionamento() {
+        return service.findByTop();
     }
 }

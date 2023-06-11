@@ -1,7 +1,7 @@
 package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
-import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
+import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
 //import carcrowdsystem.ccs.mapper.EstacionamentoUpdateMapper;
@@ -20,7 +20,7 @@ public class EstacionamentoService {
 
     private EstacionamentoMapper estacionamentoMapper = new EstacionamentoMapper();
 
-    public EstacionamentoDto postEstacionamento(EstacionamentoEntity estacionamento) throws MyException {
+    public EstacionamentoDto postEstacionamento(Estacionamento estacionamento) throws MyException {
         try {
             estacionamentoRepository.save(estacionamento);
         } catch (Exception e){
@@ -39,8 +39,8 @@ public class EstacionamentoService {
         return toListDto(estacionamentoRepository.findAll());
     }
 
-    public void patchEstacionamento(Integer id, EstacionamentoEntity estacionamento) {
-        Optional<EstacionamentoEntity> estacionamentoAntigo = estacionamentoRepository.findById(id);
+    public void patchEstacionamento(Integer id, Estacionamento estacionamento) {
+        Optional<Estacionamento> estacionamentoAntigo = estacionamentoRepository.findById(id);
         if (estacionamentoAntigo.isEmpty()){
             estacionamentoRepository.save(estacionamento);
             return;
@@ -61,7 +61,7 @@ public class EstacionamentoService {
     }
 
     public Boolean deleteEstacionamento(Integer id) {
-        Optional<EstacionamentoEntity> estacionamento = estacionamentoRepository.findById(id);
+        Optional<Estacionamento> estacionamento = estacionamentoRepository.findById(id);
         if (estacionamento.isEmpty()){
             return false;
         }
@@ -70,15 +70,15 @@ public class EstacionamentoService {
         return true;
     }
 
-    private List<EstacionamentoDto> toListDto(List<EstacionamentoEntity> estacionamentos){
+    private List<EstacionamentoDto> toListDto(List<Estacionamento> estacionamentos){
         List<EstacionamentoDto> estacionamentoDtos = new ArrayList<>();
-        for (EstacionamentoEntity e: estacionamentos){
+        for (Estacionamento e: estacionamentos){
             estacionamentoDtos.add(estacionamentoMapper.toEstacionamentoDto(e));
         }
         return estacionamentoDtos;
     }
 
-    public EstacionamentoEntity findById(Integer id) throws MyException {
+    public Estacionamento findById(Integer id) throws MyException {
         try {
             return estacionamentoRepository.findById(id).get();
         } catch (Exception e) {
@@ -86,11 +86,15 @@ public class EstacionamentoService {
         }
     }
 
-    public EstacionamentoEntity findByCnpj(String cnpj) throws MyException {
+    public Estacionamento findByCnpj(String cnpj) throws MyException {
         try {
             return estacionamentoRepository.findByCnpj(cnpj).get();
         } catch (Exception e) {
             throw new MyException(404, "Cnpj não existente", "E006");
         }
+    }
+
+    public Estacionamento findByTop() {
+        return estacionamentoRepository.findTopByOrderByIdEstacionamentoDesc();
     }
 }

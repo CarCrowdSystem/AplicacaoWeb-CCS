@@ -1,15 +1,15 @@
 package carcrowdsystem.ccs.mapper;
 
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
-import carcrowdsystem.ccs.abstracts.Funcionario;
+import carcrowdsystem.ccs.abstracts.FuncionarioAbstract;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
-import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
+import carcrowdsystem.ccs.models.FuncionarioAbstractEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
 
 public class FuncionarioMapper {
-    public FuncionarioEstacionamento toFuncionario(FuncionarioEntity f){
-        return new FuncionarioEstacionamento(
+    public FuncionarioAbstractEstacionamento toFuncionario(FuncionarioEntity f){
+        return new FuncionarioAbstractEstacionamento(
                 f.getId(),
                 f.getNome(),
                 f.getCpf(),
@@ -18,7 +18,7 @@ public class FuncionarioMapper {
         );
     }
 
-    public GerenteEstacionamento toGerente(Funcionario f){
+    public GerenteEstacionamento toGerente(FuncionarioAbstract f){
         return new GerenteEstacionamento(
                 f.getId(),
                 f.getNome(),
@@ -37,7 +37,7 @@ public class FuncionarioMapper {
         );
     }
 
-    public FuncionarioDto toFuncionarioDto(Funcionario f){
+    public FuncionarioDto toFuncionarioDto(FuncionarioAbstract f){
         return new FuncionarioDto(
                 f.getNome(),
                 f.getCpf(),
@@ -49,23 +49,23 @@ public class FuncionarioMapper {
         return new FuncionarioDto(
                 f.getNome(),
                 f.getCpf(),
-                f.getAdm(),
+                f.getUsuarioAdm(),
                 f.getEmail()
         );
     }
 
-    public FuncionarioEntity toFuncionarioEntity(Funcionario f){
+    public FuncionarioEntity toFuncionarioEntity(FuncionarioAbstract f){
         FuncionarioEntity func = new FuncionarioEntity();
         func.setNome(f.getNome());
         func.setCpf(f.getCpf());
-        func.setAdm(f.getAdm());
+        func.setUsuarioAdm(f.getAdm());
         func.setEmail(f.getEmail());
         func.setSenha(f.getSenha());
 
         return func;
     }
 
-    public FuncionarioTokenDto toFuncionarioTokenDto(Funcionario f, String token){
+    public FuncionarioTokenDto toFuncionarioTokenDto(FuncionarioAbstract f, String token){
         FuncionarioTokenDto func = new FuncionarioTokenDto();
         func.setFuncId(f.getId());
         func.setEmail(f.getEmail());

@@ -1,7 +1,7 @@
 package carcrowdsystem.ccs.entitys;
 
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
-import carcrowdsystem.ccs.models.FuncionarioEstacionamento;
+import carcrowdsystem.ccs.models.FuncionarioAbstractEstacionamento;
 import carcrowdsystem.ccs.models.GerenteEstacionamento;
 
 import jakarta.persistence.*;
@@ -29,13 +29,13 @@ public class FuncionarioEntity {
     @Column(name = "login_Habilitado")
     private Boolean loginHabilitado = false;
     @Column(name = "usuario_adm")
-    private Boolean adm = false;
+    private Boolean usuarioAdm = false;
     @ManyToOne
     @JoinColumn(name = "fk_estacionamento")
-    private EstacionamentoEntity estacionamento;
+    private Estacionamento estacionamento;
 
-    public FuncionarioEstacionamento toFuncionario(){
-        return new FuncionarioEstacionamento(
+    public FuncionarioAbstractEstacionamento toFuncionario(){
+        return new FuncionarioAbstractEstacionamento(
                 id,
                 nome,
                 cpf,
@@ -58,7 +58,7 @@ public class FuncionarioEntity {
         return new FuncionarioDto(
                 nome,
                 cpf,
-                adm,
+                usuarioAdm,
                 email
         );
     }
@@ -118,19 +118,19 @@ public class FuncionarioEntity {
         this.loginHabilitado = loginHabilitado;
     }
 
-    public Boolean getAdm() {
-        return adm;
+    public Boolean getUsuarioAdm() {
+        return usuarioAdm;
     }
 
-    public void setAdm(Boolean adm) {
-        this.adm = adm;
+    public void setUsuarioAdm(Boolean usuarioAdm) {
+        this.usuarioAdm = usuarioAdm;
     }
 
-    public EstacionamentoEntity getEstacionamento() {
+    public Estacionamento getEstacionamento() {
         return estacionamento;
     }
 
-    public void setEstacionamento(EstacionamentoEntity estacionamento) {
+    public void setEstacionamento(Estacionamento estacionamento) {
         this.estacionamento = estacionamento;
     }
 

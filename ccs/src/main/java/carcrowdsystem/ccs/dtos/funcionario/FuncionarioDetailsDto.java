@@ -1,6 +1,5 @@
 package carcrowdsystem.ccs.dtos.funcionario;
 
-import carcrowdsystem.ccs.abstracts.Funcionario;
 import carcrowdsystem.ccs.entitys.FuncionarioEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,8 +1,7 @@
 package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.dtos.valorEstacionamento.ValorEstacionamentoDto;
-import carcrowdsystem.ccs.entitys.EstacionamentoEntity;
-import carcrowdsystem.ccs.entitys.VagaEntity;
+import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.entitys.ValorEstacionamentoEntity;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.ValorEstacionamentoRepository;
@@ -28,7 +27,7 @@ public class ValorEstacionamentoService {
         ValorEstacionamentoDto valorEstacionamentoDto,
         Integer idEstacionamento
     ) throws MyException {
-        EstacionamentoEntity estacionamento =
+        Estacionamento estacionamento =
                 estacionamentoService.findById(idEstacionamento);
         ValorEstacionamentoEntity valor = new ValorEstacionamentoEntity();
         valor.setDiaria(valorEstacionamentoDto.getDiaria());
