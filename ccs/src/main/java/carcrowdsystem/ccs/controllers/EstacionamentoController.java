@@ -112,7 +112,7 @@ public class EstacionamentoController {
             @ApiResponse(responseCode = "404", description = "CEP não encontrado",
                     content = @Content(schema = @Schema(hidden = true)))
     })
-    @GetMapping("{cep}")
+    @GetMapping("/buscar/{cep}")
     public ResponseEntity<EnderecoEstacionamento> buscarEndereco(@PathVariable String cep){
         ViaCepService viaCepService = new ViaCepService();
 
