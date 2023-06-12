@@ -2,7 +2,7 @@ package carcrowdsystem.ccs.request;
 
 public class EstacionamentoRequest {
     private String cepEmpresa;
-    private String cnpjEmpresa;
+    private String cnpjEmpresa = null;
     private String enderecoEmpresa;
     private String nomeEmpresa;
     private String telefoneEmpresa;
