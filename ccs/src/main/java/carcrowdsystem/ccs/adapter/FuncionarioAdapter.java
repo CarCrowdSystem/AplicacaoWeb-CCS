@@ -5,6 +5,7 @@ import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.FuncionarioRequest;
+import carcrowdsystem.ccs.response.LoginResponse;
 import carcrowdsystem.ccs.services.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, Funcionario
         return null;
     }
 
-    public FuncionarioTokenDto autenticar(FuncionarioLoginDto func) {
+    public LoginResponse autenticar(FuncionarioLoginDto func) {
         return service.autenticar(func);
     }
 

@@ -6,6 +6,7 @@ import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.entitys.Funcionario;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.FuncionarioRequest;
+import carcrowdsystem.ccs.response.LoginResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -45,8 +46,8 @@ public class FuncionarioController {
             @Schema(hidden = true)))
     })
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody FuncionarioLoginDto funcionarioLoginDto) {
-        return ResponseEntity.status(200).body(funcionarioAdapter.autenticar(funcionarioLoginDto).getToken());
+    public ResponseEntity<LoginResponse> login(@RequestBody FuncionarioLoginDto funcionarioLoginDto) {
+        return ResponseEntity.status(200).body(funcionarioAdapter.autenticar(funcionarioLoginDto));
     }
 
     @ApiResponses({

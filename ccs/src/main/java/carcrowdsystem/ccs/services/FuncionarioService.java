@@ -10,6 +10,7 @@ import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.FuncionarioMapper;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
 import carcrowdsystem.ccs.request.FuncionarioRequest;
+import carcrowdsystem.ccs.response.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -58,7 +59,7 @@ public class FuncionarioService {
         }
     }
 
-    public FuncionarioTokenDto autenticar(FuncionarioLoginDto funcionarioLoginDto){
+    public LoginResponse autenticar(FuncionarioLoginDto funcionarioLoginDto){
         final UsernamePasswordAuthenticationToken credentials =
             new UsernamePasswordAuthenticationToken(
                     funcionarioLoginDto.getEmail(), funcionarioLoginDto.getSenha()
@@ -76,7 +77,18 @@ public class FuncionarioService {
 
         final String token = gerenciadorTokenJwt.generateToken(authentication);
 
-        return funcionarioMapper.toFuncionarioTokenDto(funcionarioAutenticado, token);
+        FuncionarioTokenDto funcionarioTokenDto =
+            funcionarioMapper.toFuncionarioTokenDto(funcionarioAutenticado, token);
+
+
+        Estacionamento estacionamento = funcionarioRepository.findById(funcionarioTokenDto.getFuncId()).get().getEstacionamento();
+
+        LoginResponse response = new LoginResponse();
+        response.setIdEstacionamento(estacionamento.getId());
+        response.setNomeEstacionamento(estacionamento.getNomeEstacionamento());
+        response.setJwt(funcionarioTokenDto.getToken());
+
+        return response;
     }
 
     public List<FuncionarioDto> getAllFuncs() throws MyException {
