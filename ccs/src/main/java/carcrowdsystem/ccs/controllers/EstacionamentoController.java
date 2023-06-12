@@ -82,7 +82,7 @@ public class EstacionamentoController {
             @ApiResponse(responseCode = "400", description = "Erro ao atualizar estacionamento",
                     content = @Content(schema = @Schema(hidden = true)))
     })
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity patchEstacionamento(
             @PathVariable Integer id,
             @RequestBody EstacionamentoRequest estacionamento
