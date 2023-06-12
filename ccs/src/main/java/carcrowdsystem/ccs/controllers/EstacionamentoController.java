@@ -82,12 +82,17 @@ public class EstacionamentoController {
             @ApiResponse(responseCode = "400", description = "Erro ao atualizar estacionamento",
                     content = @Content(schema = @Schema(hidden = true)))
     })
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity patchEstacionamento(
             @PathVariable Integer id,
-            @RequestBody Estacionamento estacionamento
+            @RequestBody EstacionamentoRequest estacionamento
     ) throws MyException {
-        estacionamentoAdapter.update(id, estacionamento);
+        Estacionamento newEstacionamento = new Estacionamento();
+        newEstacionamento.setCep(estacionamento.getCepEmpresa());
+        newEstacionamento.setNomeEstacionamento(estacionamento.getNomeEmpresa());
+        newEstacionamento.setTelefone(estacionamento.getTelefoneEmpresa());
+        newEstacionamento.setNumeroEndereco(estacionamento.getEnderecoEmpresa());
+        estacionamentoAdapter.update(id, newEstacionamento);
         return ResponseEntity.status(201).build();
     }
 
@@ -107,7 +112,7 @@ public class EstacionamentoController {
             @ApiResponse(responseCode = "404", description = "CEP não encontrado",
                     content = @Content(schema = @Schema(hidden = true)))
     })
-    @GetMapping("{cep}")
+    @GetMapping("/buscar/{cep}")
     public ResponseEntity<EnderecoEstacionamento> buscarEndereco(@PathVariable String cep){
         ViaCepService viaCepService = new ViaCepService();
 

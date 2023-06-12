@@ -47,6 +47,7 @@ public class FuncionarioService {
             funcionario.setNome(newFunc.getNomeUsuario());
             funcionario.setCpf(newFunc.getCpfUsuario());
             funcionario.setEmail(newFunc.getEmailUsuario());
+            funcionario.setUsuarioAdm(newFunc.getAdm());
             funcionario.setSenha(passwordEncoder.encode(newFunc.getSenha()));
             Estacionamento estacionamento =
                     estacionamentoService.findById(newFunc.getIdEstacionamento());
@@ -91,11 +92,11 @@ public class FuncionarioService {
         return response;
     }
 
-    public List<FuncionarioDto> getAllFuncs() throws MyException {
+    public List<FuncionarioDto> getAllFuncs(Integer id) throws MyException {
         if (funcionarioRepository.findAll().isEmpty()){
             throw new MyException(404, "Não existe nada no Banco de Dados", "G-002");
         }
-        return listFuncToListFuncDto(funcionarioRepository.findAll());
+        return listFuncToListFuncDto(funcionarioRepository.findAllByIdEstacionamento(id));
     }
 
     // Pega uma lista de funcionarioEntity e transforma em lista de funcionarioDto
@@ -107,13 +108,8 @@ public class FuncionarioService {
         return funcsDto;
     }
 
-    public FuncionarioDto[] getAllFuncsOrderByName() throws MyException {
-
-      // FuncionarioDto[] funcionarios = {new FuncionarioDto("Rogério", "7824836483", "93847878574", "Funcionario", "fnrunfurn@gmail.com", "1193823938"),
-         //       new FuncionarioDto("Carlos", "7824836483", "93847878574", "Funcionario", "fnrunfurn@gmail.com", "1193823938")};
-
-        //Transforma em Array
-        FuncionarioDto[] funcionarios = getAllFuncs().toArray(new FuncionarioDto[0]);
+    public FuncionarioDto[] getAllFuncsOrderByName(Integer id) throws MyException {
+        FuncionarioDto[] funcionarios = getAllFuncs(id).toArray(new FuncionarioDto[0]);
 
          // Imprime antes de ordenar
          System.out.println("Antes de ordenar: \n");
@@ -144,8 +140,8 @@ public class FuncionarioService {
         return funcionarios;
     }
 
-    public ResponseEntity<FuncionarioDto> binarySearch(String name) throws MyException {
-        FuncionarioDto[] funcArray = getAllFuncsOrderByName();
+    public ResponseEntity<FuncionarioDto> binarySearch(String name, Integer id) throws MyException {
+        FuncionarioDto[] funcArray = getAllFuncsOrderByName(id);
         int inicio = 0;
         int fim = funcArray.length - 1;
 
@@ -173,5 +169,14 @@ public class FuncionarioService {
             return ResponseEntity.status(200).build();
         }
         return ResponseEntity.status(404).build();
+    }
+
+    public Boolean deleteFunc(Integer id) throws MyException {
+        Funcionario func = funcionarioRepository.findById(id).orElseThrow(
+            () -> new MyException(404, "Id não existe", "F-010")
+        );
+        func.setLoginHabilitado(false);
+        funcionarioRepository.save(func);
+        return true;
     }
 }

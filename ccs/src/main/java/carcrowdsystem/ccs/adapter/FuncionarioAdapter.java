@@ -28,24 +28,24 @@ public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, Funcionario
     }
 
     @Override
-    public Boolean delete(Integer id) {
-        return null;
+    public Boolean delete(Integer id) throws MyException {
+        return service.deleteFunc(id);
     }
 
     public LoginResponse autenticar(FuncionarioLoginDto func) {
         return service.autenticar(func);
     }
 
-    public List<FuncionarioDto> getAllFuncs() throws MyException {
-        return service.getAllFuncs();
+    public List<FuncionarioDto> getAllFuncs(Integer id) throws MyException {
+        return service.getAllFuncs(id);
     }
 
-    public ResponseEntity<FuncionarioDto> binarySearch(String nome) throws MyException {
-        return service.binarySearch(nome);
+    public ResponseEntity<FuncionarioDto> binarySearch(String nome, Integer id) throws MyException {
+        return service.binarySearch(nome, id);
     }
 
-    public FuncionarioDto[] getALLOrdenado() throws MyException {
-        return service.getAllFuncsOrderByName();
+    public FuncionarioDto[] getALLOrdenado(Integer id) throws MyException {
+        return service.getAllFuncsOrderByName(id);
     }
 
     public ResponseEntity alterarSenha(String email, String novaSenha) {

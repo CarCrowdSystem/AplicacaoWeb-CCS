@@ -4,6 +4,7 @@ import carcrowdsystem.ccs.adapter.FuncionarioAdapter;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
 import carcrowdsystem.ccs.entitys.Funcionario;
+import carcrowdsystem.ccs.entitys.Vaga;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.FuncionarioRequest;
 import carcrowdsystem.ccs.response.LoginResponse;
@@ -30,7 +31,6 @@ public class FuncionarioController {
             @ApiResponse(responseCode = "400", description = "Erro ao cadastrar usuário", content = @Content(schema =
             @Schema(hidden = true)))
     })
-
     @PostMapping
     public ResponseEntity<FuncionarioDto> postUsuario(
             @RequestBody FuncionarioRequest funcionario
@@ -55,17 +55,37 @@ public class FuncionarioController {
             @ApiResponse(responseCode = "204", description = "Lista vazia", content = @Content(schema =
             @Schema(hidden = true)))
     })
-    @GetMapping
-    public ResponseEntity<List<FuncionarioDto>> getFuncionarios() throws MyException {
-        return ResponseEntity.status(200).body(funcionarioAdapter.getAllFuncs());
+    @GetMapping("/{id}")
+    public ResponseEntity<List<FuncionarioDto>> getFuncionariosEmpresa(
+            @PathVariable Integer id
+    ) throws MyException {
+        return ResponseEntity.status(200).body(funcionarioAdapter.getAllFuncs(id));
     }
 
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Ordenação feita com sucesso"),
     })
-    @GetMapping("/nome-ordenado")
-    public ResponseEntity<FuncionarioDto[]> getFuncOrdenado() throws MyException {
-        return ResponseEntity.status(200).body(funcionarioAdapter.getALLOrdenado());
+    @GetMapping("/nome-ordenado-a/{id}")
+    public ResponseEntity<FuncionarioDto[]> getFuncOrdenadoA(
+            @PathVariable Integer id
+    ) throws MyException {
+        return ResponseEntity.status(200).body(funcionarioAdapter.getALLOrdenado(id));
+    }
+
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Ordenação feita com sucesso"),
+    })
+    @GetMapping("/nome-ordenado-z/{id}")
+    public ResponseEntity<FuncionarioDto[]> getFuncOrdenadoZ(
+            @PathVariable Integer id
+    ) throws MyException {
+        FuncionarioDto[] allOrdenadoA = funcionarioAdapter.getALLOrdenado(id);
+        FuncionarioDto[] allOrdenadoZ = new FuncionarioDto[allOrdenadoA.length];
+        int j = 0;
+        for (int i = allOrdenadoA.length - 1; i >= 0; i--, j++){
+            allOrdenadoZ[j] = allOrdenadoA[i];
+        }
+        return ResponseEntity.status(200).body(allOrdenadoZ);
     }
 
     @ApiResponses({
@@ -73,9 +93,9 @@ public class FuncionarioController {
             @ApiResponse(responseCode = "404", description = "Nome não encontrado", content = @Content(schema =
             @Schema(hidden = true)))
     })
-    @GetMapping("/busca-nome/{nome}")
-    public ResponseEntity<FuncionarioDto> getFuncByName(@PathVariable String nome) throws MyException {
-        return funcionarioAdapter.binarySearch(nome);
+    @GetMapping("/busca-nome/{nome}/{id}")
+    public ResponseEntity<FuncionarioDto> getFuncByName(@PathVariable String nome, @PathVariable Integer id) throws MyException {
+        return funcionarioAdapter.binarySearch(nome, id);
     }
 
     @ApiResponses({
@@ -86,5 +106,11 @@ public class FuncionarioController {
     @PatchMapping("/alterar-senha/{email}/{novaSenha}")
     public ResponseEntity patchSenha(@RequestParam String email, @RequestParam String novaSenha){
         return funcionarioAdapter.alterarSenha(email, novaSenha);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteVaga(@PathVariable Integer id) throws MyException {
+        funcionarioAdapter.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
