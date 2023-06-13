@@ -16,7 +16,7 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
 
     @Query(
         nativeQuery = true,
-        value = "SELECT * FROM HISTORICO_ENTITY where fk_veiculo = ? order by id desc limit 1"
+        value = "SELECT top(1) * from historico where fk_veiculo = ? order by id_historico desc"
     )
     Historico pegarMomentoByIdVeiculo(Integer idVeiculo);
 
