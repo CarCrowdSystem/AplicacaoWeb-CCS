@@ -6,6 +6,8 @@ public class PegarCheckoutsResponse {
     private String andar;
     private Integer vaga;
     private Double valor;
+    private Integer fkVaga;
+    private Integer fkVeiculo;
 
     public String getNome() {
         return nome;
@@ -45,5 +47,21 @@ public class PegarCheckoutsResponse {
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Integer getFkVaga() {
+        return fkVaga;
+    }
+
+    public void setFkVaga(Integer fkVaga) {
+        this.fkVaga = fkVaga;
+    }
+
+    public Integer getFkVeiculo() {
+        return fkVeiculo;
+    }
+
+    public void setFkVeiculo(Integer fkVeiculo) {
+        this.fkVeiculo = fkVeiculo;
     }
 }

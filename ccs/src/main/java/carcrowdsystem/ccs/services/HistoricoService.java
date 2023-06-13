@@ -181,6 +181,8 @@ public class HistoricoService {
             response.setTelefone(historico.getVeiculo().getTelefoneCliente());
             response.setAndar(historico.getVaga().getAndar());
             response.setVaga(historico.getVaga().getNumero());
+            response.setFkVaga(historico.getVaga().getId());
+            response.setFkVeiculo(historico.getVeiculo().getId());
             response.setValor(repository.calculaPreco(historico.getId()));
             listResponse.add(response);
         }
