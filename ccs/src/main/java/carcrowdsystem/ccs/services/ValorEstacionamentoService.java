@@ -37,4 +37,8 @@ public class ValorEstacionamentoService {
 
         repository.save(valor);
     }
+
+    public ValorEstacionamento findByIdEstacionamento(Integer id) {
+        return repository.findByIdEstacionamento(id);
+    }
 }

@@ -18,7 +18,7 @@ public class ValorEstacionamentoController {
         this.valorEstacionamentoService = valorEstacionamentoService;
     }
 
-    @GetMapping
+    @GetMapping("/todos")
     public ResponseEntity<List<ValorEstacionamento>> getValores(){
         return ResponseEntity.status(200).body(valorEstacionamentoService.findAll());
     }
@@ -30,5 +30,12 @@ public class ValorEstacionamentoController {
     ) throws MyException {
         valorEstacionamentoService.postValor(valorEstacionamentoDto, idEstacionamento);
         return ResponseEntity.status(201).build();
+    }
+
+    @GetMapping
+    public ResponseEntity<ValorEstacionamento> getValorByEstacionamento(
+        @RequestParam Integer id
+    ){
+        return ResponseEntity.status(200).body(valorEstacionamentoService.findByIdEstacionamento(id));
     }
 }
