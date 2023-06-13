@@ -189,4 +189,8 @@ public class HistoricoService {
 
         return listResponse;
     }
+
+    public Double calculaPreco(Integer id){
+        return repository.calculaPreco(id);
+    }
 }
