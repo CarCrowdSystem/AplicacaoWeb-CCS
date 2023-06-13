@@ -94,5 +94,10 @@ public class HistoricoController {
     ){
         service.postHistoricoInicial(historicoInicial);
     }
+
+    @GetMapping("/pegar-momento-vagas")
+    public ResponseEntity<List<Historico>> pegarMomentoVagasByEstacionamento(@RequestParam Integer idEstacionamento){
+        return ResponseEntity.ok().body(service.pegarMomentoVagasByEstacionamento(idEstacionamento));
+    }
 }
 
