@@ -6,6 +6,7 @@ import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
 import carcrowdsystem.ccs.entitys.Historico;
 import carcrowdsystem.ccs.entitys.Vaga;
 import carcrowdsystem.ccs.entitys.Veiculo;
+import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
 import carcrowdsystem.ccs.response.HistoricoResponse;
@@ -179,19 +180,21 @@ public class HistoricoService {
     }
 
     public List<PegarCheckoutsResponse> pegarCheckouts(Integer id) {
-        List<Historico> checkouts = repository.pegarCheckouts(id);
+        List<Historico> checkouts = repository.pegarMomentoByIdEstacionamento(id);
         List<PegarCheckoutsResponse> listResponse = new ArrayList();
 
         for (Historico historico: checkouts) {
-            PegarCheckoutsResponse response = new PegarCheckoutsResponse();
-            response.setNome(historico.getVeiculo().getNomeCliente());
-            response.setTelefone(historico.getVeiculo().getTelefoneCliente());
-            response.setAndar(historico.getVaga().getAndar());
-            response.setVaga(historico.getVaga().getNumero());
-            response.setFkVaga(historico.getVaga().getId());
-            response.setFkVeiculo(historico.getVeiculo().getId());
-            response.setValor(repository.calculaPreco(historico.getId()));
-            listResponse.add(response);
+            if(historico.getStatusRegistro().equals(StatusVagaEnum.Entrada)) {
+                PegarCheckoutsResponse response = new PegarCheckoutsResponse();
+                response.setNome(historico.getVeiculo().getNomeCliente());
+                response.setTelefone(historico.getVeiculo().getTelefoneCliente());
+                response.setAndar(historico.getVaga().getAndar());
+                response.setVaga(historico.getVaga().getNumero());
+                response.setFkVaga(historico.getVaga().getId());
+                response.setFkVeiculo(historico.getVeiculo().getId());
+                response.setValor(repository.calculaPreco(historico.getId()));
+                listResponse.add(response);
+            }
         }
 
         return listResponse;
