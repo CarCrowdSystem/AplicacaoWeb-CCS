@@ -47,7 +47,6 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "    AND CAST(momento_registro AS DATE) = CAST(GETDATE() AS DATE);"
     )
     Integer pegarTotalCheckoutDiario(Integer idEstacionamento);
-}
 
     @Query(nativeQuery = true,
     value = "SELECT h.*\n" +
