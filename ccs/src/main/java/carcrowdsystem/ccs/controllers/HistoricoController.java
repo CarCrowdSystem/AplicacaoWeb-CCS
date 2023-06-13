@@ -4,6 +4,8 @@ import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
 import carcrowdsystem.ccs.entitys.Historico;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.response.DadosDashResponse;
+import carcrowdsystem.ccs.response.MomentoVagasResponse;
 import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
 import carcrowdsystem.ccs.services.HistoricoService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -96,7 +98,7 @@ public class HistoricoController {
     }
 
     @GetMapping("/pegar-momento-vagas")
-    public ResponseEntity<List<Historico>> pegarMomentoVagasByEstacionamento(@RequestParam Integer idEstacionamento){
+    public ResponseEntity<List<MomentoVagasResponse>> pegarMomentoVagasByEstacionamento(@RequestParam Integer idEstacionamento){
         return ResponseEntity.ok().body(service.pegarMomentoVagasByEstacionamento(idEstacionamento));
     }
     @GetMapping("/total-checkout")
@@ -111,6 +113,22 @@ public class HistoricoController {
             @RequestParam Integer idEstacionamento
     ){
         return ResponseEntity.ok().body(service.pegarTotalFaturamentoDiario(idEstacionamento));
+    }
+
+    @GetMapping("/pegar-dados-dash")
+    public ResponseEntity<DadosDashResponse> getDadosDash(
+            @RequestParam Integer id
+    ){
+        Double faturamento = totalFaturamentoDiario(id).getBody();
+        Integer checkout = totalCheckoutDiario(id).getBody();
+        List<MomentoVagasResponse> momento = pegarMomentoVagasByEstacionamento(id).getBody();
+
+        DadosDashResponse dados = new DadosDashResponse();
+        dados.setMomentoVagas(momento);
+        dados.setTotalFaturamento(faturamento);
+        dados.setTotalCheckoutDiario(checkout);
+
+        return ResponseEntity.ok().body(dados);
     }
 }
 

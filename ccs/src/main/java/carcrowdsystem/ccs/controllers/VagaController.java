@@ -28,7 +28,7 @@ public class VagaController {
         @PathVariable Integer idEstacionamento
     ) throws MyException {
         for (VagaDtoRequest v: novasVagas.getVagas()) {
-            for (int i = 0; i < v.getQtdVagas(); i++) {
+            for (int i = 1; i <= v.getQtdVagas(); i++) {
                 VagaDto novaVaga = new VagaDto(i, v.getAndarVaga());
                 service.postVaga(novaVaga, idEstacionamento);
             }

@@ -8,6 +8,7 @@ import carcrowdsystem.ccs.entitys.Vaga;
 import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
+import carcrowdsystem.ccs.response.MomentoVagasResponse;
 import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.FormatterClosedException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HistoricoService {
@@ -147,8 +149,8 @@ public class HistoricoService {
         return listHistoricoDto;
     }
 
-    public List<Historico> pegarMomentoVagasByEstacionamento(Integer id){
-        return repository.pegarMomentoVagasByEstacionamento(id);
+    public List<MomentoVagasResponse> pegarMomentoVagasByEstacionamento(Integer id){
+        return converter(repository.pegarMomentoVagasByEstacionamento(id));
     }
 
     public Integer pegarTotalCheckoutDiario(Integer idEstacionamento){
@@ -157,5 +159,17 @@ public class HistoricoService {
 
     public Double pegarTotalFaturamentoDiario(Integer idEstacionamento){
         return repository.pegarTotalFaturamentoDiario(idEstacionamento);
+    }
+
+    public static List<MomentoVagasResponse> converter(List<Historico> historicos) {
+        return historicos.stream()
+                .map(historico -> {
+                    MomentoVagasResponse momentoVagas = new MomentoVagasResponse();
+                    momentoVagas.setNumero(historico.getVaga().getNumero());
+                    momentoVagas.setAndar(historico.getVaga().getAndar());
+                    momentoVagas.setStatusRegistro(historico.getStatusRegistro());
+                    return momentoVagas;
+                })
+                .collect(Collectors.toList());
     }
 }
