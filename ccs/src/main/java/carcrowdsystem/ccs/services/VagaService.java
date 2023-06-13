@@ -39,7 +39,7 @@ public class VagaService {
                 estacionamento
         );
         vaga = repository.save(vaga);
-        Veiculo veiculoFantasma = veiculoService.findById(4);
+        Veiculo veiculoFantasma = veiculoService.findById(1);
         Historico historico = new Historico();
         historico.setVaga(vaga);
         historico.setStatusRegistro(StatusVagaEnum.Saida);
