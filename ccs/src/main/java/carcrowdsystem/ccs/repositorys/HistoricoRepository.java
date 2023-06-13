@@ -22,24 +22,18 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
 
     @Query(
             nativeQuery = true,
-            value = "SELECT DISTINCT fk_veiculo, h.*\n" +
-                    "FROM (\n" +
-                    "    SELECT h.id_historico, h.momento_registro, h.status_registro, h.valor_pago, h.fk_vaga, h.fk_veiculo\n" +
-                    "    FROM historico AS h\n" +
-                    "    INNER JOIN vaga AS v ON h.fk_vaga = v.id_vaga\n" +
-                    "    WHERE v.fk_estacionamento = 3\n" +
-                    ") AS h\n" +
-                    "ORDER BY momento_registro DESC\n" +
-                    "OFFSET 0 ROWS\n" +
-                    "FETCH NEXT (\n" +
-                    "    SELECT COUNT(DISTINCT fk_veiculo + fk_vaga)\n" +
-                    "    FROM (\n" +
-                    "        SELECT h2.momento_registro, h2.status_registro, h2.valor_pago, h2.fk_vaga, h2.fk_veiculo\n" +
-                    "        FROM historico AS h2\n" +
-                    "        INNER JOIN vaga AS v2 ON h2.fk_vaga = v2.id_vaga\n" +
-                    "        WHERE v2.fk_estacionamento = 3\n" +
-                    "    ) AS subquery\n" +
-                    ") ROWS ONLY"
+            value = "SELECT h.*\n" +
+                    "FROM historico h\n" +
+                    "INNER JOIN (\n" +
+                    "    SELECT fk_veiculo, MAX(momento_registro) AS ultimo_registro\n" +
+                    "    FROM historico\n" +
+                    "    WHERE fk_vaga IN (\n" +
+                    "        SELECT id_vaga\n" +
+                    "        FROM vaga\n" +
+                    "        WHERE fk_estacionamento = ?\n" +
+                    "    )\n" +
+                    "    GROUP BY fk_veiculo\n" +
+                    ") t ON h.fk_veiculo = t.fk_veiculo AND h.momento_registro = t.ultimo_registro;"
     )
     List<Historico> pegarMomentoByIdEstacionamento(Integer idEstacionamento);
 }
