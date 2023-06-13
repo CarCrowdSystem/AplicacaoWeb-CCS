@@ -48,6 +48,15 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
     )
     Integer pegarTotalCheckoutDiario(Integer idEstacionamento);
 
+    @Query(
+            nativeQuery = true,
+            value = "SELECT sum(valor_pago) AS valoTotal\n" +
+                    "FROM historico\n" +
+                    "WHERE status_registro = '0'\n" +
+                    "    AND CAST(momento_registro AS DATE) = CAST(GETDATE() AS DATE);"
+    )
+    Double pegarTotalFaturamentoDiario(Integer idEstacionamento);
+
     @Query(nativeQuery = true,
     value = "SELECT h.*\n" +
             "FROM historico h\n" +
