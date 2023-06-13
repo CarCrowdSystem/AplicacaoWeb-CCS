@@ -150,4 +150,8 @@ public class HistoricoService {
     public List<Historico> pegarMomentoVagasByEstacionamento(Integer id){
         return repository.pegarMomentoVagasByEstacionamento(id);
     }
+
+    public Integer pegarTotalCheckoutDiario(Integer idEstacionamento){
+        return repository.pegarTotalCheckoutDiario(idEstacionamento);
+    }
 }
