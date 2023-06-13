@@ -93,4 +93,26 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
             ") t ON h.fk_veiculo = t.fk_veiculo AND h.momento_registro = t.ultimo_registro\n" +
             "WHERE h.status_registro = '0';")
     List<Historico> pegarCheckouts(Integer id);
+
+    @Query(nativeQuery = true,
+    value = "SELECT CASE\n" +
+            "    WHEN horas_decorridas * valor_estacionamento.hora_adicional + valor_estacionamento.primeira_hora > valor_estacionamento.diaria THEN valor_estacionamento.diaria\n" +
+            "    ELSE horas_decorridas * valor_estacionamento.hora_adicional + valor_estacionamento.primeira_hora\n" +
+            "    END AS valor_2_horas\n" +
+            "FROM (\n" +
+            "    SELECT TOP 1 \n" +
+            "        CEILING(ABS(DATEDIFF(MINUTE, h.momento_registro, GETDATE())) / 60.0) AS horas_decorridas\n" +
+            "    FROM historico AS h\n" +
+            "    WHERE h.id_historico = ?1\n" +
+            "    ORDER BY h.id_historico DESC\n" +
+            ") AS subquery\n" +
+            "CROSS APPLY (\n" +
+            "    SELECT TOP 1 ve.hora_adicional, ve.primeira_hora, ve.diaria\n" +
+            "    FROM valor_estacionamento AS ve\n" +
+            "    JOIN vaga AS v ON ve.fk_estacionamento = v.fk_estacionamento\n" +
+            "    JOIN historico AS h ON v.id_vaga = h.fk_vaga\n" +
+            "    WHERE h.id_historico = ?1\n" +
+            "    ORDER BY ve.id_preco DESC\n" +
+            ") AS valor_estacionamento")
+    Double calculaPreco(Integer id);
 }
