@@ -5,6 +5,7 @@ import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.entitys.ValorEstacionamento;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.ValorEstacionamentoRepository;
+import carcrowdsystem.ccs.response.ValorResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,7 +39,13 @@ public class ValorEstacionamentoService {
         repository.save(valor);
     }
 
-    public ValorEstacionamento findByIdEstacionamento(Integer id) {
-        return repository.findByIdEstacionamento(id);
+    public ValorResponse findByIdEstacionamento(Integer id) {
+        ValorEstacionamento estacionamento = repository.findByIdEstacionamento(id);
+        ValorResponse response = new ValorResponse();
+        // Mapear os atributos relevantes
+        response.setDiaria(estacionamento.getDiaria());
+        response.setHoraAdicional(estacionamento.getHoraAdicional());
+        response.setPrimeiraHora(estacionamento.getPrimeiraHora());
+        return response;
     }
 }

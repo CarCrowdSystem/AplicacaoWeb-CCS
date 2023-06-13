@@ -3,6 +3,7 @@ package carcrowdsystem.ccs.controllers;
 import carcrowdsystem.ccs.dtos.valorEstacionamento.ValorEstacionamentoDto;
 import carcrowdsystem.ccs.entitys.ValorEstacionamento;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.response.ValorResponse;
 import carcrowdsystem.ccs.services.ValorEstacionamentoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("${uri.dev}/valor")
+@RequestMapping("${uri.dev}/valores")
 public class ValorEstacionamentoController {
     private final ValorEstacionamentoService valorEstacionamentoService;
 
@@ -33,7 +34,7 @@ public class ValorEstacionamentoController {
     }
 
     @GetMapping
-    public ResponseEntity<ValorEstacionamento> getValorByEstacionamento(
+    public ResponseEntity<ValorResponse> getValorByEstacionamento(
         @RequestParam Integer id
     ){
         return ResponseEntity.status(200).body(valorEstacionamentoService.findByIdEstacionamento(id));
