@@ -154,4 +154,8 @@ public class HistoricoService {
     public Integer pegarTotalCheckoutDiario(Integer idEstacionamento){
         return repository.pegarTotalCheckoutDiario(idEstacionamento);
     }
+
+    public Double pegarTotalFaturamentoDiario(Integer idEstacionamento){
+        return repository.pegarTotalFaturamentoDiario(idEstacionamento);
+    }
 }

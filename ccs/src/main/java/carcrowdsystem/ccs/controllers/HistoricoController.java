@@ -105,5 +105,12 @@ public class HistoricoController {
     ){
         return ResponseEntity.ok().body(service.pegarTotalCheckoutDiario(idEstacionamento));
     }
+
+    @GetMapping("/total-faturamento")
+    public ResponseEntity<Double> totalFaturamentoDiario(
+            @RequestParam Integer idEstacionamento
+    ){
+        return ResponseEntity.ok().body(service.pegarTotalFaturamentoDiario(idEstacionamento));
+    }
 }
 
