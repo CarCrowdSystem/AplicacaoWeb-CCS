@@ -146,4 +146,8 @@ public class HistoricoService {
         }
         return listHistoricoDto;
     }
+
+    public List<Historico> pegarMomentoVagasByEstacionamento(Integer id){
+        return repository.pegarMomentoVagasByEstacionamento(id);
+    }
 }
