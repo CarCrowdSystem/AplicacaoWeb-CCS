@@ -6,6 +6,7 @@ import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.response.DadosDashResponse;
 import carcrowdsystem.ccs.response.MomentoVagasResponse;
+import carcrowdsystem.ccs.response.PegarCheckoutsResponse;
 import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
 import carcrowdsystem.ccs.services.HistoricoService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -129,6 +130,13 @@ public class HistoricoController {
         dados.setTotalCheckoutDiario(checkout);
 
         return ResponseEntity.ok().body(dados);
+    }
+
+    @GetMapping("/pegar-checkouts")
+    public ResponseEntity<List<PegarCheckoutsResponse>> pegarCheckouts(
+        @RequestParam Integer id
+    ){
+        return ResponseEntity.ok().body(service.pegarCheckouts(id));
     }
 }
 

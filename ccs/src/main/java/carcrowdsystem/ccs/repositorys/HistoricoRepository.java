@@ -77,4 +77,20 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
             "    GROUP BY fk_vaga\n" +
             ") t ON h.fk_vaga = t.fk_vaga AND h.momento_registro = t.ultimo_registro;")
     List<Historico> pegarMomentoVagasByEstacionamento(Integer id);
+
+    @Query(nativeQuery = true,
+    value = "SELECT h.*\n" +
+            "FROM historico h\n" +
+            "INNER JOIN (\n" +
+            "    SELECT fk_veiculo, MAX(momento_registro) AS ultimo_registro\n" +
+            "    FROM historico\n" +
+            "    WHERE fk_vaga IN (\n" +
+            "        SELECT id_vaga\n" +
+            "        FROM vaga\n" +
+            "        WHERE fk_estacionamento = ?\n" +
+            "    )\n" +
+            "    GROUP BY fk_veiculo\n" +
+            ") t ON h.fk_veiculo = t.fk_veiculo AND h.momento_registro = t.ultimo_registro\n" +
+            "WHERE h.status_registro = '0';")
+    List<Historico> pegarCheckouts(Integer id);
 }

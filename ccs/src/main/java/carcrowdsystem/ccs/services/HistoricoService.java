@@ -9,6 +9,7 @@ import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
 import carcrowdsystem.ccs.response.MomentoVagasResponse;
+import carcrowdsystem.ccs.response.PegarCheckoutsResponse;
 import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.FormatterClosedException;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -171,5 +169,22 @@ public class HistoricoService {
                     return momentoVagas;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public List<PegarCheckoutsResponse> pegarCheckouts(Integer id) {
+        List<Historico> checkouts = repository.pegarCheckouts(id);
+        List<PegarCheckoutsResponse> listResponse = new ArrayList();
+
+        for (Historico historico: checkouts) {
+            PegarCheckoutsResponse response = new PegarCheckoutsResponse();
+            response.setNome(historico.getVeiculo().getNomeCliente());
+            response.setTelefone(historico.getVeiculo().getTelefoneCliente());
+            response.setAndar(historico.getVaga().getAndar());
+            response.setVaga(historico.getVaga().getNumero());
+            response.setValor(historico.getValorPago());
+            listResponse.add(response);
+        }
+
+        return listResponse;
     }
 }
