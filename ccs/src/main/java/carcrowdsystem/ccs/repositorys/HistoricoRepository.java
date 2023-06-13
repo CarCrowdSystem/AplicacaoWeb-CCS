@@ -10,8 +10,13 @@ import java.util.List;
 public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
     @Query(
         nativeQuery = true,
-        value = "SELECT distinct fk_veiculo, * from HISTORICO" +
-        " order by status_registro  desc limit (SELECT count(distinct fk_veiculo) from HISTORICO)"
+        value = "SELECT h.*\n" +
+                "FROM (\n" +
+                "    SELECT *,\n" +
+                "           ROW_NUMBER() OVER (PARTITION BY fk_veiculo ORDER BY momento_registro DESC) AS rn\n" +
+                "    FROM HISTORICO\n" +
+                ") AS h\n" +
+                "WHERE h.rn = 1;"
     )
     List<Historico> pegarMomento();
 

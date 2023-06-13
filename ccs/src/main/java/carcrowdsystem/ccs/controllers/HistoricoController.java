@@ -5,6 +5,7 @@ import carcrowdsystem.ccs.entitys.Historico;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.response.DadosDashResponse;
+import carcrowdsystem.ccs.response.HistoricoResponse;
 import carcrowdsystem.ccs.response.MomentoVagasResponse;
 import carcrowdsystem.ccs.response.PegarCheckoutsResponse;
 import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
@@ -41,7 +42,7 @@ public class HistoricoController {
             @RequestParam Integer idVeiculo,
             @RequestParam Integer idVaga
     ) throws MyException {
-        Historico ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        HistoricoResponse ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
         if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Saida)) {
             newHistorico.setStatusRegistro(StatusVagaEnum.Entrada);
             return service.postHistorico(newHistorico, idVeiculo, idVaga);
@@ -54,11 +55,11 @@ public class HistoricoController {
     public ResponseEntity checkout(
             @RequestParam Integer idVeiculo
     ) throws MyException {
-        Historico ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        HistoricoResponse ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
         if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Entrada)) {
             HistoricoDto newHistorico =
                     new HistoricoDto(StatusVagaEnum.Saida, service.calculaPreco(ultimoHistorico.getId()));
-            return service.postHistorico(newHistorico, idVeiculo, ultimoHistorico.getVaga().getId());
+            return service.postHistorico(newHistorico, idVeiculo, ultimoHistorico.getIdVaga());
         } else {
             return ResponseEntity.status(400).body("O veiculo não está no estacionamento");
         }
@@ -75,11 +76,11 @@ public class HistoricoController {
     }
 
     @GetMapping("/pegar-momento")
-    public ResponseEntity<List<Historico>> pegarMomento(){
+    public ResponseEntity<List<HistoricoResponse>> pegarMomento(){
         return ResponseEntity.ok(service.pegarMomento());
     }
     @GetMapping("/pegar-momento-idVeiculo")
-    public ResponseEntity<Historico> pegarMomentoByIdVeiculo(
+    public ResponseEntity<HistoricoResponse> pegarMomentoByIdVeiculo(
         @RequestParam Integer idVeiculo
     ){
         return ResponseEntity.ok().body(service.pegarMomentoByIdVeiculo(idVeiculo));

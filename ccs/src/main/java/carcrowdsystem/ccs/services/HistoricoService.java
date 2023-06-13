@@ -8,6 +8,7 @@ import carcrowdsystem.ccs.entitys.Vaga;
 import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
+import carcrowdsystem.ccs.response.HistoricoResponse;
 import carcrowdsystem.ccs.response.MomentoVagasResponse;
 import carcrowdsystem.ccs.response.PegarCheckoutsResponse;
 import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
@@ -125,12 +126,18 @@ public class HistoricoService {
         repository.save(historico);
     }
 
-    public List<Historico> pegarMomento() {
-        return repository.pegarMomento();
+    public List<HistoricoResponse> pegarMomento() {
+        List<Historico> listH = repository.pegarMomento();
+        List<HistoricoResponse> listResult = new ArrayList();
+        for (Historico h: listH){
+            listResult.add(toHistoricoResponse(h));
+        }
+        return listResult;
     }
 
-    public Historico pegarMomentoByIdVeiculo(Integer idVeiculo) {
-        return repository.pegarMomentoByIdVeiculo(idVeiculo);
+    public HistoricoResponse pegarMomentoByIdVeiculo(Integer idVeiculo) {
+        Historico h = repository.pegarMomentoByIdVeiculo(idVeiculo);
+        return toHistoricoResponse(h);
     }
 
     public List<UltimoHistoricoVagaDtoResponse> pegarMomentoByIdEstacionamento(Integer idEstacionamento) {
@@ -192,5 +199,16 @@ public class HistoricoService {
 
     public Double calculaPreco(Integer id){
         return repository.calculaPreco(id);
+    }
+
+    private HistoricoResponse toHistoricoResponse(Historico h){
+        HistoricoResponse response = new HistoricoResponse();
+        response.setId(h.getId());
+        response.setIdVeiculo(h.getVeiculo().getId());
+        response.setMomentoRegistro(h.getMomentoRegistro());
+        response.setIdVaga(h.getVaga().getId());
+        response.setStatusRegistro(h.getStatusRegistro());
+        response.setValorPago(h.getValorPago());
+        return response;
     }
 }
