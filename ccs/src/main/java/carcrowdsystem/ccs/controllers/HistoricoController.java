@@ -99,5 +99,11 @@ public class HistoricoController {
     public ResponseEntity<List<Historico>> pegarMomentoVagasByEstacionamento(@RequestParam Integer idEstacionamento){
         return ResponseEntity.ok().body(service.pegarMomentoVagasByEstacionamento(idEstacionamento));
     }
+    @GetMapping("/total-checkout")
+    public ResponseEntity<Integer> totalCheckoutDiario(
+            @RequestParam Integer idEstacionamento
+    ){
+        return ResponseEntity.ok().body(service.pegarTotalCheckoutDiario(idEstacionamento));
+    }
 }
 
