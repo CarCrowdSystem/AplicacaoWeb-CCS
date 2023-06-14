@@ -38,14 +38,13 @@ public class HistoricoController {
 
     @PostMapping("/checkin")
     public ResponseEntity checkin(
-            @RequestBody HistoricoDto newHistorico,
             @RequestParam Integer idVeiculo,
             @RequestParam Integer idVaga
     ) throws MyException {
         HistoricoResponse ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
         if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Saida)) {
-            newHistorico.setStatusRegistro(StatusVagaEnum.Entrada);
-            return service.postHistorico(newHistorico, idVeiculo, idVaga);
+            return service.postHistorico(
+                new HistoricoDto(StatusVagaEnum.Entrada, 0.0), idVeiculo, idVaga);
         } else {
             return ResponseEntity.status(400).body("O veiculo já está no estacionamento");
         }

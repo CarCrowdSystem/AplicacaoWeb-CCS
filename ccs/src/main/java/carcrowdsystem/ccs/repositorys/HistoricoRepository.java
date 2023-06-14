@@ -53,7 +53,7 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "    FROM vaga\n" +
                     "    WHERE fk_estacionamento = ?\n" +
                     ")\n" +
-                    "AND CAST(momento_registro AS DATE) = CAST(GETDATE() AS DATE)\n" +
+                    "AND CONVERT(DATE, momento_registro) = CONVERT(DATE, DATEADD(HOUR, -3, GETDATE()))\n" +
                     "AND status_registro = '1';"
     )
     Integer pegarTotalCheckoutDiario(Integer idEstacionamento);
@@ -67,7 +67,7 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "    FROM vaga\n" +
                     "    WHERE fk_estacionamento = ?\n" +
                     ")\n" +
-                    "AND CAST(momento_registro AS DATE) = CAST(GETDATE() AS DATE);"
+                    "AND CONVERT(DATE, momento_registro) = CONVERT(DATE, DATEADD(HOUR, -3, GETDATE()));"
     )
     Double pegarTotalFaturamentoDiario(Integer idEstacionamento);
 
