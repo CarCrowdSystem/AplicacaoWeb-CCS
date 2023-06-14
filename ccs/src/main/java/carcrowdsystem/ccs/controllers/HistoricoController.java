@@ -2,6 +2,7 @@ package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
 import carcrowdsystem.ccs.entitys.Historico;
+import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.response.*;
@@ -41,7 +42,22 @@ public class HistoricoController {
         HistoricoResponse ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
         if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Saida)) {
             return service.postHistorico(
-                new HistoricoDto(StatusVagaEnum.Entrada, 0.0), idVeiculo, idVaga);
+                    new HistoricoDto(StatusVagaEnum.Entrada, 0.0), idVeiculo, idVaga);
+        } else {
+            return ResponseEntity.status(400).body("O veiculo já está no estacionamento");
+        }
+    }
+
+    @PostMapping("/checkin-placa")
+    public ResponseEntity checkinPlaca(
+            @RequestParam String placa,
+            @RequestParam Integer idVaga
+    ) throws MyException {
+        Integer idVeiculo = service.pegarVeiculoPorPlaca(placa).getId();
+        HistoricoResponse ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Saida)) {
+            return service.postHistorico(
+                    new HistoricoDto(StatusVagaEnum.Entrada, 0.0), idVeiculo, idVaga);
         } else {
             return ResponseEntity.status(400).body("O veiculo já está no estacionamento");
         }

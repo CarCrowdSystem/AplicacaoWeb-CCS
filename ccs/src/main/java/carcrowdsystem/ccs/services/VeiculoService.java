@@ -6,6 +6,8 @@ import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.VeiculoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class VeiculoService {
     private final VeiculoRepository repository;
@@ -32,5 +34,9 @@ public class VeiculoService {
         return repository.findById(idVeiculo).orElseThrow(
             () -> new MyException(404, "Ve  iculo não existe", "VE-002")
         );
+    }
+
+    public Optional<Veiculo> findByPlaca(String placa){
+        return repository.findByPlacaEqualsIgnoreCase(placa);
     }
 }

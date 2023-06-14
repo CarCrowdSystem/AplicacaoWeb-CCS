@@ -3,9 +3,18 @@ package carcrowdsystem.ccs.response;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 
 public class MomentoVagasResponse {
+    private Integer idVaga;
     private Integer numero;
     private String andar;
     private StatusVagaEnum statusRegistro;
+
+    public Integer getIdVaga() {
+        return idVaga;
+    }
+
+    public void setIdVaga(Integer idVaga) {
+        this.idVaga = idVaga;
+    }
 
     public Integer getNumero() {
         return numero;

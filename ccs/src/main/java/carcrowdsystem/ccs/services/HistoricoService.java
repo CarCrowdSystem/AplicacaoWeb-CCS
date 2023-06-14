@@ -173,6 +173,7 @@ public class HistoricoService {
         return historicos.stream()
                 .map(historico -> {
                     MomentoVagasResponse momentoVagas = new MomentoVagasResponse();
+                    momentoVagas.setIdVaga(historico.getVaga().getId());
                     momentoVagas.setNumero(historico.getVaga().getNumero());
                     momentoVagas.setAndar(historico.getVaga().getAndar());
                     momentoVagas.setStatusRegistro(historico.getStatusRegistro());
@@ -239,5 +240,9 @@ public class HistoricoService {
         response.setStatus(h.getStatusRegistro().toString());
         response.setValor(decimalFormat.format(h.getValorPago()));
         return response;
+    }
+
+    public Veiculo pegarVeiculoPorPlaca(String placa) {
+        return veiculoController.findByPlaca(placa);
     }
 }

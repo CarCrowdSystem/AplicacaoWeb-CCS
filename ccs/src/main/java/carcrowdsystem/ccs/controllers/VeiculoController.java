@@ -28,4 +28,8 @@ public class VeiculoController {
     ) throws MyException {
         return ResponseEntity.ok(service.findById(idVeiculo));
     }
+
+    public Veiculo findByPlaca(String placa) {
+        return service.findByPlaca(placa).get();
+    }
 }
