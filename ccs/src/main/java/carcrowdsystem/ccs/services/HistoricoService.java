@@ -47,11 +47,10 @@ public class HistoricoService {
         return repository.findAll();
     }
 
-    public static String gravaArquivoCsv(List<Historico> lista) throws MyException {
+    public static String gravaArquivoCsv(List<HistoricoDadosResponse> lista) throws MyException {
         FileWriter arq = null;
         Formatter saida = null;
         String nome = LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyyyyHHmmss")) + "-historico.csv";
-
 
         // Bloc try catch para abrir o arquivo
         try {
@@ -67,16 +66,12 @@ public class HistoricoService {
         try {
             saida.format("%-15S;%-10S;%-7S;%-7S;%5S;%-14S;%-10S;%7S;%7S;%10S\n",
                     "CLIENTE","MODELO","PLACA","ANDAR","VAGA","TELEFONE","DATA","HORA","STATUS","VALOR");
-            for (Historico h: lista){
-                Veiculo veiculo = h.getVeiculo();
-                Vaga vaga = h.getVaga();
-                LocalDate data = h.getMomentoRegistro().toLocalDate();
-                LocalTime hora = h.getMomentoRegistro().toLocalTime();
+            for (HistoricoDadosResponse h: lista){
                 saida.format("%-15S;%-10S;%-7S;%-7S;%5d;%-10S;%-10S;%7S;%7S;%10.2f\n",
-                veiculo.getNomeCliente(), veiculo.getModelo(), veiculo.getPlaca(),
-                vaga.getAndar(), vaga.getNumero(), veiculo.getTelefoneCliente(),
-                data, hora, h.getStatusRegistro(),
-                h.getValorPago());
+                h.getCliente(), h.getModelo(), h.getPlaca(),
+                h.getAndar(), h.getVaga(), h.getTelefone(),
+                h.getData(), h.getHora(), h.getStatus(),
+                h.getValor());
             }
         }
         catch (FormatterClosedException erro){

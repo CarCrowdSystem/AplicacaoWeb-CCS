@@ -109,8 +109,8 @@ public class FuncionarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteVaga(@PathVariable Integer id) throws MyException {
+    public ResponseEntity deleteFuncionario(@PathVariable Integer id) throws MyException {
         funcionarioAdapter.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

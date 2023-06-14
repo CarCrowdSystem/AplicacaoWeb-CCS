@@ -81,10 +81,10 @@ public class HistoricoController {
             @ApiResponse(responseCode = "200", description = "Arquivo criado")
     })
     @GetMapping("/gerar-csv")
-    public ResponseEntity gerarCsv() throws MyException {
-        List<Historico> listaHistorico = getAllHistorico();
-        String nome = service.gravaArquivoCsv(listaHistorico);
-        return ResponseEntity.status(200).body("Arquivo '"+nome+"' criado com sucesso");
+    public ResponseEntity gerarCsv(@RequestParam Integer id) throws MyException {
+        List<HistoricoDadosResponse> listHistorico = pegaDadosHistorico(id).getBody();
+        String nome = service.gravaArquivoCsv(listHistorico);
+        return ResponseEntity.status(200).body("Arquivo '"+"' criado com sucesso");
     }
 
     @GetMapping("/pegar-momento")
