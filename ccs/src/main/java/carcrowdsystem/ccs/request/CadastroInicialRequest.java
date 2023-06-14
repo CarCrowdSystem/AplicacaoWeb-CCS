@@ -5,6 +5,7 @@ import carcrowdsystem.ccs.request.dtos.VagaDtoRequest;
 import java.util.List;
 
 public class CadastroInicialRequest {
+    private Integer idVeiculo;
     private String cepEmpresa;
     private String cnpjEmpresa;
     private String enderecoEmpresa;
@@ -15,6 +16,14 @@ public class CadastroInicialRequest {
     private String nomeUsuario;
     private String senha;
     private List<VagaDtoRequest> vagas;
+
+    public Integer getIdVeiculo() {
+        return idVeiculo;
+    }
+
+    public void setIdVeiculo(Integer idVeiculo) {
+        this.idVeiculo = idVeiculo;
+    }
 
     public String getCepEmpresa() {
         return cepEmpresa;

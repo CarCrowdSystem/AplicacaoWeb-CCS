@@ -56,6 +56,7 @@ public class Funcionario {
 
     public FuncionarioDto toFuncionarioDto(){
         return new FuncionarioDto(
+                id,
                 nome,
                 cpf,
                 usuarioAdm,

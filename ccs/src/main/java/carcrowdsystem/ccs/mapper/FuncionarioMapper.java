@@ -39,6 +39,7 @@ public class FuncionarioMapper {
 
     public FuncionarioDto toFuncionarioDto(FuncionarioAbstract f){
         return new FuncionarioDto(
+                f.getId(),
                 f.getNome(),
                 f.getCpf(),
                 f.getAdm(),
@@ -47,6 +48,7 @@ public class FuncionarioMapper {
     }
     public FuncionarioDto toFuncionarioDto(Funcionario f){
         return new FuncionarioDto(
+                f.getId(),
                 f.getNome(),
                 f.getCpf(),
                 f.getUsuarioAdm(),

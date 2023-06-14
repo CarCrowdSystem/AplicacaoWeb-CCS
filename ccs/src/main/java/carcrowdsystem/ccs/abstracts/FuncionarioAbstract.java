@@ -46,6 +46,7 @@ public abstract class FuncionarioAbstract {
 
     public FuncionarioDto toFuncionarioDto(){
         return new FuncionarioDto(
+                id,
                 nome,
                 cpf,
                 adm,
