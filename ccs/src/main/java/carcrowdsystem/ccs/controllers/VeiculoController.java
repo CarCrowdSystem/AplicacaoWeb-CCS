@@ -20,7 +20,11 @@ public class VeiculoController {
     public ResponseEntity postVeiculo(
         @RequestBody VeiculoRequest newVeiculo
     ) throws MyException {
-        return ResponseEntity.ok(service.postVeiculo(newVeiculo));
+        try {
+            return ResponseEntity.ok(service.postVeiculo(newVeiculo));
+        }catch (Exception e){
+            throw new MyException(404, "Placa já cadastrada", "V-007");
+        }
     }
 
     public ResponseEntity<Veiculo> getVeiculoById(

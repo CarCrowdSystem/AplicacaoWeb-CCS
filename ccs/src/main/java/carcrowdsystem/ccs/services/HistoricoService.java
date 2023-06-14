@@ -237,7 +237,11 @@ public class HistoricoService {
         return response;
     }
 
-    public Veiculo pegarVeiculoPorPlaca(String placa) {
-        return veiculoController.findByPlaca(placa);
+    public Veiculo pegarVeiculoPorPlaca(String placa) throws MyException {
+        try{
+            return veiculoController.findByPlaca(placa);
+        }catch (Exception e){
+            throw new MyException(404, "Essa placa não existe", "H-010");
+        }
     }
 }

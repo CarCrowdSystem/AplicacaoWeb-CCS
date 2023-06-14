@@ -54,7 +54,13 @@ public class HistoricoController {
             @RequestParam Integer idVaga
     ) throws MyException {
         Integer idVeiculo = service.pegarVeiculoPorPlaca(placa).getId();
-        HistoricoResponse ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        HistoricoResponse ultimoHistorico = new HistoricoResponse();
+        try {
+            ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        } catch (Exception e){
+            return service.postHistorico(
+                    new HistoricoDto(StatusVagaEnum.Entrada, 0.0), idVeiculo, idVaga);
+        }
         if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Saida)) {
             return service.postHistorico(
                     new HistoricoDto(StatusVagaEnum.Entrada, 0.0), idVeiculo, idVaga);
