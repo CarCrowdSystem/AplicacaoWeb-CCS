@@ -9,6 +9,7 @@ import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
+import carcrowdsystem.ccs.response.HistoricoDadosResponse;
 import carcrowdsystem.ccs.response.HistoricoResponse;
 import carcrowdsystem.ccs.response.MomentoVagasResponse;
 import carcrowdsystem.ccs.response.PegarCheckoutsResponse;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -204,6 +206,14 @@ public class HistoricoService {
         return repository.calculaPreco(id);
     }
 
+    public List<HistoricoDadosResponse> findByIdEstacionamentoPegaDados(Integer id) {
+        List<Historico> historicos = repository.pegarDadosHistoricoByIdEstacionamento(id);
+        List<HistoricoDadosResponse> listResult = new ArrayList();
+        for (Historico h: historicos){
+            listResult.add(toHistoricoDadosResponse(h));
+        }
+        return listResult;
+    }
     private HistoricoResponse toHistoricoResponse(Historico h){
         HistoricoResponse response = new HistoricoResponse();
         response.setId(h.getId());
@@ -212,6 +222,22 @@ public class HistoricoService {
         response.setIdVaga(h.getVaga().getId());
         response.setStatusRegistro(h.getStatusRegistro());
         response.setValorPago(h.getValorPago());
+        return response;
+    }
+
+    private HistoricoDadosResponse toHistoricoDadosResponse(Historico h){
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        HistoricoDadosResponse response = new HistoricoDadosResponse();
+        response.setCliente(h.getVeiculo().getNomeCliente());
+        response.setModelo(h.getVeiculo().getModelo());
+        response.setPlaca(h.getVeiculo().getPlaca());
+        response.setAndar(h.getVaga().getAndar());
+        response.setVaga(h.getVaga().getNumero());
+        response.setTelefone(h.getVeiculo().getTelefoneCliente());
+        response.setData(h.getMomentoRegistro().toLocalDate().toString());
+        response.setHora(h.getMomentoRegistro().format(DateTimeFormatter.ofPattern("HH:mm:ss")).toString());
+        response.setStatus(h.getStatusRegistro().toString());
+        response.setValor(decimalFormat.format(h.getValorPago()));
         return response;
     }
 }

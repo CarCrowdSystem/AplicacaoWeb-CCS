@@ -4,10 +4,7 @@ import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
 import carcrowdsystem.ccs.entitys.Historico;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
-import carcrowdsystem.ccs.response.DadosDashResponse;
-import carcrowdsystem.ccs.response.HistoricoResponse;
-import carcrowdsystem.ccs.response.MomentoVagasResponse;
-import carcrowdsystem.ccs.response.PegarCheckoutsResponse;
+import carcrowdsystem.ccs.response.*;
 import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
 import carcrowdsystem.ccs.services.HistoricoService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -137,6 +134,13 @@ public class HistoricoController {
         @RequestParam Integer id
     ){
         return ResponseEntity.ok().body(service.pegarCheckouts(id));
+    }
+
+    @GetMapping("/dados")
+    public ResponseEntity<List<HistoricoDadosResponse>> pegaDadosHistorico(
+        @RequestParam Integer id
+    ){
+        return ResponseEntity.ok().body(service.findByIdEstacionamentoPegaDados(id));
     }
 }
 

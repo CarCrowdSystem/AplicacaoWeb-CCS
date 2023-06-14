@@ -18,7 +18,7 @@ public class Historico {
     @Column(name = "status_registro")
     private StatusVagaEnum statusRegistro;
     @Column(name = "valor_pago")
-    private Double valorPago;
+    private Double valorPago = 0.0;
     @ManyToOne
     @JoinColumn(name = "fk_veiculo")
     private Veiculo veiculo;

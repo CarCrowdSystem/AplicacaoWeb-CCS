@@ -120,4 +120,15 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
             "    ORDER BY ve.id_preco DESC\n" +
             ") AS valor_estacionamento")
     Double calculaPreco(Integer id);
+
+    @Query(nativeQuery = true,
+    value = "SELECT TOP 25 *\n" +
+            "FROM historico\n" +
+            "WHERE fk_vaga IN (\n" +
+            "    SELECT id_vaga\n" +
+            "    FROM vaga\n" +
+            "    WHERE fk_estacionamento = ?\n" +
+            ")\n" +
+            "ORDER BY momento_registro DESC;")
+    List<Historico> pegarDadosHistoricoByIdEstacionamento(Integer id);
 }
