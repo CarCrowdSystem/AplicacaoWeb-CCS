@@ -1,4 +1,4 @@
-package carcrowdsystem.ccs.services;
+package carcrowdsystem.ccs.services.builders;
 
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.entitys.Funcionario;
@@ -26,16 +26,4 @@ public class FuncionarioBuilder {
         funcionario2.setUsuarioAdm(false);
         return List.of(new Funcionario(), new Funcionario());
     }
-
-    public static List<Funcionario> criarArrayFuncionario(){
-        FuncionarioDto[] funcionarios = new FuncionarioDto[
-                {new FuncionarioDto(1, "Teste", "22233344499", false,
-                        "teste1@gmail.com")}, {new FuncionarioDto(2, "Teste2", "33344455588",
-                        false, "teste2@gmail.com")}
-        ];
-
-        return List.of(new Funcionario(), new Funcionario());
-    }
-
-
 }
