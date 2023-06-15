@@ -2,7 +2,6 @@ package carcrowdsystem.ccs.adapter;
 
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
-import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.FuncionarioRequest;
 import carcrowdsystem.ccs.response.LoginResponse;
@@ -14,7 +13,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, FuncionarioRequest>{
+public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, FuncionarioRequest> {
+    public ResponseEntity<List<FuncionarioDto>> getFuncionariosPorNome(String nome) throws MyException {
+        return service.getFuncionariosPorNome(nome);
+    }
+
     @Autowired
     private FuncionarioService service;
 
