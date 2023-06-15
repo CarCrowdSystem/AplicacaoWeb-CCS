@@ -17,15 +17,15 @@ import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.FormatterClosedException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -101,11 +101,11 @@ public class HistoricoService {
         Integer idVaga
     ) throws MyException {
         try {
-            Vaga vaga = vagaController.getVagaById(idVaga).getBody();
-            Veiculo veiculo = veiculoController.getVeiculoById(idVeiculo).getBody();
+            ResponseEntity<Vaga> vaga = vagaController.getVagaById(idVaga);
+            ResponseEntity<Veiculo> veiculo = veiculoController.getVeiculoById(idVeiculo);
             Historico historico = new Historico();
-            historico.setVaga(vaga);
-            historico.setVeiculo(veiculo);
+            historico.setVaga(vaga.getBody());
+            historico.setVeiculo(veiculo.getBody());
             historico.setValorPago(newHistorico.getValorPago());
             historico.setStatusRegistro(newHistorico.getStatusRegistro());
             historico.setMomentoRegistro(newHistorico.getMomentoRegistro());

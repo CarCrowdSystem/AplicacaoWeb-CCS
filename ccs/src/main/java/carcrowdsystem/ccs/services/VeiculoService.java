@@ -32,7 +32,7 @@ public class VeiculoService {
 
     public Veiculo findById(Integer idVeiculo) throws MyException {
         return repository.findById(idVeiculo).orElseThrow(
-            () -> new MyException(404, "Ve  iculo não existe", "VE-002")
+            () -> new MyException(404, "Veiculo não existe", "VE-002")
         );
     }
 
