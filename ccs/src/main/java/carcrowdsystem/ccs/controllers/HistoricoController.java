@@ -74,7 +74,7 @@ public class HistoricoController {
             @RequestParam Integer idVeiculo
     ) throws MyException {
         HistoricoResponse ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
-        if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Entrada)) {
+        if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Processando)) {
             HistoricoDto newHistorico =
                     new HistoricoDto(StatusVagaEnum.Saida, service.calculaPreco(ultimoHistorico.getId()));
             return service.postHistorico(newHistorico, idVeiculo, ultimoHistorico.getIdVaga());
@@ -87,10 +87,10 @@ public class HistoricoController {
             @ApiResponse(responseCode = "200", description = "Arquivo criado")
     })
     @GetMapping("/gerar-csv")
-    public ResponseEntity gerarCsv(@RequestParam Integer id) throws MyException {
+    public ResponseEntity<String> gerarCsv(@RequestParam Integer id) throws MyException {
         List<HistoricoDadosResponse> listHistorico = pegaDadosHistorico(id).getBody();
         String nome = service.gravaArquivoCsv(listHistorico);
-        return ResponseEntity.status(200).body("Arquivo '"+"' criado com sucesso");
+        return ResponseEntity.status(200).body(nome);
     }
 
     @GetMapping("/pegar-momento")
@@ -165,7 +165,7 @@ public class HistoricoController {
         return ResponseEntity.ok().body(service.findByIdEstacionamentoPegaDados(id));
     }
 
-    @PostMapping("/Processar")
+    @PostMapping("/processar")
     public ResponseEntity pedeRetiradaCarro(
         @RequestParam String placa
     ) throws MyException {

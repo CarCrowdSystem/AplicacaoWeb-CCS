@@ -182,7 +182,7 @@ public class HistoricoService {
         List<PegarCheckoutsResponse> listResponse = new ArrayList();
 
         for (Historico historico: checkouts) {
-            if(historico.getStatusRegistro().equals(StatusVagaEnum.Entrada)) {
+            if(historico.getStatusRegistro().equals(StatusVagaEnum.Processando)) {
                 PegarCheckoutsResponse response = new PegarCheckoutsResponse();
                 response.setNome(historico.getVeiculo().getNomeCliente());
                 response.setTelefone(historico.getVeiculo().getTelefoneCliente());
