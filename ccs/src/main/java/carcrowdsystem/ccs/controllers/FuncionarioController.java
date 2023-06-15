@@ -62,6 +62,13 @@ public class FuncionarioController {
         return ResponseEntity.status(200).body(funcionarioAdapter.getAllFuncs(id));
     }
 
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<List<FuncionarioDto>> getFuncionarioPorNome(
+            @PathVariable String nome
+    ) throws MyException {
+        return ResponseEntity.status(200).body(funcionarioAdapter.getFuncionariosPorNome(nome).getBody());
+    }
+
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Ordenação feita com sucesso"),
     })

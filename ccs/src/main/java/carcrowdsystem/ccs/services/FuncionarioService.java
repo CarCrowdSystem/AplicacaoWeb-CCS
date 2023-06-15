@@ -179,4 +179,10 @@ public class FuncionarioService {
         funcionarioRepository.save(func);
         return true;
     }
+
+
+    public ResponseEntity<List<FuncionarioDto>> getFuncionariosPorNome(String nome) throws MyException {
+        List<FuncionarioDto> funcionarioDtos = listFuncToListFuncDto(funcionarioRepository.findByNomeContainsIgnoreCase(nome));
+        return ResponseEntity.status(200).body(funcionarioDtos);
+    }
 }
