@@ -17,6 +17,7 @@ import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -47,44 +48,41 @@ public class HistoricoService {
         return repository.findAll();
     }
 
-    public static String gravaArquivoCsv(List<HistoricoDadosResponse> lista) throws MyException {
+    public String gravaArquivoCsv(List<HistoricoDadosResponse> lista) throws IOException, MyException {
         FileWriter arq = null;
         Formatter saida = null;
-        String nome = LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyyyyHHmmss")) + "-historico.csv";
+        String nome = System.getProperty("java.io.tmpdir") +
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyyyyHHmmss")) + "-historico.csv";
 
-        // Bloc try catch para abrir o arquivo
+        // Bloco try-catch para abrir o arquivo
         try {
             arq = new FileWriter(nome);
             saida = new Formatter(arq);
-        }
-        catch (IOException erro){
+        } catch (IOException erro) {
             System.out.println("Erro ao abrir o arquivo.");
             throw new MyException(400, "Erro ao abrir o arquivo.", "H-001");
         }
 
-        // Bloco try catch para gravar o arquivo
+        // Bloco try-catch para gravar o arquivo
         try {
             saida.format("%-15S;%-10S;%-7S;%-7S;%5S;%-14S;%-10S;%7S;%7S;%10S\n",
-                    "CLIENTE","MODELO","PLACA","ANDAR","VAGA","TELEFONE","DATA","HORA","STATUS","VALOR");
-            for (HistoricoDadosResponse h: lista){
-                saida.format("%-15S;%-10S;%-7S;%-7S;%5d;%-10S;%-10S;%7S;%7S;%10.2f\n",
-                h.getCliente(), h.getModelo(), h.getPlaca(),
-                h.getAndar(), h.getVaga(), h.getTelefone(),
-                h.getData(), h.getHora(), h.getStatus(),
-                h.getValor());
+                    "CLIENTE", "MODELO", "PLACA", "ANDAR", "VAGA", "TELEFONE", "DATA", "HORA", "STATUS", "VALOR");
+            for (HistoricoDadosResponse h : lista) {
+                saida.format("%-15S;%-10S;%-7S;%-7S;%5d;%-10S;%-10S;%7S;%7S;%10S\n",
+                        h.getCliente(), h.getModelo(), h.getPlaca(),
+                        h.getAndar(), h.getVaga(), h.getTelefone(),
+                        h.getData(), h.getHora(), h.getStatus(),
+                        h.getValor());
             }
-        }
-        catch (FormatterClosedException erro){
+        } catch (FormatterClosedException erro) {
             System.out.println("Erro ao gravar o arquivo");
             throw new MyException(400, "Erro ao gravar o arquivo", "H-002");
-        }
-        finally {
+        } finally {
             saida.close();
             try {
                 arq.close();
                 return nome;
-            }
-            catch (IOException erro){
+            } catch (IOException erro) {
                 System.out.println("Erro ao fechar o arquivo");
                 throw new MyException(400, "Erro ao fechar o arquivo", "H-003");
             }
@@ -182,7 +180,7 @@ public class HistoricoService {
         List<PegarCheckoutsResponse> listResponse = new ArrayList();
 
         for (Historico historico: checkouts) {
-            if(historico.getStatusRegistro().equals(StatusVagaEnum.Entrada)) {
+            if(historico.getStatusRegistro().equals(StatusVagaEnum.Processando)) {
                 PegarCheckoutsResponse response = new PegarCheckoutsResponse();
                 response.setNome(historico.getVeiculo().getNomeCliente());
                 response.setTelefone(historico.getVeiculo().getTelefoneCliente());
