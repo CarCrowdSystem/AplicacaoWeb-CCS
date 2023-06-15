@@ -2,7 +2,6 @@ package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
 import carcrowdsystem.ccs.entitys.Historico;
-import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.response.*;
@@ -12,9 +11,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -86,11 +88,12 @@ public class HistoricoController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Arquivo criado")
     })
-    @GetMapping("/gerar-csv")
-    public ResponseEntity<String> gerarCsv(@RequestParam Integer id) throws MyException {
+    @GetMapping("/download-csv")
+    public FileSystemResource gerarCsv(@RequestParam Integer id) throws MyException, IOException {
         List<HistoricoDadosResponse> listHistorico = pegaDadosHistorico(id).getBody();
-        String nome = service.gravaArquivoCsv(listHistorico);
-        return ResponseEntity.status(200).body(nome);
+        String filePath = service.gravaArquivoCsv(listHistorico);
+        File file = new File(filePath);
+        return new FileSystemResource(file);
     }
 
     @GetMapping("/pegar-momento")
