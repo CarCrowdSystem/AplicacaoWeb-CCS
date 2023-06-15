@@ -14,8 +14,8 @@ import java.util.List;
 
 @Service
 public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, FuncionarioRequest> {
-    public ResponseEntity<List<FuncionarioDto>> getFuncionariosPorNome(String nome) throws MyException {
-        return service.getFuncionariosPorNome(nome);
+    public ResponseEntity<List<FuncionarioDto>> getFuncionariosPorNomeEIdEstacionamento(String nome, Integer idEstacionamento) throws MyException {
+        return service.getFuncionariosPorNomeEIdEstacionamento(nome, idEstacionamento);
     }
 
     @Autowired

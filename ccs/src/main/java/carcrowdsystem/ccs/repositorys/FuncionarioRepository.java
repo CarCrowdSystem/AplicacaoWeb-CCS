@@ -17,7 +17,11 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Intege
     )
     List<Funcionario> findAllByIdEstacionamento(Integer id);
 
-    List<Funcionario> findByNomeContainsIgnoreCase(String nome);
+    @Query(nativeQuery = true,
+            value = "SELECT * FROM funcionario JOIN estacionamento on funcionario.fk_estacionamento = estacionamento.id_estacionamento WHERE nome_funcionario = '?' AND id_estacionamento = ?"
+    )
+    List<Funcionario> findByNomeContainsIgnoreCaseAndIdEstacionamento(String nome, Integer idEstacionamento);
+
 
 //
 //    @Override

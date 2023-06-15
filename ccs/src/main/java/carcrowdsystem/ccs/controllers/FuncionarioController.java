@@ -62,11 +62,12 @@ public class FuncionarioController {
         return ResponseEntity.status(200).body(funcionarioAdapter.getAllFuncs(id));
     }
 
-    @GetMapping("/nome/{nome}")
+    @GetMapping("/buscar-nome-funcionario/{idEstacionamento}/{nome}")
     public ResponseEntity<List<FuncionarioDto>> getFuncionarioPorNome(
-            @PathVariable String nome
+            @PathVariable String nome,
+            @PathVariable Integer idEstacionamento
     ) throws MyException {
-        return ResponseEntity.status(200).body(funcionarioAdapter.getFuncionariosPorNome(nome).getBody());
+        return ResponseEntity.status(200).body(funcionarioAdapter.getFuncionariosPorNomeEIdEstacionamento(nome, idEstacionamento).getBody());
     }
 
     @ApiResponses({

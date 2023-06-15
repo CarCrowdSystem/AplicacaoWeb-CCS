@@ -181,8 +181,8 @@ public class FuncionarioService {
     }
 
 
-    public ResponseEntity<List<FuncionarioDto>> getFuncionariosPorNome(String nome) throws MyException {
-        List<FuncionarioDto> funcionarioDtos = listFuncToListFuncDto(funcionarioRepository.findByNomeContainsIgnoreCase(nome));
+    public ResponseEntity<List<FuncionarioDto>> getFuncionariosPorNomeEIdEstacionamento(String nome, Integer idEstacionamento) throws MyException {
+        List<FuncionarioDto> funcionarioDtos = listFuncToListFuncDto(funcionarioRepository.findByNomeContainsIgnoreCaseAndIdEstacionamento(nome, idEstacionamento));
         return ResponseEntity.status(200).body(funcionarioDtos);
     }
 }
