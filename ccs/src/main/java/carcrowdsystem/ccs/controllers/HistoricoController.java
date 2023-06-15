@@ -54,7 +54,7 @@ public class HistoricoController {
             @RequestParam Integer idVaga
     ) throws MyException {
         Integer idVeiculo = service.pegarVeiculoPorPlaca(placa).getId();
-        HistoricoResponse ultimoHistorico = new HistoricoResponse();
+        HistoricoResponse ultimoHistorico;
         try {
             ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
         } catch (Exception e){
@@ -163,6 +163,26 @@ public class HistoricoController {
         @RequestParam Integer id
     ){
         return ResponseEntity.ok().body(service.findByIdEstacionamentoPegaDados(id));
+    }
+
+    @PostMapping("/Processar")
+    public ResponseEntity pedeRetiradaCarro(
+        @RequestParam String placa
+    ) throws MyException {
+        Integer idVeiculo = service.pegarVeiculoPorPlaca(placa).getId();
+        HistoricoResponse ultimoHistorico;
+        try {
+            ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        } catch (Exception e){
+            throw new MyException(404, "Esse veículo não está no estacionamento", "H-011");
+        }
+        if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Entrada)) {
+            return service.postHistorico(
+                    new HistoricoDto(StatusVagaEnum.Processando, 0.0),
+                    idVeiculo, ultimoHistorico.getIdVaga());
+        } else {
+            return ResponseEntity.status(400).body("Esse veículo não está no estacionamento");
+        }
     }
 }
 
