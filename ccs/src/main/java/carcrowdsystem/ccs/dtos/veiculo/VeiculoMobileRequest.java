@@ -1,15 +1,10 @@
 package carcrowdsystem.ccs.dtos.veiculo;
 
-public class VeiculoRequest {
+public class VeiculoMobileRequest {
     private String placa;
-    private String modelo;
     private String marca;
-
-    public VeiculoRequest(String placa, String modelo, String marca) {
-        this.placa = placa;
-        this.modelo = modelo;
-        this.marca = marca;
-    }
+    private String modelo;
+    private Integer id_cliente;
 
     public String getPlaca() {
         return placa;
@@ -17,6 +12,14 @@ public class VeiculoRequest {
 
     public void setPlaca(String placa) {
         this.placa = placa;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
     public String getModelo() {
@@ -27,11 +30,11 @@ public class VeiculoRequest {
         this.modelo = modelo;
     }
 
-    public String getMarca() {
-        return marca;
+    public Integer getId_cliente() {
+        return id_cliente;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setId_cliente(Integer id_cliente) {
+        this.id_cliente = id_cliente;
     }
 }

@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.controllers;
 
+import carcrowdsystem.ccs.dtos.veiculo.VeiculoMobileRequest;
 import carcrowdsystem.ccs.dtos.veiculo.VeiculoRequest;
 import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.exception.MyException;
@@ -18,12 +19,23 @@ public class VeiculoController {
 
     @PostMapping
     public ResponseEntity postVeiculo(
-        @RequestBody VeiculoRequest newVeiculo
+            @RequestBody VeiculoRequest newVeiculo
     ) throws MyException {
         try {
             return ResponseEntity.ok(service.postVeiculo(newVeiculo));
         }catch (Exception e){
             throw new MyException(404, "Placa já cadastrada", "V-007");
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity postVeiculoMobile(
+            @RequestBody VeiculoMobileRequest newVeiculo
+    ) throws MyException {
+        try {
+            return ResponseEntity.ok(service.postVeiculoMobile(newVeiculo));
+        }catch (Exception e){
+            throw new MyException(404, "Placa já cadastrada", "V-008");
         }
     }
 

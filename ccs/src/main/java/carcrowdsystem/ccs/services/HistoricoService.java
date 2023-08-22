@@ -182,8 +182,8 @@ public class HistoricoService {
         for (Historico historico: checkouts) {
             if(historico.getStatusRegistro().equals(StatusVagaEnum.Processando)) {
                 PegarCheckoutsResponse response = new PegarCheckoutsResponse();
-                response.setNome(historico.getVeiculo().getNomeCliente());
-                response.setTelefone(historico.getVeiculo().getTelefoneCliente());
+                response.setNome(historico.getVeiculo().getCliente().getNome());
+                response.setTelefone(historico.getVeiculo().getCliente().getTelefone());
                 response.setAndar(historico.getVaga().getAndar());
                 response.setVaga(historico.getVaga().getNumero());
                 response.setFkVaga(historico.getVaga().getId());
@@ -222,12 +222,12 @@ public class HistoricoService {
     private HistoricoDadosResponse toHistoricoDadosResponse(Historico h){
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         HistoricoDadosResponse response = new HistoricoDadosResponse();
-        response.setCliente(h.getVeiculo().getNomeCliente());
+        response.setCliente(h.getVeiculo().getCliente().getNome());
         response.setModelo(h.getVeiculo().getModelo());
         response.setPlaca(h.getVeiculo().getPlaca());
         response.setAndar(h.getVaga().getAndar());
         response.setVaga(h.getVaga().getNumero());
-        response.setTelefone(h.getVeiculo().getTelefoneCliente());
+        response.setTelefone(h.getVeiculo().getCliente().getTelefone());
         response.setData(h.getMomentoRegistro().toLocalDate().toString());
         response.setHora(h.getMomentoRegistro().format(DateTimeFormatter.ofPattern("HH:mm:ss")).toString());
         response.setStatus(h.getStatusRegistro().toString());
