@@ -8,16 +8,15 @@ public class VeiculoBuilder {
     }
     public static VeiculoRequest criarVeiculoRequest() {
         return new VeiculoRequest(
-                "AWB2T23","Celta", "Fabiano", "11999222333"
+                "AWB2T23","Uno", "Fiat"
         );
     }
 
     public static Veiculo criarVeiculo() {
         Veiculo veiculo = new Veiculo();
-        veiculo.setModelo("Celta");
+        veiculo.setModelo("Uno");
         veiculo.setPlaca("AWB2T23");
-        veiculo.setNomeCliente("Fabiano");
-        veiculo.setTelefoneCliente("11999222333");
+        veiculo.setMarca("Fiat");
         return veiculo;
     }
 
@@ -26,8 +25,7 @@ public class VeiculoBuilder {
         veiculo.setId(1);
         veiculo.setModelo("Civic");
         veiculo.setPlaca("AWB2T24");
-        veiculo.setNomeCliente("Joao");
-        veiculo.setTelefoneCliente("11999222111");
+        veiculo.setMarca("Honda");
         return veiculo;
     }
 }

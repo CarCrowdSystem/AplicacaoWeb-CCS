@@ -11,13 +11,13 @@ public class Veiculo {
     @Column(name = "id_checkin")
     private Integer id;
     private String placa;
+    private String marca;
     private String modelo;
-    @Column(name = "nome_cliente")
-    private String nomeCliente;
-    @Column(name = "telefone_cliente")
-    private String telefoneCliente;
     @OneToMany
     private List<Historico> historico;
+    @ManyToOne
+    @JoinColumn(name = "fk_cliente")
+    private Cliente cliente;
 
     public Integer getId() {
         return id;
@@ -25,14 +25,6 @@ public class Veiculo {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<Historico> getHistorico() {
-        return historico;
-    }
-
-    public void setHistorico(List<Historico> historico) {
-        this.historico = historico;
     }
 
     public String getPlaca() {
@@ -43,6 +35,14 @@ public class Veiculo {
         this.placa = placa;
     }
 
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
     public String getModelo() {
         return modelo;
     }
@@ -51,19 +51,19 @@ public class Veiculo {
         this.modelo = modelo;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public List<Historico> getHistorico() {
+        return historico;
     }
 
-    public void setNomeCliente(String nomeCliente) {
-        this.nomeCliente = nomeCliente;
+    public void setHistorico(List<Historico> historico) {
+        this.historico = historico;
     }
 
-    public String getTelefoneCliente() {
-        return telefoneCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setTelefoneCliente(String telefoneCliente) {
-        this.telefoneCliente = telefoneCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }
