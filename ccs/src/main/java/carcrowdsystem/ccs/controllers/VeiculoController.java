@@ -28,7 +28,7 @@ public class VeiculoController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/mobile")
     public ResponseEntity postVeiculoMobile(
             @RequestBody VeiculoMobileRequest newVeiculo
     ) throws MyException {

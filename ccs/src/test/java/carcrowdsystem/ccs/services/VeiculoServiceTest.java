@@ -38,9 +38,9 @@ class VeiculoServiceTest {
         Veiculo veiculoSalvo = veiculoCaptor.getValue();
 
         Assertions.assertThat(veiculoSalvo.getModelo().equals(veiculo.getModelo()));
-        Assertions.assertThat(veiculoSalvo.getNomeCliente().equals(veiculo.getNomeCliente()));
+        Assertions.assertThat(veiculoSalvo.getCliente().getNome().equals(veiculo.getCliente().getNome()));
         Assertions.assertThat(veiculoSalvo.getPlaca().equals(veiculo.getPlaca()));
-        Assertions.assertThat(veiculoSalvo.getTelefoneCliente().equals(veiculo.getTelefoneCliente()));
+        Assertions.assertThat(veiculoSalvo.getCliente().getTelefone().equals(veiculo.getCliente().getTelefone()));
     }
 
     @Test
