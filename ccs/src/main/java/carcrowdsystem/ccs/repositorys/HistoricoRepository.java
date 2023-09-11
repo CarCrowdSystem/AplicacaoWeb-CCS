@@ -53,21 +53,21 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "    FROM vaga\n" +
                     "    WHERE fk_estacionamento = ?\n" +
                     ")\n" +
-                    "AND AND DATE(momento_registro) = DATEADD('HOUR', -3, CURRENT_TIMESTAMP())\n" +
+                    "AND DATE_TRUNC('DAY', momento_registro) = CURRENT_DATE()\n" +
                     "AND status_registro = '1';"
     )
     Integer pegarTotalCheckoutDiario(Integer idEstacionamento);
 
     @Query(
             nativeQuery = true,
-            value = "SELECT SUM(valor_pago) AS lucro_do_dia\n" +
+            value = "SELECT COALESCE(SUM(valor_pago), 0) AS lucro_do_dia\n" +
                     "FROM historico\n" +
-                    "WHERE fk_vaga IN (\n" +
+                    "WHERE DATE_TRUNC('DAY', momento_registro) = CURRENT_DATE()\n" +
+                    "AND fk_vaga IN (\n" +
                     "    SELECT id_vaga\n" +
                     "    FROM vaga\n" +
                     "    WHERE fk_estacionamento = ?\n" +
-                    ")\n" +
-                    "AND DATE(momento_registro) = DATEADD('HOUR', -3, CURRENT_TIMESTAMP());"
+                    ");"
     )
     Double pegarTotalFaturamentoDiario(Integer idEstacionamento);
 
