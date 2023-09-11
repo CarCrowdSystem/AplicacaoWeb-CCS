@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "checkin_veiculo")
+@Table(name = "veiculo")
 public class Veiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_checkin")
+    @Column(name = "id_veiculo")
     private Integer id;
     private String placa;
     private String marca;
