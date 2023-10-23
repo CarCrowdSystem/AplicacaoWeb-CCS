@@ -4,7 +4,7 @@ import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.entitys.Funcionario;
 import carcrowdsystem.ccs.configuration.security.jwt.GerenciadorTokenJwt;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
-import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
+import carcrowdsystem.ccs.dtos.funcionario.LoginDto;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioTokenDto;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.FuncionarioMapper;
@@ -60,16 +60,16 @@ public class FuncionarioService {
         }
     }
 
-    public LoginResponse autenticar(FuncionarioLoginDto funcionarioLoginDto){
+    public LoginResponse autenticar(LoginDto loginDto){
         final UsernamePasswordAuthenticationToken credentials =
             new UsernamePasswordAuthenticationToken(
-                    funcionarioLoginDto.getEmail(), funcionarioLoginDto.getSenha()
+                    loginDto.getEmail(), loginDto.getSenha()
             );
 
         final Authentication authentication = this.authenticationManager.authenticate(credentials);
 
         Funcionario funcionarioAutenticado =
-            funcionarioRepository.findByEmail(funcionarioLoginDto.getEmail())
+            funcionarioRepository.findByEmail(loginDto.getEmail())
                 .orElseThrow(
                         () -> new ResponseStatusException(404, "Email do usuário não cadastrado", null)
                 );

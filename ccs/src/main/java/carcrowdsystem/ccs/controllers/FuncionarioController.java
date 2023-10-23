@@ -2,9 +2,7 @@ package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.adapter.FuncionarioAdapter;
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
-import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
-import carcrowdsystem.ccs.entitys.Funcionario;
-import carcrowdsystem.ccs.entitys.Vaga;
+import carcrowdsystem.ccs.dtos.funcionario.LoginDto;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.FuncionarioRequest;
 import carcrowdsystem.ccs.response.LoginResponse;
@@ -46,8 +44,8 @@ public class FuncionarioController {
             @Schema(hidden = true)))
     })
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody FuncionarioLoginDto funcionarioLoginDto) {
-        return ResponseEntity.status(200).body(funcionarioAdapter.autenticar(funcionarioLoginDto));
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) {
+        return ResponseEntity.status(200).body(funcionarioAdapter.autenticar(loginDto));
     }
 
     @ApiResponses({

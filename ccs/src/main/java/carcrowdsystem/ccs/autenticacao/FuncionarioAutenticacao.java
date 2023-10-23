@@ -2,6 +2,7 @@ package carcrowdsystem.ccs.autenticacao;
 
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDetailsDto;
 import carcrowdsystem.ccs.entitys.Funcionario;
+import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +19,9 @@ public class FuncionarioAutenticacao implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Funcionario> funcOpt = funcionarioRepository.findByEmail(username);
-        if (funcOpt.isEmpty()){
-            throw new UsernameNotFoundException(String.format("Usuario: %s nao encontrado", username));
-        }
-        return new FuncionarioDetailsDto(funcOpt.get());
+        FuncionarioDetailsDto funcOpt = funcionarioRepository.findByEmailLogin(username).orElseThrow(
+                () -> new UsernameNotFoundException(String.format("Usuario: %s nao encontrado", username))
+        );
+        return funcOpt;
     }
 }

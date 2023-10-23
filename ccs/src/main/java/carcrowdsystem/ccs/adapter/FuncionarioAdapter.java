@@ -1,7 +1,7 @@
 package carcrowdsystem.ccs.adapter;
 
 import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDto;
-import carcrowdsystem.ccs.dtos.funcionario.FuncionarioLoginDto;
+import carcrowdsystem.ccs.dtos.funcionario.LoginDto;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.FuncionarioRequest;
 import carcrowdsystem.ccs.response.LoginResponse;
@@ -35,7 +35,7 @@ public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, Funcionario
         return service.deleteFunc(id);
     }
 
-    public LoginResponse autenticar(FuncionarioLoginDto func) {
+    public LoginResponse autenticar(LoginDto func) {
         return service.autenticar(func);
     }
 

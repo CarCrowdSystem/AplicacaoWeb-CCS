@@ -1,6 +1,6 @@
 package carcrowdsystem.ccs.dtos.funcionario;
 
-public class FuncionarioLoginDto {
+public class LoginDto {
     private String email;
     private String senha;
 
