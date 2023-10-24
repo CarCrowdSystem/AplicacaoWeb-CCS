@@ -2,6 +2,7 @@ package carcrowdsystem.ccs.dtos.funcionario;
 
 import carcrowdsystem.ccs.entitys.Cliente;
 import carcrowdsystem.ccs.entitys.Funcionario;
+import carcrowdsystem.ccs.entitys.Login;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,6 +19,12 @@ public class FuncionarioDetailsDto implements UserDetails {
     }
 
     public FuncionarioDetailsDto(Cliente cliente) {
+        this.nome = cliente.getNome();
+        this.email = cliente.getEmail();
+        this.senha = cliente.getSenha();
+    }
+
+    public FuncionarioDetailsDto(Login cliente) {
         this.nome = cliente.getNome();
         this.email = cliente.getEmail();
         this.senha = cliente.getSenha();

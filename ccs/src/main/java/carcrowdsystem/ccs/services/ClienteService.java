@@ -11,12 +11,14 @@ import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
 import carcrowdsystem.ccs.request.ClienteRequest;
 import carcrowdsystem.ccs.request.dtos.ClienteUpdateRequest;
 import carcrowdsystem.ccs.response.ClienteResponse;
+import carcrowdsystem.ccs.response.LoginClienteResponse;
 import carcrowdsystem.ccs.response.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,14 +33,16 @@ public class ClienteService {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
     private GerenciadorTokenJwt gerenciadorTokenJwt;
 
     public void postCliente(ClienteRequest cliente) throws MyException {
         try {
             Cliente newCliente = new Cliente();
-            cliente.setNome(cliente.getNome());
-            cliente.setEmail(cliente.getEmail());
-            cliente.setSenha(cliente.getSenha());
+            newCliente.setNome(cliente.getNome());
+            newCliente.setEmail(cliente.getEmail());
+            newCliente.setSenha(passwordEncoder.encode(cliente.getSenha()));
 
             clienteRepository.save(newCliente);
         } catch (Exception e) {
@@ -46,7 +50,7 @@ public class ClienteService {
         }
     }
 
-    public LoginResponse autenticar(LoginDto loginDto) throws MyException {
+    public LoginClienteResponse autenticar(LoginDto loginDto) throws MyException {
         final UsernamePasswordAuthenticationToken credentials =
                 new UsernamePasswordAuthenticationToken(
                         loginDto.getEmail(), loginDto.getSenha()
@@ -70,9 +74,9 @@ public class ClienteService {
         cli.setSenha(cliente.getSenha());
         cli.setToken(token);
 
-        LoginResponse response = new LoginResponse();
-        response.setIdEstacionamento(cliente.getId());
-        response.setNomeEstacionamento(cliente.getNome());
+        LoginClienteResponse response = new LoginClienteResponse();
+        response.setId(cliente.getId());
+        response.setNome(cliente.getNome());
         response.setJwt(cli.getToken());
 
         return response;

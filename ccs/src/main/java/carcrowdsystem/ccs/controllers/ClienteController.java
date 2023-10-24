@@ -6,6 +6,7 @@ import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.ClienteRequest;
 import carcrowdsystem.ccs.request.dtos.ClienteUpdateRequest;
 import carcrowdsystem.ccs.response.ClienteResponse;
+import carcrowdsystem.ccs.response.LoginClienteResponse;
 import carcrowdsystem.ccs.response.LoginResponse;
 import carcrowdsystem.ccs.services.ClienteService;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -55,7 +56,7 @@ public class ClienteController {
             @Schema(hidden = true)))
     })
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) throws MyException {
+    public ResponseEntity<LoginClienteResponse> login(@RequestBody LoginDto loginDto) throws MyException {
         return ResponseEntity.status(200).body(clienteService.autenticar(loginDto));
     }
 
