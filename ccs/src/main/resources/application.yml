@@ -18,7 +18,6 @@ spring:
     # Habilita data.sql
     defer-datasource-initialization: true
 
-# Habilitando o H2 Console. Num navegador, permite o acesso a http://localhost:8080/h2-console
   datasource:
     url: jdbc:mysql://database-mysql-1.ctrkrldsk0fr.us-east-1.rds.amazonaws.com:3306/CCS
     username: root
