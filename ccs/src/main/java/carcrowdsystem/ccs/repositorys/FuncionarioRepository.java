@@ -24,7 +24,7 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Intege
     Optional<Login> findByEmailLogin(String username);
 
     @Query(nativeQuery = true,
-            value = "select * from funcionario where fk_estacionamento = ? and login_habilitado = 'True'"
+            value = "select * from funcionario where fk_estacionamento = ? and login_habilitado = 1"
     )
     List<Funcionario> findAllByIdEstacionamento(Integer id);
 
