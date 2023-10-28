@@ -18,18 +18,23 @@ spring:
     # Habilita data.sql
     defer-datasource-initialization: true
 
-# Habilitando o H2 Console. Num navegador, permite o acesso a http://localhost:8080/h2-console
-  h2:
-    console:
-      enabled: true
   datasource:
-    url: jdbc:h2:mem:ccs-dev
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  jackson:
-    default-property-inclusion: non_null
+    url: jdbc:mysql://database-mysql-1.ctrkrldsk0fr.us-east-1.rds.amazonaws.com:3306/CCS
+    username: root
+    password: "#Gfgrupo7"
+    driver-class-name: com.mysql.cj.jdbc.Driver # Use o driver correto para o MySQL
+    jpa:
+      show-sql: true
+      hibernate:
+        ddl-auto: update
 
+server:
+  ssl:
+    key-store: classpath:keystore2.p12
+    key-store-password: ccs12345
+    key-store-type: pkcs12
+    key-alias: css
+  port: 8080
 uri.prod: /ccs-prod
 uri.dev: /ccs-dev
 uri.homol: /ccs-homol
