@@ -3,132 +3,137 @@ package carcrowdsystem.ccs.repositorys;
 import carcrowdsystem.ccs.entitys.Historico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
     @Query(
-        nativeQuery = true,
-        value = "SELECT h.*\n" +
-                "FROM (\n" +
-                "    SELECT *,\n" +
-                "           ROW_NUMBER() OVER (PARTITION BY fk_veiculo ORDER BY momento_registro DESC) AS rn\n" +
-                "    FROM HISTORICO\n" +
-                ") AS h\n" +
-                "WHERE h.rn = 1;"
+            nativeQuery = true,
+            value = "SELECT h.* " +
+                    "FROM ( " +
+                    "    SELECT *, " +
+                    "           ROW_NUMBER() OVER (PARTITION BY fk_veiculo ORDER BY momento_registro DESC) AS rn " +
+                    "    FROM historico " +
+                    ") AS h " +
+                    "WHERE h.rn = 1;"
     )
     List<Historico> pegarMomento();
 
     @Query(
-        nativeQuery = true,
-        value = "SELECT top(1) * from historico where fk_veiculo = ? order by id_historico desc"
+            nativeQuery = true,
+            value = "SELECT * FROM historico WHERE fk_veiculo = ? ORDER BY id_historico DESC LIMIT 1"
     )
     Historico pegarMomentoByIdVeiculo(Integer idVeiculo);
 
     @Query(
             nativeQuery = true,
-            value = "SELECT h.*\n" +
-                    "FROM historico h\n" +
-                    "INNER JOIN (\n" +
-                    "    SELECT fk_veiculo, MAX(id_historico) AS ultimo_registro\n" +
-                    "    FROM historico\n" +
-                    "    WHERE fk_vaga IN (\n" +
-                    "        SELECT id_vaga\n" +
-                    "        FROM vaga\n" +
-                    "        WHERE fk_estacionamento = ?\n" +
-                    "    )\n" +
-                    "    GROUP BY fk_veiculo\n" +
+            value = "SELECT h.* " +
+                    "FROM historico h " +
+                    "INNER JOIN ( " +
+                    "    SELECT fk_veiculo, MAX(id_historico) AS ultimo_registro " +
+                    "    FROM historico " +
+                    "    WHERE fk_vaga IN ( " +
+                    "        SELECT id_vaga " +
+                    "        FROM vaga " +
+                    "        WHERE fk_estacionamento = ? " +
+                    "    ) " +
+                    "    GROUP BY fk_veiculo " +
                     ") t ON h.fk_veiculo = t.fk_veiculo AND h.id_historico = t.ultimo_registro;"
     )
     List<Historico> pegarMomentoByIdEstacionamento(Integer idEstacionamento);
 
-
     @Query(
             nativeQuery = true,
-            value = "SELECT COUNT(id_historico)\n" +
-                    "FROM historico\n" +
-                    "WHERE fk_vaga IN (\n" +
-                    "    SELECT id_vaga\n" +
-                    "    FROM vaga\n" +
-                    "    WHERE fk_estacionamento = ?\n" +
-                    ")\n" +
-                    "AND DATE_TRUNC('DAY', momento_registro) = CURRENT_DATE()\n" +
+            value = "SELECT COUNT(id_historico) " +
+                    "FROM historico " +
+                    "WHERE fk_vaga IN ( " +
+                    "    SELECT id_vaga " +
+                    "    FROM vaga " +
+                    "    WHERE fk_estacionamento = ? " +
+                    ") " +
+                    "AND DATE(momento_registro) = CURDATE() " +
                     "AND status_registro = '1';"
     )
     Integer pegarTotalCheckoutDiario(Integer idEstacionamento);
 
     @Query(
             nativeQuery = true,
-            value = "SELECT COALESCE(SUM(valor_pago), 0) AS lucro_do_dia\n" +
-                    "FROM historico\n" +
-                    "WHERE DATE_TRUNC('DAY', momento_registro) = CURRENT_DATE()\n" +
-                    "AND fk_vaga IN (\n" +
-                    "    SELECT id_vaga\n" +
-                    "    FROM vaga\n" +
-                    "    WHERE fk_estacionamento = ?\n" +
+            value = "SELECT COALESCE(SUM(valor_pago), 0) AS lucro_do_dia " +
+                    "FROM historico " +
+                    "WHERE DATE(momento_registro) = CURDATE() " +
+                    "AND fk_vaga IN ( " +
+                    "    SELECT id_vaga " +
+                    "    FROM vaga " +
+                    "    WHERE fk_estacionamento = ? " +
                     ");"
     )
     Double pegarTotalFaturamentoDiario(Integer idEstacionamento);
 
     @Query(nativeQuery = true,
-    value = "SELECT h.*\n" +
-            "FROM historico h\n" +
-            "INNER JOIN (\n" +
-            "    SELECT fk_vaga, MAX(momento_registro) AS ultimo_registro\n" +
-            "    FROM historico\n" +
-            "    INNER JOIN vaga ON historico.fk_vaga = vaga.id_vaga\n" +
-            "    WHERE vaga.fk_estacionamento = ?\n" +
-            "    GROUP BY fk_vaga\n" +
-            ") t ON h.fk_vaga = t.fk_vaga AND h.momento_registro = t.ultimo_registro;")
+            value = "SELECT h.* " +
+                    "FROM historico h " +
+                    "INNER JOIN ( " +
+                    "    SELECT fk_vaga, MAX(momento_registro) AS ultimo_registro " +
+                    "    FROM historico " +
+                    "    INNER JOIN vaga ON historico.fk_vaga = vaga.id_vaga " +
+                    "    WHERE vaga.fk_estacionamento = ? " +
+                    "    GROUP BY fk_vaga " +
+                    ") t ON h.fk_vaga = t.fk_vaga AND h.momento_registro = t.ultimo_registro;")
     List<Historico> pegarMomentoVagasByEstacionamento(Integer id);
 
     @Query(nativeQuery = true,
-    value = "SELECT h.*\n" +
-            "FROM historico h\n" +
-            "INNER JOIN (\n" +
-            "    SELECT fk_veiculo, MAX(momento_registro) AS ultimo_registro\n" +
-            "    FROM historico\n" +
-            "    WHERE fk_vaga IN (\n" +
-            "        SELECT id_vaga\n" +
-            "        FROM vaga\n" +
-            "        WHERE fk_estacionamento = ?\n" +
-            "    )\n" +
-            "    GROUP BY fk_veiculo\n" +
-            ") t ON h.fk_veiculo = t.fk_veiculo AND h.momento_registro = t.ultimo_registro\n" +
-            "WHERE h.status_registro = '0';")
+            value = "SELECT h.* " +
+                    "FROM historico h " +
+                    "INNER JOIN ( " +
+                    "    SELECT fk_veiculo, MAX(momento_registro) AS ultimo_registro " +
+                    "    FROM historico " +
+                    "    WHERE fk_vaga IN ( " +
+                    "        SELECT id_vaga " +
+                    "        FROM vaga " +
+                    "        WHERE fk_estacionamento = ? " +
+                    "    ) " +
+                    "    GROUP BY fk_veiculo " +
+                    ") t ON h.fk_veiculo = t.fk_veiculo AND h.momento_registro = t.ultimo_registro " +
+                    "WHERE h.status_registro = '0';")
     List<Historico> pegarCheckouts(Integer id);
 
     @Query(nativeQuery = true,
-    value = "SELECT CASE\n" +
-            "    WHEN horas_decorridas * ve.hora_adicional + ve.primeira_hora > ve.diaria THEN ve.diaria\n" +
-            "    ELSE horas_decorridas * ve.hora_adicional + ve.primeira_hora\n" +
-            "    END AS valor_2_horas\n" +
-            "FROM (\n" +
-            "    SELECT TOP 1 \n" +
-            "        CEILING(ABS(DATEDIFF('MINUTE', h.momento_registro, CURRENT_TIMESTAMP())) / 60.0) AS horas_decorridas\n" +
-            "    FROM historico AS h\n" +
-            "    WHERE h.id_historico = ?1\n" +
-            "    ORDER BY h.id_historico DESC\n" +
-            ") AS subquery\n" +
-            "CROSS JOIN (\n" +
-            "    SELECT TOP 1 ve.hora_adicional, ve.primeira_hora, ve.diaria\n" +
-            "    FROM valor_estacionamento AS ve\n" +
-            "    JOIN vaga AS v ON ve.fk_estacionamento = v.fk_estacionamento\n" +
-            "    JOIN historico AS h ON v.id_vaga = h.fk_vaga\n" +
-            "    WHERE h.id_historico = ?1\n" +
-            "    ORDER BY ve.id_preco DESC\n" +
-            ") AS ve;")
+            value = "SELECT CASE " +
+                    "    WHEN horas_decorridas * ve.hora_adicional + ve.primeira_hora > ve.diaria THEN ve.diaria " +
+                    "    ELSE horas_decorridas * ve.hora_adicional + ve.primeira_hora " +
+                    "    END AS valor_2_horas " +
+                    "FROM ( " +
+                    "    SELECT * " +
+                    "    FROM ( " +
+                    "        SELECT " +
+                    "            CEILING(ABS(TIMESTAMPDIFF(MINUTE, h.momento_registro, NOW())) / 60.0) AS horas_decorridas " +
+                    "        FROM historico AS h " +
+                    "        WHERE h.id_historico = ?1 " +
+                    "        ORDER BY h.id_historico DESC " +
+                    "        LIMIT 1 " +
+                    "    ) AS subquery, " +
+                    "    ( " +
+                    "        SELECT " +
+                    "            ve.hora_adicional, ve.primeira_hora, ve.diaria " +
+                    "        FROM valor_estacionamento AS ve " +
+                    "        JOIN vaga AS v ON ve.fk_estacionamento = v.fk_estacionamento " +
+                    "        JOIN historico AS h ON v.id_vaga = h.fk_vaga " +
+                    "        WHERE h.id_historico = ?1 " +
+                    "        ORDER BY ve.id_preco DESC " +
+                    "        LIMIT 1 " +
+                    "    ) AS ve " +
+                    ") AS result;")
     Double calculaPreco(Integer id);
 
     @Query(nativeQuery = true,
-    value = "SELECT TOP 25 *\n" +
-            "FROM historico\n" +
-            "WHERE fk_vaga IN (\n" +
-            "    SELECT id_vaga\n" +
-            "    FROM vaga\n" +
-            "    WHERE fk_estacionamento = ?\n" +
-            ")\n" +
-            "ORDER BY momento_registro DESC;")
+            value = "SELECT * " +
+                    "FROM historico " +
+                    "WHERE fk_vaga IN ( " +
+                    "    SELECT id_vaga " +
+                    "    FROM vaga " +
+                    "    WHERE fk_estacionamento = ? " +
+                    ") " +
+                    "ORDER BY momento_registro DESC " +
+                    "LIMIT 25;")
     List<Historico> pegarDadosHistoricoByIdEstacionamento(Integer id);
 }
