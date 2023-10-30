@@ -1,4 +1,4 @@
-package carcrowdsystem.ccs.controllers;
+/*package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.response.EmailValidationResponse;
 import carcrowdsystem.ccs.services.EmailValidationService;
@@ -18,4 +18,4 @@ public class EmailValidationController {
     public EmailValidationResponse validateEmail(@RequestParam String email) {
         return emailValidationService.validateEmail(email);
     }
-}
+}*/

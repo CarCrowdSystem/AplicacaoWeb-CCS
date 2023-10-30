@@ -32,8 +32,8 @@ public class CcsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CcsApplication.class, args);
 	}
-	@Bean
+/*	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
-	}
+	}*/
 }

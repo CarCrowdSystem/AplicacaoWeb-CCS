@@ -1,4 +1,4 @@
-package carcrowdsystem.ccs.response;
+/*package carcrowdsystem.ccs.response;
 
 public class EmailValidationResponse {
     private boolean valid;
@@ -19,4 +19,4 @@ public class EmailValidationResponse {
     public void setMessage(String message) {
         this.message = message;
     }
-}
+}*/

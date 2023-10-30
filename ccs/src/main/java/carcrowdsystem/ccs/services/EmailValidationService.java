@@ -1,4 +1,4 @@
-package carcrowdsystem.ccs.services;
+/*package carcrowdsystem.ccs.services;
 import carcrowdsystem.ccs.response.EmailValidationResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -18,4 +18,4 @@ public class EmailValidationService {
         String url = ABSTRACT_API_URL + "?api_key=" + API_KEY + "&email=" + email;
         return restTemplate.getForObject(url, EmailValidationResponse.class);
     }
-}
+}*/
