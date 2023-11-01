@@ -14,7 +14,7 @@ public class Historico {
     @Column(name = "id_historico")
     private Integer id;
     @Column(name = "momento_registro")
-    private LocalDateTime momentoRegistro = LocalDateTime.now();
+    private LocalDateTime momentoRegistro = LocalDateTime.now().minusHours(3);
     @Column(name = "status_registro")
     private StatusVagaEnum statusRegistro;
     @Column(name = "valor_pago")

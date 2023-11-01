@@ -5,7 +5,7 @@ import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import java.time.LocalDateTime;
 
 public class HistoricoDto {
-    private LocalDateTime momentoRegistro = LocalDateTime.now();
+    private LocalDateTime momentoRegistro = LocalDateTime.now().minusHours(3);
     private StatusVagaEnum statusRegistro;
     private Double valorPago;
 

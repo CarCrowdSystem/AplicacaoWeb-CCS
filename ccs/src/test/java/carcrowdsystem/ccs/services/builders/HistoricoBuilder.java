@@ -17,7 +17,7 @@ public class HistoricoBuilder {
         historico.setVaga(VagaBuilder.criarVagaRequest());
         historico.setId(1);
         historico.setValorPago(20.0);
-        historico.setMomentoRegistro(LocalDateTime.now());
+        historico.setMomentoRegistro(LocalDateTime.now().minusHours(3));
         return historico;
     }
 

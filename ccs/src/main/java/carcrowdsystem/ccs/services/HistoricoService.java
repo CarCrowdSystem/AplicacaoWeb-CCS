@@ -52,7 +52,7 @@ public class HistoricoService {
         FileWriter arq = null;
         Formatter saida = null;
         String nome = System.getProperty("java.io.tmpdir") +
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyyyyHHmmss")) + "-historico.csv";
+                LocalDateTime.now().minusHours(3).format(DateTimeFormatter.ofPattern("ddMMyyyyHHmmss")) + "-historico.csv";
 
         // Bloco try-catch para abrir o arquivo
         try {
