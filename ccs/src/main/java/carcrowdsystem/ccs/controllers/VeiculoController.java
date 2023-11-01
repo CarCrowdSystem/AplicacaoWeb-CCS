@@ -39,6 +39,7 @@ public class VeiculoController {
         }
     }
 
+    @GetMapping
     public ResponseEntity<Veiculo> getVeiculoById(
         @RequestParam Integer idVeiculo
     ) throws MyException {
