@@ -52,7 +52,7 @@ public class HistoricoService {
         FileWriter arq = null;
         Formatter saida = null;
         System.out.println(System.getProperty("java.io.tmpdir"));
-        String nome = System.getProperty("java.io.tmpdir") +
+        String nome = System.getProperty("java.io.tmpdir") +"/"+
                 LocalDateTime.now().minusHours(3).format(DateTimeFormatter.ofPattern("ddMMyyyyHHmmss")) + "-historico.csv";
         System.out.println(nome);
 
