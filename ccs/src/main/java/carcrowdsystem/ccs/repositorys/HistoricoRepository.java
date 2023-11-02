@@ -95,32 +95,33 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
     List<Historico> pegarCheckouts(Integer id);
 
     @Query(nativeQuery = true,
-            value = "SELECT CASE " +
-                    "    WHEN horas_decorridas * ve.hora_adicional + ve.primeira_hora > ve.diaria THEN ve.diaria " +
-                    "    ELSE horas_decorridas * ve.hora_adicional + ve.primeira_hora " +
-                    "    END AS valor_2_horas " +
-                    "FROM ( " +
-                    "    SELECT * " +
-                    "    FROM ( " +
-                    "        SELECT " +
-                    "            CEILING(ABS(TIMESTAMPDIFF(MINUTE, h.momento_registro, NOW())) / 60.0) AS horas_decorridas " +
-                    "        FROM historico AS h " +
-                    "        WHERE h.id_historico = ?1 " +
-                    "        ORDER BY h.id_historico DESC " +
-                    "        LIMIT 1 " +
-                    "    ) AS subquery, " +
-                    "    ( " +
-                    "        SELECT " +
-                    "            ve.hora_adicional, ve.primeira_hora, ve.diaria " +
-                    "        FROM valor_estacionamento AS ve " +
-                    "        JOIN vaga AS v ON ve.fk_estacionamento = v.fk_estacionamento " +
-                    "        JOIN historico AS h ON v.id_vaga = h.fk_vaga " +
-                    "        WHERE h.id_historico = ?1 " +
-                    "        ORDER BY ve.id_preco DESC " +
-                    "        LIMIT 1 " +
-                    "    ) AS ve " +
-                    ") AS result;")
-    Double calculaPreco(Integer id);
+            value = "SELECT \n" +
+                    "    IF(diferenca_horas = 1, ve.primeira_hora,\n" +
+                    "       IF((diferenca_horas - 1) * ve.hora_adicional + ve.primeira_hora > ve.diaria, ve.diaria,\n" +
+                    "          (diferenca_horas - 1) * ve.hora_adicional + ve.primeira_hora)) AS valor_calculado\n" +
+                    "FROM (\n" +
+                    "    SELECT CEIL(TIMESTAMPDIFF(SECOND, h2.momento_registro, h1.momento_registro) / 3600) AS diferenca_horas\n" +
+                    "    FROM (\n" +
+                    "        SELECT *\n" +
+                    "        FROM historico\n" +
+                    "        WHERE fk_veiculo = ?1\n" +
+                    "        ORDER BY momento_registro DESC\n" +
+                    "        LIMIT 2\n" +
+                    "    ) AS h1\n" +
+                    "    JOIN (\n" +
+                    "        SELECT *\n" +
+                    "        FROM historico\n" +
+                    "        WHERE fk_veiculo = ?1\n" +
+                    "        ORDER BY momento_registro DESC\n" +
+                    "        LIMIT 2\n" +
+                    "        OFFSET 1\n" +
+                    "    ) AS h2\n" +
+                    "    ORDER BY h1.momento_registro DESC\n" +
+                    "    LIMIT 1\n" +
+                    ") AS diff\n" +
+                    "JOIN valor_estacionamento AS ve\n" +
+                    "ON ve.fk_estacionamento = ?2;")
+    Double calculaPreco(Integer id, Integer idEstacionamento);
 
     @Query(nativeQuery = true,
             value = "SELECT * " +
@@ -133,4 +134,10 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "ORDER BY momento_registro DESC " +
                     "LIMIT 25;")
     List<Historico> pegarDadosHistoricoByIdEstacionamento(Integer id);
+
+    @Query(nativeQuery = true,
+            value = "SELECT v.fk_estacionamento FROM historico h\n" +
+                    "JOIN vaga v ON h.fk_vaga = v.id_vaga where v.id_vaga = ? limit 1;"
+    )
+    Integer getIdEstacionamento(Integer idVaga);
 }

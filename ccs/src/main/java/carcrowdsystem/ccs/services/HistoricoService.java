@@ -190,7 +190,7 @@ public class HistoricoService {
                 response.setVaga(historico.getVaga().getNumero());
                 response.setFkVaga(historico.getVaga().getId());
                 response.setFkVeiculo(historico.getVeiculo().getId());
-                response.setValor(repository.calculaPreco(historico.getId()));
+                response.setValor(repository.calculaPreco(historico.getId(), id));
                 listResponse.add(response);
             }
         }
@@ -198,8 +198,8 @@ public class HistoricoService {
         return listResponse;
     }
 
-    public Double calculaPreco(Integer id){
-        return repository.calculaPreco(id);
+    public Double calculaPreco(Integer id, Integer idEstacionamento){
+        return repository.calculaPreco(id, idEstacionamento);
     }
 
     public List<HistoricoDadosResponse> findByIdEstacionamentoPegaDados(Integer id) {
@@ -243,5 +243,9 @@ public class HistoricoService {
         }catch (Exception e){
             throw new MyException(404, "Essa placa não existe", "H-010");
         }
+    }
+
+    public Integer findByIdEstacionamento(Integer idVaga) {
+        return repository.getIdEstacionamento(idVaga);
     }
 }

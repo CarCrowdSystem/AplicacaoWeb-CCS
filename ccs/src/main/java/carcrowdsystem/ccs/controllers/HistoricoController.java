@@ -76,9 +76,10 @@ public class HistoricoController {
             @RequestParam Integer idVeiculo
     ) throws MyException {
         HistoricoResponse ultimoHistorico = pegarMomentoByIdVeiculo(idVeiculo).getBody();
+        Integer idEstacionamento = service.findByIdEstacionamento(ultimoHistorico.getIdVaga());
         if(ultimoHistorico.getStatusRegistro().equals(StatusVagaEnum.Processando)) {
             HistoricoDto newHistorico =
-                    new HistoricoDto(StatusVagaEnum.Saida, service.calculaPreco(ultimoHistorico.getId()));
+                    new HistoricoDto(StatusVagaEnum.Saida, service.calculaPreco(ultimoHistorico.getId(), idEstacionamento));
             return service.postHistorico(newHistorico, idVeiculo, ultimoHistorico.getIdVaga());
         } else {
             return ResponseEntity.status(400).body("O veiculo não está no estacionamento");
