@@ -58,14 +58,11 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
 
     @Query(
             nativeQuery = true,
-            value = "SELECT COALESCE(SUM(valor_pago), 0) AS lucro_do_dia " +
-                    "FROM historico " +
-                    "WHERE DATE(momento_registro) = CURDATE() " +
-                    "AND fk_vaga IN ( " +
-                    "    SELECT id_vaga " +
-                    "    FROM vaga " +
-                    "    WHERE fk_estacionamento = ? " +
-                    ");"
+            value = "SELECT SUM(valor_pago) AS total_pago\n" +
+                    "FROM historico\n" +
+                    "WHERE fk_vaga IN (SELECT id_vaga FROM vaga WHERE fk_estacionamento = ?)\n" +
+                    "      AND DATE(CONVERT_TZ(momento_registro, '+00:00', '-03:00')) = " +
+                    "DATE(DATE_SUB(NOW(), INTERVAL 3 HOUR));"
     )
     Double pegarTotalFaturamentoDiario(Integer idEstacionamento);
 
