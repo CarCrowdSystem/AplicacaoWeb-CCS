@@ -44,14 +44,14 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
 
     @Query(
             nativeQuery = true,
-            value = "SELECT COUNT(id_historico) " +
-                    "FROM historico " +
-                    "WHERE fk_vaga IN ( " +
-                    "    SELECT id_vaga " +
-                    "    FROM vaga " +
-                    "    WHERE fk_estacionamento = ? " +
-                    ") " +
-                    "AND DATE(momento_registro) = CURDATE() " +
+            value = "SELECT COUNT(id_historico)" +
+                    "FROM historico" +
+                    "WHERE fk_vaga IN (" +
+                    "    SELECT id_vaga" +
+                    "    FROM vaga" +
+                    "    WHERE fk_estacionamento = ?" +
+                    ")" +
+                    "AND DATE(CONVERT_TZ(momento_registro, '+00:00', '-03:00')) = DATE(DATE_SUB(NOW(), INTERVAL 3 HOUR))" +
                     "AND status_registro = '1';"
     )
     Integer pegarTotalCheckoutDiario(Integer idEstacionamento);
