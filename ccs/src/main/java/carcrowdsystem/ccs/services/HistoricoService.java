@@ -183,6 +183,7 @@ public class HistoricoService {
 
         for (Historico historico: checkouts) {
             if(historico.getStatusRegistro().equals(StatusVagaEnum.Processando)) {
+                Integer idVeiculo = historico.getVeiculo().getId();
                 PegarCheckoutsResponse response = new PegarCheckoutsResponse();
                 response.setNome(historico.getVeiculo().getCliente().getNome());
                 response.setTelefone(historico.getVeiculo().getCliente().getTelefone());
@@ -190,7 +191,7 @@ public class HistoricoService {
                 response.setVaga(historico.getVaga().getNumero());
                 response.setFkVaga(historico.getVaga().getId());
                 response.setFkVeiculo(historico.getVeiculo().getId());
-                response.setValor(repository.calculaPreco(historico.getId(), id));
+                response.setValor(repository.calculaPreco(idVeiculo, idVeiculo, id));
                 listResponse.add(response);
             }
         }
@@ -199,7 +200,7 @@ public class HistoricoService {
     }
 
     public Double calculaPreco(Integer id, Integer idEstacionamento){
-        return repository.calculaPreco(id, idEstacionamento);
+        return repository.calculaPreco(id, id, idEstacionamento);
     }
 
     public List<HistoricoDadosResponse> findByIdEstacionamentoPegaDados(Integer id) {

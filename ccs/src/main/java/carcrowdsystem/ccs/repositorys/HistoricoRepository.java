@@ -44,24 +44,24 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
 
     @Query(
             nativeQuery = true,
-            value = "SELECT COUNT(id_historico)" +
-                    "FROM historico" +
-                    "WHERE fk_vaga IN (" +
-                    "    SELECT id_vaga" +
-                    "    FROM vaga" +
-                    "    WHERE fk_estacionamento = ?" +
-                    ")" +
-                    "AND DATE(CONVERT_TZ(momento_registro, '+00:00', '-03:00')) = DATE(DATE_SUB(NOW(), INTERVAL 3 HOUR))" +
+            value = "SELECT COUNT(id_historico) " +
+                    "FROM historico " +
+                    "WHERE fk_vaga IN ( " +
+                    "    SELECT id_vaga " +
+                    "    FROM vaga " +
+                    "    WHERE fk_estacionamento = ? " +
+                    ") " +
+                    "AND DATE(CONVERT_TZ(momento_registro, '+00:00', '-03:00')) = DATE(DATE_SUB(NOW(), INTERVAL 3 HOUR)) " +
                     "AND status_registro = '1';"
     )
     Integer pegarTotalCheckoutDiario(Integer idEstacionamento);
 
     @Query(
             nativeQuery = true,
-            value = "SELECT SUM(valor_pago) AS total_pago\n" +
-                    "FROM historico\n" +
-                    "WHERE fk_vaga IN (SELECT id_vaga FROM vaga WHERE fk_estacionamento = ?)\n" +
-                    "      AND DATE(CONVERT_TZ(momento_registro, '+00:00', '-03:00')) = " +
+            value = "SELECT SUM(valor_pago) AS total_pago " +
+                    "FROM historico " +
+                    "WHERE fk_vaga IN (SELECT id_vaga FROM vaga WHERE fk_estacionamento = ?) " +
+                    "AND DATE(CONVERT_TZ(momento_registro, '+00:00', '-03:00')) = " +
                     "DATE(DATE_SUB(NOW(), INTERVAL 3 HOUR));"
     )
     Double pegarTotalFaturamentoDiario(Integer idEstacionamento);
@@ -96,22 +96,25 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
 
     @Query(nativeQuery = true,
             value = "SELECT \n" +
-                    "    IF(diferenca_horas = 1, ve.primeira_hora,\n" +
-                    "       IF((diferenca_horas - 1) * ve.hora_adicional + ve.primeira_hora > ve.diaria, ve.diaria,\n" +
-                    "          (diferenca_horas - 1) * ve.hora_adicional + ve.primeira_hora)) AS valor_calculado\n" +
+                    "    CAST(\n" +
+                    "        IF(diferenca_horas = 1, ve.primeira_hora,\n" +
+                    "           IF((diferenca_horas - 1) * ve.hora_adicional + ve.primeira_hora > ve.diaria, ve.diaria,\n" +
+                    "              (diferenca_horas - 1) * ve.hora_adicional + ve.primeira_hora)\n" +
+                    "        ) AS DECIMAL(10, 2)\n" +
+                    "    ) AS valor_calculado\n" +
                     "FROM (\n" +
                     "    SELECT CEIL(TIMESTAMPDIFF(SECOND, h2.momento_registro, h1.momento_registro) / 3600) AS diferenca_horas\n" +
                     "    FROM (\n" +
                     "        SELECT *\n" +
                     "        FROM historico\n" +
-                    "        WHERE fk_veiculo = ?1\n" +
+                    "        WHERE fk_veiculo = ?\n" +
                     "        ORDER BY momento_registro DESC\n" +
                     "        LIMIT 2\n" +
                     "    ) AS h1\n" +
                     "    JOIN (\n" +
                     "        SELECT *\n" +
                     "        FROM historico\n" +
-                    "        WHERE fk_veiculo = ?1\n" +
+                    "        WHERE fk_veiculo = ?\n" +
                     "        ORDER BY momento_registro DESC\n" +
                     "        LIMIT 2\n" +
                     "        OFFSET 1\n" +
@@ -120,8 +123,8 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "    LIMIT 1\n" +
                     ") AS diff\n" +
                     "JOIN valor_estacionamento AS ve\n" +
-                    "ON ve.fk_estacionamento = ?2;")
-    Double calculaPreco(Integer id, Integer idEstacionamento);
+                    "ON ve.fk_estacionamento = ?;")
+    Double calculaPreco(Integer id, Integer id2, Integer idEstacionamento);
 
     @Query(nativeQuery = true,
             value = "SELECT * " +
