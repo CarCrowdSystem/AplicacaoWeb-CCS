@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.controllers;
 
+import carcrowdsystem.ccs.dtos.historico.CheckoutSemanalResponse;
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
 import carcrowdsystem.ccs.entitys.Historico;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
@@ -131,6 +132,13 @@ public class HistoricoController {
             @RequestParam Integer idEstacionamento
     ){
         return ResponseEntity.ok().body(service.pegarTotalCheckoutDiario(idEstacionamento));
+    }
+
+    @GetMapping("/total-checkout-semanal")
+    public ResponseEntity<List<CheckoutSemanalResponse>> totalCheckoutSemanal(
+            @RequestParam Integer idEstacionamento
+    ){
+        return ResponseEntity.ok().body(service.pegarTotalCheckoutSemanal(idEstacionamento));
     }
 
     @GetMapping("/total-faturamento")

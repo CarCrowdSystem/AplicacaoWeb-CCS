@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.repositorys;
 
+import carcrowdsystem.ccs.dtos.historico.CheckoutSemanalResponse;
 import carcrowdsystem.ccs.entitys.Historico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -51,17 +52,35 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "    FROM vaga " +
                     "    WHERE fk_estacionamento = ? " +
                     ") " +
-                    "AND DATE(CONVERT_TZ(momento_registro, '+00:00', '-03:00')) = DATE(DATE_SUB(NOW(), INTERVAL 3 HOUR)) " +
+                    "AND DATE(momento_registro) = DATE(DATE_SUB(NOW(), INTERVAL 3 HOUR)) " +
                     "AND status_registro = '1';"
     )
     Integer pegarTotalCheckoutDiario(Integer idEstacionamento);
+
+    @Query(
+        nativeQuery = true,
+        value = "SELECT DATE(momento_registro) AS data,\n" +
+                "       COUNT(id_historico) AS totalCheckouts\n" +
+                "FROM historico\n" +
+                "WHERE fk_vaga IN (\n" +
+                "    SELECT id_vaga\n" +
+                "    FROM vaga\n" +
+                "    WHERE fk_estacionamento = ?\n" +
+                ")\n" +
+                "AND DATE(momento_registro) >= DATE(DATE_SUB(NOW(), INTERVAL 7 DAY))\n" +
+                "AND DATE(momento_registro) <= DATE(NOW())\n" +
+                "AND status_registro = '1'\n" +
+                "GROUP BY DATE(momento_registro)\n" +
+                "ORDER BY DATE(momento_registro) DESC limit 7;"
+    )
+    List<Object[]> pegarTotalCheckoutSemanal(Integer id);
 
     @Query(
             nativeQuery = true,
             value = "SELECT SUM(valor_pago) AS total_pago " +
                     "FROM historico " +
                     "WHERE fk_vaga IN (SELECT id_vaga FROM vaga WHERE fk_estacionamento = ?) " +
-                    "AND DATE(CONVERT_TZ(momento_registro, '+00:00', '-03:00')) = " +
+                    "AND DATE (momento_registro) = " +
                     "DATE(DATE_SUB(NOW(), INTERVAL 3 HOUR));"
     )
     Double pegarTotalFaturamentoDiario(Integer idEstacionamento);
@@ -117,13 +136,12 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "        WHERE fk_veiculo = ?\n" +
                     "        ORDER BY momento_registro DESC\n" +
                     "        LIMIT 2\n" +
-                    "        OFFSET 1\n" +
                     "    ) AS h2\n" +
                     "    ORDER BY h1.momento_registro DESC\n" +
                     "    LIMIT 1\n" +
                     ") AS diff\n" +
                     "JOIN valor_estacionamento AS ve\n" +
-                    "ON ve.fk_estacionamento = ?;")
+                    "ON ve.fk_estacionamento = ? limit 1;")
     Double calculaPreco(Integer id, Integer id2, Integer idEstacionamento);
 
     @Query(nativeQuery = true,

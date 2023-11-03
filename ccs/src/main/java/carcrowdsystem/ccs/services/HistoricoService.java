@@ -2,6 +2,7 @@ package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.controllers.VagaController;
 import carcrowdsystem.ccs.controllers.VeiculoController;
+import carcrowdsystem.ccs.dtos.historico.CheckoutSemanalResponse;
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
 import carcrowdsystem.ccs.entitys.Historico;
 import carcrowdsystem.ccs.entitys.Vaga;
@@ -158,6 +159,15 @@ public class HistoricoService {
 
     public Integer pegarTotalCheckoutDiario(Integer idEstacionamento){
         return repository.pegarTotalCheckoutDiario(idEstacionamento);
+    }
+
+    public List<CheckoutSemanalResponse> pegarTotalCheckoutSemanal(Integer idEstacionamento){
+        List<Object[]> list = repository.pegarTotalCheckoutSemanal(idEstacionamento);
+        List<CheckoutSemanalResponse> checkoutResponseList = new ArrayList<>();
+        for (Object[] item : list) {
+            checkoutResponseList.add(new CheckoutSemanalResponse(item[0].toString(), item[1].toString()));
+        }
+        return checkoutResponseList;
     }
 
     public Double pegarTotalFaturamentoDiario(Integer idEstacionamento){
