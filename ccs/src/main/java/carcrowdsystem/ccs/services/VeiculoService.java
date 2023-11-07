@@ -9,6 +9,7 @@ import carcrowdsystem.ccs.repositorys.ClienteRepository;
 import carcrowdsystem.ccs.repositorys.VeiculoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,4 +61,7 @@ public class VeiculoService {
         return repository.findByPlacaEqualsIgnoreCase(placa);
     }
 
+    public List<Veiculo> findAllById(Integer idCliente) {
+        return repository.findAllByIdCliente(idCliente);
+    }
 }

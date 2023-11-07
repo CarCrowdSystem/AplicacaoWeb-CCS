@@ -8,6 +8,8 @@ import carcrowdsystem.ccs.services.VeiculoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("${uri.dev}/veiculo")
 public class VeiculoController {
@@ -37,6 +39,13 @@ public class VeiculoController {
         }catch (Exception e){
             throw new MyException(404, "Placa já cadastrada", "V-008");
         }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Veiculo>> getAllVeiculoById(
+            @RequestParam Integer idVeiculo
+    ) throws MyException {
+        return ResponseEntity.ok(service.findAllById(idVeiculo));
     }
 
     @GetMapping
