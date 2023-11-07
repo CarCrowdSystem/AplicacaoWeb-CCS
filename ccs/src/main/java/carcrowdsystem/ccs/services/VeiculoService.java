@@ -1,6 +1,7 @@
 package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.dtos.veiculo.VeiculoMobileRequest;
+import carcrowdsystem.ccs.dtos.veiculo.VeiculoMobileResponse;
 import carcrowdsystem.ccs.dtos.veiculo.VeiculoRequest;
 import carcrowdsystem.ccs.entitys.Cliente;
 import carcrowdsystem.ccs.entitys.Veiculo;
@@ -61,7 +62,7 @@ public class VeiculoService {
         return repository.findByPlacaEqualsIgnoreCase(placa);
     }
 
-    public List<Veiculo> findAllById(Integer idCliente) {
+    public List<VeiculoMobileResponse> findAllById(Integer idCliente) {
         return repository.findAllByIdCliente(idCliente);
     }
 }

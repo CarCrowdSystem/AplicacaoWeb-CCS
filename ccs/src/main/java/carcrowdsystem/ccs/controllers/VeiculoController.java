@@ -1,6 +1,7 @@
 package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.veiculo.VeiculoMobileRequest;
+import carcrowdsystem.ccs.dtos.veiculo.VeiculoMobileResponse;
 import carcrowdsystem.ccs.dtos.veiculo.VeiculoRequest;
 import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.exception.MyException;
@@ -42,7 +43,7 @@ public class VeiculoController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Veiculo>> getAllVeiculoById(
+    public ResponseEntity<List<VeiculoMobileResponse>> getAllVeiculoById(
             @RequestParam Integer idVeiculo
     ) throws MyException {
         return ResponseEntity.ok(service.findAllById(idVeiculo));

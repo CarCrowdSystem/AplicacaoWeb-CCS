@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.repositorys;
 
+import carcrowdsystem.ccs.dtos.veiculo.VeiculoMobileResponse;
 import carcrowdsystem.ccs.entitys.Veiculo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +13,7 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Integer> {
 
     @Query(
             nativeQuery = true,
-            value = "Select * from veiculo where fk_cliente = ?"
+            value = "Select placa, marca, modelo, id_veiculo from veiculo where fk_cliente = ?"
     )
-    List<Veiculo> findAllByIdCliente(Integer idCliente);
+    List<VeiculoMobileResponse> findAllByIdCliente(Integer idCliente);
 }
