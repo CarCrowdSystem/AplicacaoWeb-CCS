@@ -10,6 +10,7 @@ import carcrowdsystem.ccs.repositorys.ClienteRepository;
 import carcrowdsystem.ccs.repositorys.VeiculoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +64,13 @@ public class VeiculoService {
     }
 
     public List<VeiculoMobileResponse> findAllById(Integer idCliente) {
-        return repository.findAllByIdCliente(idCliente);
+        List<Veiculo> list = repository.findAllByIdCliente(idCliente);
+        List<VeiculoMobileResponse> listResponse = new ArrayList<>();
+        for(Veiculo veiculo: list){
+            listResponse.add(new VeiculoMobileResponse(
+                veiculo.getPlaca(), veiculo.getMarca(), veiculo.getModelo(), veiculo.getId()
+            ));
+        };
+        return listResponse;
     }
 }

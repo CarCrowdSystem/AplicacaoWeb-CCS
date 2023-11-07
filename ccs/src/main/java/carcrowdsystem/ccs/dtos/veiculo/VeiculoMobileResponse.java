@@ -6,6 +6,13 @@ public class VeiculoMobileResponse {
     private String modelo;
     private Integer id_veiculo;
 
+    public VeiculoMobileResponse(String placa, String marca, String modelo, Integer id_veiculo) {
+        this.placa = placa;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.id_veiculo = id_veiculo;
+    }
+
     public String getPlaca() {
         return placa;
     }
