@@ -1,18 +1,19 @@
 package carcrowdsystem.ccs.services;
 
 import carcrowdsystem.ccs.configuration.security.jwt.GerenciadorTokenJwt;
+import carcrowdsystem.ccs.dtos.cliente.ClienteHistoricoResponse;
 import carcrowdsystem.ccs.dtos.cliente.ClienteTokenDto;
 import carcrowdsystem.ccs.dtos.funcionario.LoginDto;
 import carcrowdsystem.ccs.entitys.Cliente;
-import carcrowdsystem.ccs.entitys.Funcionario;
 import carcrowdsystem.ccs.exception.MyException;
+import carcrowdsystem.ccs.models.EnderecoEstacionamento;
 import carcrowdsystem.ccs.repositorys.ClienteRepository;
 import carcrowdsystem.ccs.repositorys.FuncionarioRepository;
 import carcrowdsystem.ccs.request.ClienteRequest;
 import carcrowdsystem.ccs.request.dtos.ClienteUpdateRequest;
 import carcrowdsystem.ccs.response.ClienteResponse;
 import carcrowdsystem.ccs.response.LoginClienteResponse;
-import carcrowdsystem.ccs.response.LoginResponse;
+import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +23,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -106,5 +111,22 @@ public class ClienteService {
 
     public List<Cliente> getAll() {
         return clienteRepository.findAll();
+    }
+
+    public List<ClienteHistoricoResponse> getAllHistoricoByIdCliente(Integer id) throws IOException, ParseException {
+        List<Object[]> list = clienteRepository.getAllHistoricoByIdCliente(id, id);
+        List<ClienteHistoricoResponse> checkoutResponseList = new ArrayList<>();
+        for (Object[] item : list) {
+            String data = item[2].toString().substring(0, 10);
+            String hora = item[2].toString().substring(11, 19);
+            ViaCepService viaCepService = new ViaCepService();
+            EnderecoEstacionamento endereco = viaCepService.getEndereco(item[1].toString());
+            String rua = endereco.logradouro + ", " + endereco.bairro + ", " + endereco.localidade + ", " + endereco.uf;
+            checkoutResponseList.add(new ClienteHistoricoResponse(
+                item[0].toString(), rua, data.toString(),
+                hora.toString(), item[3].toString(), item[4].toString()
+            ));
+        }
+        return checkoutResponseList;
     }
 }

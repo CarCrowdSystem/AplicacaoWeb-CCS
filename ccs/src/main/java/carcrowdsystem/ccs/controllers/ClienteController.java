@@ -7,17 +7,18 @@ import carcrowdsystem.ccs.request.ClienteRequest;
 import carcrowdsystem.ccs.request.dtos.ClienteUpdateRequest;
 import carcrowdsystem.ccs.response.ClienteResponse;
 import carcrowdsystem.ccs.response.LoginClienteResponse;
-import carcrowdsystem.ccs.response.LoginResponse;
 import carcrowdsystem.ccs.services.ClienteService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -67,5 +68,12 @@ public class ClienteController {
     ) throws MyException {
         clienteService.patch(clienteUpdateRequest, id);
         return ResponseEntity.status(200).build();
+    }
+
+    @GetMapping("/historico")
+    public ResponseEntity getAllHistoricoByIdCliente(
+        @RequestParam Integer id
+    ) throws IOException, ParseException {
+        return ResponseEntity.ok().body(clienteService.getAllHistoricoByIdCliente(id));
     }
 }
