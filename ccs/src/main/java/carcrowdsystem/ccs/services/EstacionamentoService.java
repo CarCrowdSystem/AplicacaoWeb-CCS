@@ -4,12 +4,14 @@ import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
 import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
-//import carcrowdsystem.ccs.mapper.EstacionamentoUpdateMapper;
+import carcrowdsystem.ccs.models.EnderecoEstacionamento;
 import carcrowdsystem.ccs.repositorys.EstacionamentoRepository;
-import carcrowdsystem.ccs.request.EstacionamentoRequest;
+import carcrowdsystem.ccs.response.EstacionamentoAllMobileResponse;
+import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -97,5 +99,21 @@ public class EstacionamentoService {
 
     public Estacionamento findByTop() {
         return estacionamentoRepository.findTopByOrderByIdEstacionamentoDesc();
+    }
+
+    public List<EstacionamentoAllMobileResponse> getAllEstacionamentosMobile() throws IOException, ParseException {
+        List<Object[]> list = estacionamentoRepository.getAllEstacionamentosMobile();
+        List<EstacionamentoAllMobileResponse> listReturn = new ArrayList<>();
+        for (Object[] item : list) {
+            ViaCepService viaCepService = new ViaCepService();
+            EnderecoEstacionamento endereco = viaCepService.getEndereco(item[2].toString());
+            String rua = endereco.logradouro + ", " + endereco.bairro + ", " + endereco.localidade + ", " + endereco.uf;
+            listReturn.add(new EstacionamentoAllMobileResponse(
+                    item[0].toString(), item[1].toString(), rua,
+                    item[2].toString(), item[3].toString(), item[4].toString(),
+                    item[5].toString(), item[7].toString(), item[6].toString()
+                ));
+        }
+        return listReturn;
     }
 }

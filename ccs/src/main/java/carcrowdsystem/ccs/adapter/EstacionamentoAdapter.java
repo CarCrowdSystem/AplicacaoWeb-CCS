@@ -3,11 +3,13 @@ package carcrowdsystem.ccs.adapter;
 import carcrowdsystem.ccs.dtos.estacionamento.EstacionamentoDto;
 import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.exception.MyException;
-import carcrowdsystem.ccs.request.EstacionamentoRequest;
+import carcrowdsystem.ccs.response.EstacionamentoAllMobileResponse;
 import carcrowdsystem.ccs.services.EstacionamentoService;
+import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -43,5 +45,9 @@ public class EstacionamentoAdapter implements DbAdapter<EstacionamentoDto, Estac
 
     public Estacionamento pegarUltimoEstacionamento() {
         return service.findByTop();
+    }
+
+    public List<EstacionamentoAllMobileResponse> getAllEstacionamentosMobile() throws IOException, ParseException {
+        return service.getAllEstacionamentosMobile();
     }
 }

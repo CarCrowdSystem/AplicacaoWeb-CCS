@@ -7,12 +7,13 @@ import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
 import carcrowdsystem.ccs.models.EnderecoEstacionamento;
 import carcrowdsystem.ccs.request.EstacionamentoRequest;
+import carcrowdsystem.ccs.response.EstacionamentoAllMobileResponse;
+import carcrowdsystem.ccs.services.ViaCepService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import carcrowdsystem.ccs.services.ViaCepService;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,15 @@ public class EstacionamentoController {
             @PathVariable Integer id
     ) throws MyException {
         return ResponseEntity.status(201).body(
-            estacionamentoMapper.toEstacionamentoDto(estacionamentoAdapter.getEstacionamentoPorId(id))
+                estacionamentoMapper.toEstacionamentoDto(estacionamentoAdapter.getEstacionamentoPorId(id))
+        );
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<EstacionamentoAllMobileResponse>>
+        getEstacionamentoPorId() throws IOException, ParseException {
+        return ResponseEntity.status(201).body(
+                estacionamentoAdapter.getAllEstacionamentosMobile()
         );
     }
 
