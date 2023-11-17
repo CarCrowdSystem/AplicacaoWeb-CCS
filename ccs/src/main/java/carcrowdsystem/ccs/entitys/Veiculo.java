@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.entitys;
 
+import carcrowdsystem.ccs.enums.StatusVeiculo;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class Veiculo {
     private String placa;
     private String marca;
     private String modelo;
+    private StatusVeiculo ativo = StatusVeiculo.Ativo;
     @OneToMany
     private List<Historico> historico;
     @ManyToOne
@@ -65,5 +67,13 @@ public class Veiculo {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public StatusVeiculo getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(StatusVeiculo ativo) {
+        this.ativo = ativo;
     }
 }

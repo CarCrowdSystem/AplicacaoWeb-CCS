@@ -5,6 +5,7 @@ import carcrowdsystem.ccs.dtos.veiculo.VeiculoMobileResponse;
 import carcrowdsystem.ccs.dtos.veiculo.VeiculoRequest;
 import carcrowdsystem.ccs.entitys.Cliente;
 import carcrowdsystem.ccs.entitys.Veiculo;
+import carcrowdsystem.ccs.enums.StatusVeiculo;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.ClienteRepository;
 import carcrowdsystem.ccs.repositorys.VeiculoRepository;
@@ -72,5 +73,13 @@ public class VeiculoService {
             ));
         };
         return listResponse;
+    }
+
+    public void delVeiculo(Integer id) throws MyException {
+        Veiculo veiculo = repository.findById(id).orElseThrow(
+                () -> new MyException(404, "Veiculo não existe", "VE-003")
+        );
+        veiculo.setAtivo(StatusVeiculo.NaoAtivo);
+        repository.save(veiculo);
     }
 }

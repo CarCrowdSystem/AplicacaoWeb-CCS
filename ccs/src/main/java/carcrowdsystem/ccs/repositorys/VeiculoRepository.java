@@ -13,7 +13,7 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Integer> {
 
     @Query(
             nativeQuery = true,
-            value = "Select * from veiculo where fk_cliente = ?"
+            value = "Select * from veiculo where fk_cliente = ? and ativo = 0"
     )
     List<Veiculo> findAllByIdCliente(Integer idCliente);
 }

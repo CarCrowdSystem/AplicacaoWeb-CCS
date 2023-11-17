@@ -44,9 +44,9 @@ public class VeiculoController {
 
     @GetMapping("/all")
     public ResponseEntity<List<VeiculoMobileResponse>> getAllVeiculoById(
-            @RequestParam Integer idVeiculo
+            @RequestParam Integer id
     ) throws MyException {
-        return ResponseEntity.ok(service.findAllById(idVeiculo));
+        return ResponseEntity.ok(service.findAllById(id));
     }
 
     @GetMapping
@@ -54,6 +54,14 @@ public class VeiculoController {
         @RequestParam Integer idVeiculo
     ) throws MyException {
         return ResponseEntity.ok(service.findById(idVeiculo));
+    }
+
+    @DeleteMapping
+    public ResponseEntity delVeiculoById(
+            @RequestParam Integer id
+    ) throws MyException {
+        service.delVeiculo(id);
+        return ResponseEntity.ok().build();
     }
 
     public Veiculo findByPlaca(String placa) {
