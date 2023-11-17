@@ -50,8 +50,4 @@ public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, Funcionario
     public FuncionarioDto[] getALLOrdenado(Integer id) throws MyException {
         return service.getAllFuncsOrderByName(id);
     }
-
-    public ResponseEntity alterarSenha(String email, String novaSenha) {
-        return service.alterarSenha(email, novaSenha);
-    }
 }

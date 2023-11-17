@@ -5,6 +5,7 @@ import carcrowdsystem.ccs.dtos.cliente.ClienteHistoricoResponse;
 import carcrowdsystem.ccs.dtos.cliente.ClienteTokenDto;
 import carcrowdsystem.ccs.dtos.funcionario.LoginDto;
 import carcrowdsystem.ccs.entitys.Cliente;
+import carcrowdsystem.ccs.entitys.Funcionario;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.models.EnderecoEstacionamento;
 import carcrowdsystem.ccs.repositorys.ClienteRepository;
@@ -15,6 +16,7 @@ import carcrowdsystem.ccs.response.ClienteResponse;
 import carcrowdsystem.ccs.response.LoginClienteResponse;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -128,5 +130,17 @@ public class ClienteService {
             ));
         }
         return checkoutResponseList;
+    }
+
+    public ResponseEntity alterarSenha(Integer id, String oldPass, String newPass) throws MyException {
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(
+                () -> new MyException(404, "Não existe", "F-012")
+        );
+        if (passwordEncoder.matches(oldPass, cliente.getSenha())) {
+            cliente.setSenha(passwordEncoder.encode(newPass));
+            clienteRepository.save(cliente);
+            return ResponseEntity.status(200).build();
+        }
+        return ResponseEntity.status(400).body("Senha inválida");
     }
 }

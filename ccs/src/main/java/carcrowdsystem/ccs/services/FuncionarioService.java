@@ -160,17 +160,6 @@ public class FuncionarioService {
         return ResponseEntity.status(404).build(); // Funcionário não encontrado
     }
 
-    public ResponseEntity alterarSenha(String email, String novaSenha){
-        Optional<Funcionario> emailUser = funcionarioRepository.findByEmail(email);
-        if(emailUser.isPresent()){
-            Funcionario user = emailUser.get();
-            user.setSenha(passwordEncoder.encode(novaSenha));
-            funcionarioRepository.save(user);
-            return ResponseEntity.status(200).build();
-        }
-        return ResponseEntity.status(404).build();
-    }
-
     public Boolean deleteFunc(Integer id) throws MyException {
         Funcionario func = funcionarioRepository.findById(id).orElseThrow(
             () -> new MyException(404, "Id não existe", "F-010")

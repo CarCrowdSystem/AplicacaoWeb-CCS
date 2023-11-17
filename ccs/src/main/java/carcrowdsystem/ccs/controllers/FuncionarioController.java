@@ -103,16 +103,6 @@ public class FuncionarioController {
         return funcionarioAdapter.binarySearch(nome, id);
     }
 
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Alteração de senha bem sucedida"),
-            @ApiResponse(responseCode = "404", description = "E-mail não encontrado", content = @Content(schema =
-            @Schema(hidden = true)))
-    })
-    @PatchMapping("/alterar-senha/{email}/{novaSenha}")
-    public ResponseEntity patchSenha(@RequestParam String email, @RequestParam String novaSenha){
-        return funcionarioAdapter.alterarSenha(email, novaSenha);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity deleteFuncionario(@PathVariable Integer id) throws MyException {
         funcionarioAdapter.delete(id);

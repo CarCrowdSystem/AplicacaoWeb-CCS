@@ -76,4 +76,18 @@ public class ClienteController {
     ) throws IOException, ParseException {
         return ResponseEntity.ok().body(clienteService.getAllHistoricoByIdCliente(id));
     }
+
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Alteração de senha bem sucedida"),
+            @ApiResponse(responseCode = "404", description = "E-mail não encontrado", content = @Content(schema =
+            @Schema(hidden = true)))
+    })
+    @PatchMapping("/alterar-senha")
+    public ResponseEntity patchSenha(
+            @RequestParam Integer id,
+            @RequestParam String oldPass,
+            @RequestParam String newPass
+    ) throws MyException {
+        return clienteService.alterarSenha(id, oldPass, newPass);
+    }
 }

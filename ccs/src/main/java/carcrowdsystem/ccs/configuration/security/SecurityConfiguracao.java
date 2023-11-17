@@ -50,9 +50,9 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/ccs-dev/valores"),
             new AntPathRequestMatcher("/ccs-dev/valores**"),
             new AntPathRequestMatcher("/ccs-dev/valores/**"),
-            new AntPathRequestMatcher("/ccs-dev/cliente"),
-            new AntPathRequestMatcher("/ccs-dev/cliente**"),
-            new AntPathRequestMatcher("/ccs-dev/cliente/**"),
+            new AntPathRequestMatcher("/ccs-dev/clientes"),
+            new AntPathRequestMatcher("/ccs-dev/clientes**"),
+            new AntPathRequestMatcher("/ccs-dev/clientes/**"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/ccs-dev/vagas**"),
             new AntPathRequestMatcher("/ccs-dev/vagas/**"),
@@ -81,9 +81,9 @@ public class SecurityConfiguracao {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests(authorize -> authorize.requestMatchers(URLS_PERMITIDAS)
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
                 )
                 .exceptionHandling()
                 .authenticationEntryPoint(autenticacaoJwtEntryPoint)
