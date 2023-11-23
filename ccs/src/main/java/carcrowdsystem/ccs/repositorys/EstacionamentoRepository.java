@@ -21,7 +21,7 @@ public interface EstacionamentoRepository extends JpaRepository<Estacionamento, 
         value = "SELECT \n" +
                 "    e.id_estacionamento,\n" +
                 "    e.nome_estacionamento,\n" +
-                "    e.cep,\n" +
+                "    e.cep, e.numero_endereco,\n" +
                 "    COALESCE(COUNT(v.id_vaga), 0) AS total_vagas,\n" +
                 "    COALESCE(SUM(CASE WHEN h.status_registro = 0 THEN 1 ELSE 0 END), 0) AS vagas_cheias,\n" +
                 "    COALESCE(ve.diaria, 0) AS diaria,\n" +

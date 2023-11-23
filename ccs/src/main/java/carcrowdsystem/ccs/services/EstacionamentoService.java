@@ -107,11 +107,12 @@ public class EstacionamentoService {
         for (Object[] item : list) {
             ViaCepService viaCepService = new ViaCepService();
             EnderecoEstacionamento endereco = viaCepService.getEndereco(item[2].toString());
-            String rua = endereco.logradouro + ", " + endereco.bairro + ", " + endereco.localidade + ", " + endereco.uf;
+            String rua = endereco.logradouro +" n"+ item[3].toString() +
+                    ", " + endereco.bairro + ", " + endereco.localidade + ", " + endereco.uf;
             listReturn.add(new EstacionamentoAllMobileResponse(
                     item[0].toString(), item[1].toString(), rua,
-                    item[2].toString(), item[3].toString(), item[4].toString(),
-                    item[5].toString(), item[7].toString(), item[6].toString()
+                    item[2].toString(), item[4].toString(), item[5].toString(),
+                    item[6].toString(), item[8].toString(), item[7].toString()
                 ));
         }
         return listReturn;

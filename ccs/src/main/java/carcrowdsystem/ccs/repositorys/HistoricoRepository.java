@@ -1,6 +1,7 @@
 package carcrowdsystem.ccs.repositorys;
 
 import carcrowdsystem.ccs.dtos.historico.CheckoutSemanalResponse;
+import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.entitys.Historico;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -161,4 +162,10 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "JOIN vaga v ON h.fk_vaga = v.id_vaga where v.id_vaga = ? limit 1;"
     )
     Integer getIdEstacionamento(Integer idVaga);
+
+    @Query(
+            nativeQuery = true,
+            value = "select * from estacionamento where id_estacionamento = ?"
+    )
+    Estacionamento findEstacionamentoById(Integer idEstacionamento);
 }

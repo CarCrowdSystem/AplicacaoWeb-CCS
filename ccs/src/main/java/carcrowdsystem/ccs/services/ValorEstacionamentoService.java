@@ -29,6 +29,11 @@ public class ValorEstacionamentoService {
         Integer idEstacionamento
     ) throws MyException {
         ValorEstacionamento valor = repository.findByIdEstacionamento(idEstacionamento);
+        if(valor == null){
+            valor = new ValorEstacionamento();
+            Estacionamento est = estacionamentoService.findById(idEstacionamento);
+            valor.setEstacionamento(est);
+        }
         if(valorEstacionamentoDto.getDiaria() != null && !valorEstacionamentoDto.getDiaria().equals(""))
         valor.setDiaria(valorEstacionamentoDto.getDiaria());
         if(valorEstacionamentoDto.getHoraAdicional() != null && !valorEstacionamentoDto.getHoraAdicional().equals(""))

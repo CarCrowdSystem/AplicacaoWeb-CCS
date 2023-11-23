@@ -2,11 +2,13 @@ package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.historico.CheckoutSemanalResponse;
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
+import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.entitys.Historico;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.response.*;
 import carcrowdsystem.ccs.response.dtos.UltimoHistoricoVagaDtoResponse;
+import carcrowdsystem.ccs.services.EstacionamentoService;
 import carcrowdsystem.ccs.services.HistoricoService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -18,13 +20,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
 @RequestMapping("${uri.dev}/historicos")
 @Tag(name = "Histórico", description = "Gerencia a entidade histórico")
-public class HistoricoController {
-
+public class HistoricoController{
+    @Autowired
+    private EstacionamentoService estacionamentoService;
     @Autowired
     private HistoricoService service;
 
@@ -196,6 +203,25 @@ public class HistoricoController {
         } else {
             return ResponseEntity.status(400).body("Esse veículo não está no estacionamento");
         }
+    }
+
+    @PostMapping("/reserva")
+    public ResponseEntity reserva(
+            @RequestParam String placa,
+            @RequestParam Integer idEstacionamento,
+            @RequestParam String dataReserva,
+            @RequestParam String horaReserva
+    ) throws MyException {
+        DateTimeFormatter parserDia = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        DateTimeFormatter parserHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime horaDataReserva = LocalDateTime.of(
+            LocalDate.parse(dataReserva, parserDia),
+            LocalTime.parse(horaReserva, parserHora)
+        );
+        Integer idVeiculo = service.pegarVeiculoPorPlaca(placa).getId();
+        Estacionamento estacionamento = estacionamentoService.findById(idEstacionamento);
+        HistoricoDto historicoDto = new HistoricoDto(StatusVagaEnum.Reservado, 0.0);
+        return service.postReserva(historicoDto, idVeiculo, estacionamento, horaDataReserva);
     }
 }
 

@@ -17,6 +17,8 @@ public class Veiculo {
     private StatusVeiculo ativo = StatusVeiculo.Ativo;
     @OneToMany
     private List<Historico> historico;
+    @OneToMany
+    private List<Reserva> reservas;
     @ManyToOne
     @JoinColumn(name = "fk_cliente")
     private Cliente cliente;

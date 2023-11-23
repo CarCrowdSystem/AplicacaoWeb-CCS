@@ -4,12 +4,11 @@ import carcrowdsystem.ccs.controllers.VagaController;
 import carcrowdsystem.ccs.controllers.VeiculoController;
 import carcrowdsystem.ccs.dtos.historico.CheckoutSemanalResponse;
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
-import carcrowdsystem.ccs.entitys.Historico;
-import carcrowdsystem.ccs.entitys.Vaga;
-import carcrowdsystem.ccs.entitys.Veiculo;
+import carcrowdsystem.ccs.entitys.*;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.repositorys.HistoricoRepository;
+import carcrowdsystem.ccs.repositorys.ReservaRepository;
 import carcrowdsystem.ccs.response.HistoricoDadosResponse;
 import carcrowdsystem.ccs.response.HistoricoResponse;
 import carcrowdsystem.ccs.response.MomentoVagasResponse;
@@ -32,15 +31,18 @@ import java.util.stream.Collectors;
 @Service
 public class HistoricoService {
     private final HistoricoRepository repository;
+    private final ReservaRepository reservaRepository;
     private final VeiculoController veiculoController;
     private final VagaController vagaController;
 
     public HistoricoService(
-        HistoricoRepository repository,
-        VeiculoController veiculoController,
-        VagaController vagaController
+            HistoricoRepository repository,
+            ReservaRepository reservaRepository,
+            VeiculoController veiculoController,
+            VagaController vagaController
     ) {
         this.repository = repository;
+        this.reservaRepository = reservaRepository;
         this.veiculoController = veiculoController;
         this.vagaController = vagaController;
     }
@@ -258,5 +260,39 @@ public class HistoricoService {
 
     public Integer findByIdEstacionamento(Integer idVaga) {
         return repository.getIdEstacionamento(idVaga);
+    }
+
+    private ResponseEntity postHistoricoReserva(
+        HistoricoDto newHistorico,
+        Integer idVeiculo
+    ) throws MyException {
+        try {
+            ResponseEntity<Veiculo> veiculo = veiculoController.getVeiculoById(idVeiculo);
+            Historico historico = new Historico();
+            historico.setVaga(null);
+            historico.setVeiculo(veiculo.getBody());
+            historico.setValorPago(0.0);
+            historico.setStatusRegistro(newHistorico.getStatusRegistro());
+            historico.setMomentoRegistro(newHistorico.getMomentoRegistro());
+            repository.save(historico);
+            return ResponseEntity.ok().build();
+        } catch (Exception e){
+            throw new MyException(e.hashCode(), e.getMessage(), "H-005");
+        }
+    }
+
+    public ResponseEntity postReserva(
+            HistoricoDto historicoDto, Integer idVeiculo,
+            Estacionamento estacionamento, LocalDateTime horaDataReserva)
+        throws MyException {
+        Veiculo veiculo = veiculoController.getVeiculoById(idVeiculo).getBody();
+        Reserva reserva = new Reserva(horaDataReserva, estacionamento, veiculo);
+        reservaRepository.save(reserva);
+        postHistoricoReserva(historicoDto, idVeiculo);
+        return ResponseEntity.ok().build();
+    }
+
+    public Estacionamento pegarEstacionamento(Integer idEstacionamento) {
+        return repository.findEstacionamentoById(idEstacionamento);
     }
 }

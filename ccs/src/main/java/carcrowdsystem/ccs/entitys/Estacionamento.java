@@ -34,6 +34,8 @@ public class Estacionamento {
     private List<Vaga> vagas;
     @OneToMany
     private List<ValorEstacionamento> valorEstacionamento;
+    @OneToMany
+    private List<Reserva> reservas;
     private Boolean statusEstacionamento = true;
 
     public Integer getId() {
