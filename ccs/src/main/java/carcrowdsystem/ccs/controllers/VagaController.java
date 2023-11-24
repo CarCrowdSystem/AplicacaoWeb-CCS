@@ -2,7 +2,6 @@ package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.vaga.VagaDto;
 import carcrowdsystem.ccs.entitys.Vaga;
-import carcrowdsystem.ccs.entitys.Veiculo;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.request.VagaRequest;
 import carcrowdsystem.ccs.request.dtos.VagaDtoRequest;
@@ -50,5 +49,9 @@ public class VagaController {
     @GetMapping
     public ResponseEntity<Vaga> getVagaById(@RequestParam Integer idVaga) throws MyException {
         return ResponseEntity.ok(service.findById(idVaga));
+    }
+
+    public Integer pegarIdVagaLivreByIdEstacionamento(Integer id) throws MyException {
+        return service.pegarIdVagaLivreByIdEstacionamento(id);
     }
 }

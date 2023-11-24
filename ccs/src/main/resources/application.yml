@@ -8,7 +8,7 @@ spring:
     allow-circular-references: true
   # habilita a impress�o dos comando SQL no log
   jpa:
-    show-sql: true
+#    show-sql: true
     # formata os SQL (quebra linha, identa etc)
     properties:
       hibernate:

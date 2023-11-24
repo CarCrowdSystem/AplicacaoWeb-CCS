@@ -19,12 +19,6 @@ public class Reserva {
     @JoinColumn(name = "fk_veiculo")
     private Veiculo veiculo;
 
-    public Reserva(LocalDateTime dataHoraReserva, Estacionamento estacionamento, Veiculo veiculo) {
-        this.dataHoraReserva = dataHoraReserva;
-        this.estacionamento = estacionamento;
-        this.veiculo = veiculo;
-    }
-
     public Integer getId() {
         return id;
     }

@@ -22,10 +22,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.FormatterClosedException;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -286,7 +283,10 @@ public class HistoricoService {
             Estacionamento estacionamento, LocalDateTime horaDataReserva)
         throws MyException {
         Veiculo veiculo = veiculoController.getVeiculoById(idVeiculo).getBody();
-        Reserva reserva = new Reserva(horaDataReserva, estacionamento, veiculo);
+        Reserva reserva = new Reserva();
+        reserva.setDataHoraReserva(horaDataReserva);
+        reserva.setEstacionamento(estacionamento);
+        reserva.setVeiculo(veiculo);
         reservaRepository.save(reserva);
         postHistoricoReserva(historicoDto, idVeiculo);
         return ResponseEntity.ok().build();
@@ -294,5 +294,28 @@ public class HistoricoService {
 
     public Estacionamento pegarEstacionamento(Integer idEstacionamento) {
         return repository.findEstacionamentoById(idEstacionamento);
+    }
+
+    public void autorizarReservas() throws MyException {
+        System.out.println("Pegando reservas");
+        List<Reserva> reservas = reservaRepository.pegarReservas();
+        if(!reservas.isEmpty()) {
+            for (Reserva r : reservas) {
+                System.out.println("Pegando id de uma vaga vazia");
+                Integer idVaga = vagaController.pegarIdVagaLivreByIdEstacionamento(
+                        r.getEstacionamento().getId()
+                );
+                HistoricoDto historicoDto = new HistoricoDto(StatusVagaEnum.Entrada, 0.0);
+                historicoDto.setMomentoRegistro(r.getDataHoraReserva());
+                System.out.println("Gerando checkin");
+                postHistorico(historicoDto, r.getVeiculo().getId(), idVaga);
+                System.out.println("Deletando reserva");
+                reservaRepository.delete(r);
+                System.out.println("-------------------------------------------------------------------");
+            }
+        } else {
+            System.out.println("Sem reservas agora");
+            System.out.println("-------------------------------------------------------------------");
+        }
     }
 }
