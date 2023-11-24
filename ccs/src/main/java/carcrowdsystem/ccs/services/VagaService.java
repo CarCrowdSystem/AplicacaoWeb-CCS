@@ -62,4 +62,10 @@ public class VagaService {
             () -> new MyException(404, "Vaga não existe", "V-001")
         );
     }
+
+    public Integer pegarIdVagaLivreByIdEstacionamento(Integer id) throws MyException {
+        return repository.pegarIdVagaLivreByIdEstacionamento(id).orElseThrow(
+                () -> new MyException(204, "Não existe nenhuma reserva neste horario", "EV-001")
+        );
+    }
 }

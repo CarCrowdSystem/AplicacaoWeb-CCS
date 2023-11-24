@@ -8,7 +8,7 @@ spring:
     allow-circular-references: true
   # habilita a impress�o dos comando SQL no log
   jpa:
-    show-sql: true
+#    show-sql: true
     # formata os SQL (quebra linha, identa etc)
     properties:
       hibernate:
@@ -28,13 +28,13 @@ spring:
       hibernate:
         ddl-auto: update
 
-server:
-  ssl:
-    key-store: classpath:keystore2.p12
-    key-store-password: ccs12345
-    key-store-type: pkcs12
-    key-alias: css
-  port: 8080
+#server:
+#  ssl:
+#    key-store: classpath:keystore2.p12
+#    key-store-password: ccs12345
+#    key-store-type: pkcs12
+#    key-alias: css
+#  port: 8080
 uri.prod: /ccs-prod
 uri.dev: /ccs-dev
 uri.homol: /ccs-homol
