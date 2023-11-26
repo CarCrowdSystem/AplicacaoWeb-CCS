@@ -283,12 +283,13 @@ public class HistoricoService {
             Estacionamento estacionamento, LocalDateTime horaDataReserva)
         throws MyException {
         Veiculo veiculo = veiculoController.getVeiculoById(idVeiculo).getBody();
+        Integer idVaga = vagaController.pegarIdVagaLivreByIdEstacionamento(1);
         Reserva reserva = new Reserva();
         reserva.setDataHoraReserva(horaDataReserva);
         reserva.setEstacionamento(estacionamento);
         reserva.setVeiculo(veiculo);
         reservaRepository.save(reserva);
-        postHistoricoReserva(historicoDto, idVeiculo);
+        postHistorico(historicoDto, idVeiculo, idVaga);
         return ResponseEntity.ok().build();
     }
 
