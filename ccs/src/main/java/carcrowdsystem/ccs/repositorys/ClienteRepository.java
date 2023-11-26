@@ -28,7 +28,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
                     "JOIN estacionamento e ON v.fk_estacionamento = e.id_estacionamento\n" +
                     "JOIN veiculo ve ON h.fk_veiculo = ve.id_veiculo\n" +
                     "JOIN cliente c ON ve.fk_cliente = c.id_cliente\n" +
-                    "WHERE c.id_cliente = ? AND h.status_registro = 1\n" +
+                    "WHERE c.id_cliente = ?\n" +
                     "ORDER BY momento_registro DESC)\n" +
                     "ORDER BY momento_registro DESC\n" +
                     "Limit 10;"
