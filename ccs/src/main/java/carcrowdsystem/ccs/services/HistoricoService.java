@@ -4,6 +4,7 @@ import carcrowdsystem.ccs.controllers.VagaController;
 import carcrowdsystem.ccs.controllers.VeiculoController;
 import carcrowdsystem.ccs.dtos.historico.CheckoutSemanalResponse;
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
+import carcrowdsystem.ccs.dtos.reserva.reservaResponseDto;
 import carcrowdsystem.ccs.entitys.*;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
 import carcrowdsystem.ccs.exception.MyException;
@@ -22,7 +23,10 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.FormatterClosedException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -318,5 +322,23 @@ public class HistoricoService {
             System.out.println("Sem reservas agora");
             System.out.println("-------------------------------------------------------------------");
         }
+    }
+
+    public List<reservaResponseDto> getReservasByIdEstacionamento(Integer idEstacionamento) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        List<Reserva> reservas = reservaRepository.getReservasByIdEstacionamento(idEstacionamento);
+        List<reservaResponseDto> returnReservas = new ArrayList<>();
+        for(Reserva r: reservas){
+            returnReservas.add(new reservaResponseDto(
+                r.getId(),
+                r.getVeiculo().getCliente().getNome(),
+                r.getDataHoraReserva().format(formatter),
+                r.getDataHoraReserva().toLocalTime().toString(),
+                r.getVeiculo().getCliente().getTelefone(),
+                r.getVeiculo().getModelo(),
+                r.getVeiculo().getMarca()
+            ));
+        }
+        return returnReservas;
     }
 }

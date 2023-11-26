@@ -2,6 +2,7 @@ package carcrowdsystem.ccs.controllers;
 
 import carcrowdsystem.ccs.dtos.historico.CheckoutSemanalResponse;
 import carcrowdsystem.ccs.dtos.historico.HistoricoDto;
+import carcrowdsystem.ccs.dtos.reserva.reservaResponseDto;
 import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.entitys.Historico;
 import carcrowdsystem.ccs.enums.StatusVagaEnum;
@@ -222,6 +223,13 @@ public class HistoricoController{
         Estacionamento estacionamento = estacionamentoService.findById(idEstacionamento);
         HistoricoDto historicoDto = new HistoricoDto(StatusVagaEnum.Reservado, 0.0);
         return service.postReserva(historicoDto, idVeiculo, estacionamento, horaDataReserva);
+    }
+
+    @GetMapping("/reserva")
+    public ResponseEntity<List<reservaResponseDto>> getReservasByIdEstacionamento(
+            @RequestParam Integer idEstacionamento
+    ){
+        return ResponseEntity.ok(service.getReservasByIdEstacionamento(idEstacionamento));
     }
 }
 

@@ -16,4 +16,10 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
                 "AND data_hora_reserva <= (NOW() - INTERVAL 3 HOUR)"
     )
     List<Reserva> pegarReservas();
+
+    @Query(
+        nativeQuery = true,
+        value = "SELECT * FROM CCS.reserva where fk_estacionamento = ? order by data_hora_reserva asc;"
+    )
+    List<Reserva> getReservasByIdEstacionamento(Integer idEstacionamento);
 }
