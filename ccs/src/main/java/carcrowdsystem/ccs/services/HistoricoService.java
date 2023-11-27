@@ -263,20 +263,22 @@ public class HistoricoService {
         return repository.getIdEstacionamento(idVaga);
     }
 
-    private ResponseEntity postHistoricoReserva(
-        HistoricoDto newHistorico,
-        Integer idVeiculo
+    private Historico postHistoricoReserva(
+            HistoricoDto newHistorico,
+            Integer idVeiculo,
+            Integer idVaga
     ) throws MyException {
         try {
+            ResponseEntity<Vaga> vaga = vagaController.getVagaById(idVaga);
             ResponseEntity<Veiculo> veiculo = veiculoController.getVeiculoById(idVeiculo);
             Historico historico = new Historico();
-            historico.setVaga(null);
+            historico.setVaga(vaga.getBody());
             historico.setVeiculo(veiculo.getBody());
-            historico.setValorPago(0.0);
+            historico.setValorPago(newHistorico.getValorPago());
             historico.setStatusRegistro(newHistorico.getStatusRegistro());
             historico.setMomentoRegistro(newHistorico.getMomentoRegistro());
-            repository.save(historico);
-            return ResponseEntity.ok().build();
+            Historico hist = repository.save(historico);
+            return hist;
         } catch (Exception e){
             throw new MyException(e.hashCode(), e.getMessage(), "H-005");
         }
@@ -288,12 +290,13 @@ public class HistoricoService {
         throws MyException {
         Veiculo veiculo = veiculoController.getVeiculoById(idVeiculo).getBody();
         Integer idVaga = vagaController.pegarIdVagaLivreByIdEstacionamento(1);
+        Historico historico = postHistoricoReserva(historicoDto, idVeiculo, idVaga);
         Reserva reserva = new Reserva();
         reserva.setDataHoraReserva(horaDataReserva);
         reserva.setEstacionamento(estacionamento);
         reserva.setVeiculo(veiculo);
+        reserva.setIdHistorico(historico.getId());
         reservaRepository.save(reserva);
-        postHistorico(historicoDto, idVeiculo, idVaga);
         return ResponseEntity.ok().build();
     }
 
@@ -340,5 +343,9 @@ public class HistoricoService {
             ));
         }
         return returnReservas;
+    }
+
+    public void delReservaById(Integer id) {
+        reservaRepository.deleteById(id);
     }
 }

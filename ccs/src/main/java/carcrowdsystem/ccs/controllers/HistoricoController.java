@@ -231,5 +231,13 @@ public class HistoricoController{
     ){
         return ResponseEntity.ok(service.getReservasByIdEstacionamento(idEstacionamento));
     }
+
+    @DeleteMapping("/reserva")
+    public ResponseEntity delReservaById(
+            @RequestParam Integer id
+    ){
+        service.delReservaById(id);
+        return ResponseEntity.ok().build();
+    }
 }
 

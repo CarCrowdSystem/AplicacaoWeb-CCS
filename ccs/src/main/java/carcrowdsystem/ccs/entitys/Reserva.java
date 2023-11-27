@@ -18,6 +18,16 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "fk_veiculo")
     private Veiculo veiculo;
+    @Column(name = "fk_historico")
+    private Integer idHistorico;
+
+    public Integer getIdHistorico() {
+        return idHistorico;
+    }
+
+    public void setIdHistorico(Integer idHistorico) {
+        this.idHistorico = idHistorico;
+    }
 
     public Integer getId() {
         return id;

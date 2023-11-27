@@ -117,7 +117,19 @@ public class ClienteService {
 
     public List<ClienteHistoricoResponse> getAllHistoricoByIdCliente(Integer id) throws IOException, ParseException {
         List<Object[]> list = clienteRepository.getAllHistoricoByIdCliente(id, id);
+        List<Object[]> listReservas = clienteRepository.getAllReservasByIdCliente(id);
         List<ClienteHistoricoResponse> checkoutResponseList = new ArrayList<>();
+        for (Object[] item : listReservas) {
+            String data = item[2].toString().substring(0, 10);
+            String hora = item[2].toString().substring(11, 19);
+            ViaCepService viaCepService = new ViaCepService();
+            EnderecoEstacionamento endereco = viaCepService.getEndereco(item[1].toString());
+            String rua = endereco.logradouro + ", " + endereco.bairro + ", " + endereco.localidade + ", " + endereco.uf;
+            checkoutResponseList.add(new ClienteHistoricoResponse(
+                    item[0].toString(), rua, data.toString(), hora.toString(),
+                    item[3].toString(), item[4].toString(), item[5].toString(), item[6].toString()
+            ));
+        }
         for (Object[] item : list) {
             String data = item[2].toString().substring(0, 10);
             String hora = item[2].toString().substring(11, 19);
@@ -125,8 +137,8 @@ public class ClienteService {
             EnderecoEstacionamento endereco = viaCepService.getEndereco(item[1].toString());
             String rua = endereco.logradouro + ", " + endereco.bairro + ", " + endereco.localidade + ", " + endereco.uf;
             checkoutResponseList.add(new ClienteHistoricoResponse(
-                item[0].toString(), rua, data.toString(),
-                hora.toString(), item[3].toString(), item[4].toString()
+                    item[0].toString(), rua, data.toString(), hora.toString(),
+                    item[3].toString(), item[4].toString(), item[5].toString(), "-1"
             ));
         }
         return checkoutResponseList;

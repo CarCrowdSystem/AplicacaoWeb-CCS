@@ -7,14 +7,21 @@ public class ClienteHistoricoResponse {
     private String hora;
     private String valor;
     private String status;
+    private String placa;
+    private String idReserva;
 
-    public ClienteHistoricoResponse(String nome, String rua, String data, String hora, String valor, String status) {
+    public ClienteHistoricoResponse(
+        String nome, String rua, String data, String hora,
+        String valor, String status, String placa, String idReserva
+    ) {
         this.nome = nome;
         this.rua = rua;
         this.data = data;
         this.hora = hora;
         this.valor = valor;
         this.status = status;
+        this.placa = placa;
+        this.idReserva = idReserva;
     }
 
     public String getNome() {
@@ -63,5 +70,21 @@ public class ClienteHistoricoResponse {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public String getIdReserva() {
+        return idReserva;
+    }
+
+    public void setIdReserva(String idReserva) {
+        this.idReserva = idReserva;
     }
 }
