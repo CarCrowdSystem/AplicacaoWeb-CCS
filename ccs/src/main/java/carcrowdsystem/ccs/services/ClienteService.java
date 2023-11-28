@@ -5,7 +5,6 @@ import carcrowdsystem.ccs.dtos.cliente.ClienteHistoricoResponse;
 import carcrowdsystem.ccs.dtos.cliente.ClienteTokenDto;
 import carcrowdsystem.ccs.dtos.funcionario.LoginDto;
 import carcrowdsystem.ccs.entitys.Cliente;
-import carcrowdsystem.ccs.entitys.Funcionario;
 import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.models.EnderecoEstacionamento;
 import carcrowdsystem.ccs.repositorys.ClienteRepository;
@@ -26,8 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,14 +41,14 @@ public class ClienteService {
     @Autowired
     private GerenciadorTokenJwt gerenciadorTokenJwt;
 
-    public void postCliente(ClienteRequest cliente) throws MyException {
+    public Cliente postCliente(ClienteRequest cliente) throws MyException {
         try {
             Cliente newCliente = new Cliente();
             newCliente.setNome(cliente.getNome());
             newCliente.setEmail(cliente.getEmail());
             newCliente.setSenha(passwordEncoder.encode(cliente.getSenha()));
 
-            clienteRepository.save(newCliente);
+            return clienteRepository.save(newCliente);
         } catch (Exception e) {
             throw new MyException(404, "Id não existente", "Cli001");
         }

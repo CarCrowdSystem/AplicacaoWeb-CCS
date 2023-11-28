@@ -40,7 +40,8 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "        WHERE fk_estacionamento = ? " +
                     "    ) " +
                     "    GROUP BY fk_veiculo " +
-                    ") t ON h.fk_veiculo = t.fk_veiculo AND h.id_historico = t.ultimo_registro;"
+                    ") t ON h.fk_veiculo = t.fk_veiculo AND h.id_historico = t.ultimo_registro " +
+                    "ORDER BY momento_registro asc;"
     )
     List<Historico> pegarMomentoByIdEstacionamento(Integer idEstacionamento);
 

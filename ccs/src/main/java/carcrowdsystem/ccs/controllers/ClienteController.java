@@ -44,9 +44,8 @@ public class ClienteController {
             @Schema(hidden = true)))
     })
     @PostMapping
-    public ResponseEntity postCliente(@RequestBody ClienteRequest cliente) throws MyException {
-        clienteService.postCliente(cliente);
-        return ResponseEntity.status(201).build();
+    public ResponseEntity<Cliente> postCliente(@RequestBody ClienteRequest cliente) throws MyException {
+        return ResponseEntity.status(201).body(clienteService.postCliente(cliente));
     }
 
     @ApiResponses({

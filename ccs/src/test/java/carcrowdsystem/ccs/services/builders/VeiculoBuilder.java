@@ -8,7 +8,7 @@ public class VeiculoBuilder {
     }
     public static VeiculoRequest criarVeiculoRequest() {
         return new VeiculoRequest(
-                "AWB2T23","Uno", "Fiat"
+                "","","","AWB2T23","Uno", "Fiat"
         );
     }
 
