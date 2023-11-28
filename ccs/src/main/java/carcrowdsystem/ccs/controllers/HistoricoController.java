@@ -221,7 +221,7 @@ public class HistoricoController{
         );
         Integer idVeiculo = service.pegarVeiculoPorPlaca(placa).getId();
         Estacionamento estacionamento = estacionamentoService.findById(idEstacionamento);
-        HistoricoDto historicoDto = new HistoricoDto(StatusVagaEnum.Reservado, 0.0);
+        HistoricoDto historicoDto = new HistoricoDto(StatusVagaEnum.Reserva, 0.0);
         return service.postReserva(historicoDto, idVeiculo, estacionamento, horaDataReserva);
     }
 

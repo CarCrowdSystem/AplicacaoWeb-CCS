@@ -1,5 +1,5 @@
 package carcrowdsystem.ccs.enums;
 
 public enum StatusVagaEnum {
-    Entrada, Saida, Processando, Reservado
+    Entrada, Saida, Processando, Reserva
 }
