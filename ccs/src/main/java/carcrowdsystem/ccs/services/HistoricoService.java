@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -332,6 +333,7 @@ public class HistoricoService {
         List<Reserva> reservas = reservaRepository.getReservasByIdEstacionamento(idEstacionamento);
         List<reservaResponseDto> returnReservas = new ArrayList<>();
         for(Reserva r: reservas){
+            if(r.getDataHoraReserva().toLocalDate().toString().equals(LocalDate.now().toString()))
             returnReservas.add(new reservaResponseDto(
                 r.getId(),
                 r.getVeiculo().getCliente().getNome(),

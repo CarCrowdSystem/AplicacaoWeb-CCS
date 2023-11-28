@@ -232,6 +232,13 @@ public class HistoricoController{
         return ResponseEntity.ok(service.getReservasByIdEstacionamento(idEstacionamento));
     }
 
+    @GetMapping("/reserva-hoje")
+    public ResponseEntity<List<reservaResponseDto>> getReservasDayByIdEstacionamento(
+            @RequestParam Integer idEstacionamento
+    ){
+        return ResponseEntity.ok(service.getReservasByIdEstacionamento(idEstacionamento));
+    }
+
     @DeleteMapping("/reserva")
     public ResponseEntity delReservaById(
             @RequestParam Integer id
