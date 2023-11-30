@@ -118,6 +118,17 @@ public class ClienteService {
         List<ClienteHistoricoResponse> checkoutResponseList = new ArrayList<>();
         Boolean continuar = true;
         for (Object[] item : listReservas) {
+            String data = item[2].toString().substring(0, 10);
+            String hora = item[2].toString().substring(11, 19);
+            ViaCepService viaCepService = new ViaCepService();
+            EnderecoEstacionamento endereco = viaCepService.getEndereco(item[1].toString());
+            String rua = endereco.logradouro + ", " + endereco.bairro + ", " + endereco.localidade + ", " + endereco.uf;
+            checkoutResponseList.add(new ClienteHistoricoResponse(
+                    item[0].toString(), rua, data.toString(), hora.toString(),
+                    item[3].toString(), item[4].toString(), item[5].toString(), item[6].toString()
+            ));
+        }
+        for (Object[] item : list) {
             String status = item[4].toString();
             Boolean isCheckinDone = true;
             if(continuar) {
@@ -135,18 +146,7 @@ public class ClienteService {
             String rua = endereco.logradouro + ", " + endereco.bairro + ", " + endereco.localidade + ", " + endereco.uf;
             checkoutResponseList.add(new ClienteHistoricoResponse(
                     item[0].toString(), rua, data.toString(), hora.toString(),
-                    item[3].toString(), status, item[5].toString(), item[6].toString(), isCheckinDone
-            ));
-        }
-        for (Object[] item : list) {
-            String data = item[2].toString().substring(0, 10);
-            String hora = item[2].toString().substring(11, 19);
-            ViaCepService viaCepService = new ViaCepService();
-            EnderecoEstacionamento endereco = viaCepService.getEndereco(item[1].toString());
-            String rua = endereco.logradouro + ", " + endereco.bairro + ", " + endereco.localidade + ", " + endereco.uf;
-            checkoutResponseList.add(new ClienteHistoricoResponse(
-                    item[0].toString(), rua, data.toString(), hora.toString(),
-                    item[3].toString(), item[4].toString(), item[5].toString(), "-1"
+                    item[3].toString(), status, item[5].toString(), "-1", isCheckinDone
             ));
         }
         return checkoutResponseList;
