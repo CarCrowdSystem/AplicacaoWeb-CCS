@@ -1,5 +1,6 @@
 package carcrowdsystem.ccs.controllers;
 
+import carcrowdsystem.ccs.dtos.cliente.ClienteHistoricoResponse;
 import carcrowdsystem.ccs.dtos.funcionario.LoginDto;
 import carcrowdsystem.ccs.entitys.Cliente;
 import carcrowdsystem.ccs.exception.MyException;
@@ -70,7 +71,7 @@ public class ClienteController {
     }
 
     @GetMapping("/historico")
-    public ResponseEntity getAllHistoricoByIdCliente(
+    public ResponseEntity<List<ClienteHistoricoResponse>> getAllHistoricoByIdCliente(
         @RequestParam Integer id
     ) throws IOException, ParseException {
         return ResponseEntity.ok().body(clienteService.getAllHistoricoByIdCliente(id));

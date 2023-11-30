@@ -116,7 +116,18 @@ public class ClienteService {
         List<Object[]> list = clienteRepository.getAllHistoricoByIdCliente(id, id);
         List<Object[]> listReservas = clienteRepository.getAllReservasByIdCliente(id);
         List<ClienteHistoricoResponse> checkoutResponseList = new ArrayList<>();
+        Boolean continuar = true;
         for (Object[] item : listReservas) {
+            String status = item[4].toString();
+            Boolean isCheckinDone = true;
+            if(continuar) {
+                if(status.equals("1") || status.equals("2")) {
+                    continuar = false;
+                } else if (status.equals("0")) {
+                    isCheckinDone = false;
+                    continuar = false;
+                }
+            }
             String data = item[2].toString().substring(0, 10);
             String hora = item[2].toString().substring(11, 19);
             ViaCepService viaCepService = new ViaCepService();
@@ -124,7 +135,7 @@ public class ClienteService {
             String rua = endereco.logradouro + ", " + endereco.bairro + ", " + endereco.localidade + ", " + endereco.uf;
             checkoutResponseList.add(new ClienteHistoricoResponse(
                     item[0].toString(), rua, data.toString(), hora.toString(),
-                    item[3].toString(), item[4].toString(), item[5].toString(), item[6].toString()
+                    item[3].toString(), status, item[5].toString(), item[6].toString(), isCheckinDone
             ));
         }
         for (Object[] item : list) {

@@ -9,10 +9,11 @@ public class ClienteHistoricoResponse {
     private String status;
     private String placa;
     private String idReserva;
+    private Boolean isCheckinDone = true;
 
     public ClienteHistoricoResponse(
-        String nome, String rua, String data, String hora,
-        String valor, String status, String placa, String idReserva
+            String nome, String rua, String data, String hora,
+            String valor, String status, String placa, String idReserva
     ) {
         this.nome = nome;
         this.rua = rua;
@@ -22,6 +23,22 @@ public class ClienteHistoricoResponse {
         this.status = status;
         this.placa = placa;
         this.idReserva = idReserva;
+    }
+
+    public ClienteHistoricoResponse(
+            String nome, String rua, String data,
+            String hora, String valor, String status,
+            String placa, String idReserva, Boolean isCheckinDone
+    ) {
+        this.nome = nome;
+        this.rua = rua;
+        this.data = data;
+        this.hora = hora;
+        this.valor = valor;
+        this.status = status;
+        this.placa = placa;
+        this.idReserva = idReserva;
+        this.isCheckinDone = isCheckinDone;
     }
 
     public String getNome() {
@@ -86,5 +103,13 @@ public class ClienteHistoricoResponse {
 
     public void setIdReserva(String idReserva) {
         this.idReserva = idReserva;
+    }
+
+    public Boolean getCheckinDone() {
+        return isCheckinDone;
+    }
+
+    public void setCheckinDone(Boolean checkinDone) {
+        isCheckinDone = checkinDone;
     }
 }
