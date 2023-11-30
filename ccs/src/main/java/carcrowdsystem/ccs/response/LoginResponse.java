@@ -4,6 +4,7 @@ public class LoginResponse {
     private Integer idEstacionamento;
     private String nomeEstacionamento;
     private String jwt;
+    private Boolean isAdm;
 
     public Integer getIdEstacionamento() {
         return idEstacionamento;
@@ -27,5 +28,13 @@ public class LoginResponse {
 
     public void setJwt(String jwt) {
         this.jwt = jwt;
+    }
+
+    public Boolean getAdm() {
+        return isAdm;
+    }
+
+    public void setAdm(Boolean adm) {
+        isAdm = adm;
     }
 }

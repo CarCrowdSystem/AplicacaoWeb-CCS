@@ -88,6 +88,7 @@ public class FuncionarioService {
         response.setIdEstacionamento(estacionamento.getId());
         response.setNomeEstacionamento(estacionamento.getNomeEstacionamento());
         response.setJwt(funcionarioTokenDto.getToken());
+        response.setAdm(funcionarioAutenticado.getUsuarioAdm());
 
         return response;
     }
