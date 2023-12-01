@@ -44,7 +44,7 @@ public class FuncionarioController {
             @Schema(hidden = true)))
     })
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) throws MyException {
         return ResponseEntity.status(200).body(funcionarioAdapter.autenticar(loginDto));
     }
 
@@ -60,11 +60,12 @@ public class FuncionarioController {
         return ResponseEntity.status(200).body(funcionarioAdapter.getAllFuncs(id));
     }
 
-    @GetMapping("/nome/{nome}")
+    @GetMapping("/nome/{nome}/{idEstacionamento}")
     public ResponseEntity<List<FuncionarioDto>> getFuncionarioPorNome(
-            @PathVariable String nome
+            @PathVariable String nome,
+            @PathVariable Integer idEstacionamento
     ) throws MyException {
-        return ResponseEntity.status(200).body(funcionarioAdapter.getFuncionariosPorNome(nome).getBody());
+        return ResponseEntity.status(200).body(funcionarioAdapter.getFuncionariosPorNome(idEstacionamento, nome).getBody());
     }
 
     @ApiResponses({

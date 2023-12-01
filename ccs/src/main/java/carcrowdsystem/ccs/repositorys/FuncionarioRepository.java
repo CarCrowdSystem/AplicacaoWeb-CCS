@@ -1,10 +1,10 @@
 package carcrowdsystem.ccs.repositorys;
 
-import carcrowdsystem.ccs.dtos.funcionario.FuncionarioDetailsDto;
 import carcrowdsystem.ccs.entitys.Funcionario;
 import carcrowdsystem.ccs.entitys.Login;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +28,18 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Intege
     )
     List<Funcionario> findAllByIdEstacionamento(Integer id);
 
-    List<Funcionario> findByNomeContainsIgnoreCase(String nome);
+    @Query(
+            nativeQuery = true,
+            value = "SELECT * FROM funcionario WHERE fk_estacionamento = :id " +
+                    "AND login_habilitado = true AND nome_funcionario LIKE %:nome%"
+    )
+    List<Funcionario> pegarFuncPorLikeNome(@Param("id") Integer id, @Param("nome") String nome);
+
+    @Query(
+        nativeQuery = true,
+        value = "SELECT * FROM funcionario where login_habilitado = 1;"
+    )
+    List<Funcionario> findAllHabilitado();
 
 //
 //    @Override

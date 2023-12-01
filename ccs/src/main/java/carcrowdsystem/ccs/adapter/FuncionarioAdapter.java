@@ -14,8 +14,8 @@ import java.util.List;
 
 @Service
 public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, FuncionarioRequest> {
-    public ResponseEntity<List<FuncionarioDto>> getFuncionariosPorNome(String nome) throws MyException {
-        return service.getFuncionariosPorNome(nome);
+    public ResponseEntity<List<FuncionarioDto>> getFuncionariosPorNome(Integer idEstacionamento, String nome) throws MyException {
+        return service.getFuncionariosPorNome(idEstacionamento, nome);
     }
 
     @Autowired
@@ -35,7 +35,7 @@ public class FuncionarioAdapter implements DbAdapter<FuncionarioDto, Funcionario
         return service.deleteFunc(id);
     }
 
-    public LoginResponse autenticar(LoginDto func) {
+    public LoginResponse autenticar(LoginDto func) throws MyException {
         return service.autenticar(func);
     }
 

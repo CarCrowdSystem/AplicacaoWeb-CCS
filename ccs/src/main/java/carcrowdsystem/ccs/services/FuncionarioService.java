@@ -24,7 +24,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 
 @Service
@@ -60,7 +59,7 @@ public class FuncionarioService {
         }
     }
 
-    public LoginResponse autenticar(LoginDto loginDto){
+    public LoginResponse autenticar(LoginDto loginDto) throws MyException {
         final UsernamePasswordAuthenticationToken credentials =
             new UsernamePasswordAuthenticationToken(
                     loginDto.getEmail(), loginDto.getSenha()
@@ -73,6 +72,8 @@ public class FuncionarioService {
                 .orElseThrow(
                         () -> new ResponseStatusException(404, "Email do usuário não cadastrado", null)
                 );
+
+        if (!funcionarioAutenticado.getLoginHabilitado()) throw new MyException(401, "Funcionario desabilitado.", "DES001");
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -94,7 +95,7 @@ public class FuncionarioService {
     }
 
     public List<FuncionarioDto> getAllFuncs(Integer id) throws MyException {
-        if (funcionarioRepository.findAll().isEmpty()){
+        if (funcionarioRepository.findAllHabilitado().isEmpty()){
             throw new MyException(404, "Não existe nada no Banco de Dados", "G-002");
         }
         return listFuncToListFuncDto(funcionarioRepository.findAllByIdEstacionamento(id));
@@ -171,8 +172,10 @@ public class FuncionarioService {
     }
 
 
-    public ResponseEntity<List<FuncionarioDto>> getFuncionariosPorNome(String nome) throws MyException {
-        List<FuncionarioDto> funcionarioDtos = listFuncToListFuncDto(funcionarioRepository.findByNomeContainsIgnoreCase(nome));
+    public ResponseEntity<List<FuncionarioDto>> getFuncionariosPorNome(Integer idEstacionamento, String nome) throws MyException {
+        List<FuncionarioDto> funcionarioDtos = listFuncToListFuncDto(
+                funcionarioRepository.pegarFuncPorLikeNome(idEstacionamento, nome)
+        );
         return ResponseEntity.status(200).body(funcionarioDtos);
     }
 }
