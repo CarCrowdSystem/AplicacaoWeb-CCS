@@ -88,15 +88,18 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
     Double pegarTotalFaturamentoDiario(Integer idEstacionamento);
 
     @Query(nativeQuery = true,
-            value = "SELECT h.* " +
-                    "FROM historico h " +
-                    "INNER JOIN ( " +
-                    "    SELECT fk_vaga, MAX(momento_registro) AS ultimo_registro " +
-                    "    FROM historico " +
-                    "    INNER JOIN vaga ON historico.fk_vaga = vaga.id_vaga " +
-                    "    WHERE vaga.fk_estacionamento = ? " +
-                    "    GROUP BY fk_vaga " +
-                    ") t ON h.fk_vaga = t.fk_vaga AND h.momento_registro = t.ultimo_registro;")
+            value = """
+                    SELECT h.*
+                    FROM historico h
+                    INNER JOIN (
+                        SELECT fk_vaga, MAX(id_historico) AS ultimo_registro
+                        FROM historico
+                        INNER JOIN vaga ON historico.fk_vaga = vaga.id_vaga
+                        WHERE vaga.fk_estacionamento = ?
+                        AND status_registro != 3
+                        GROUP BY fk_vaga
+                    ) t ON h.fk_vaga = t.fk_vaga AND h.id_historico = t.ultimo_registro;
+                    """)
     List<Historico> pegarMomentoVagasByEstacionamento(Integer id);
 
     @Query(nativeQuery = true,
