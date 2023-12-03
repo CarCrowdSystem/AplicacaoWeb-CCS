@@ -39,6 +39,7 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "        FROM vaga " +
                     "        WHERE fk_estacionamento = ? " +
                     "    ) " +
+                    "    AND status_registro != 3" +
                     "    GROUP BY fk_veiculo " +
                     ") t ON h.fk_veiculo = t.fk_veiculo AND h.id_historico = t.ultimo_registro " +
                     "ORDER BY momento_registro asc;"
@@ -72,6 +73,7 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                 "AND DATE(momento_registro) >= DATE(DATE_SUB(NOW(), INTERVAL 7 DAY))\n" +
                 "AND DATE(momento_registro) <= DATE(NOW())\n" +
                 "AND status_registro = '1'\n" +
+                "AND fk_veiculo != '1'\n" +
                 "GROUP BY DATE(momento_registro)\n" +
                 "ORDER BY DATE(momento_registro) DESC limit 7;"
     )
@@ -150,15 +152,16 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
     Double calculaPreco(Integer id, Integer id2, Integer idEstacionamento);
 
     @Query(nativeQuery = true,
-            value = "SELECT * " +
-                    "FROM historico " +
-                    "WHERE fk_vaga IN ( " +
-                    "    SELECT id_vaga " +
-                    "    FROM vaga " +
-                    "    WHERE fk_estacionamento = ? " +
-                    ") " +
-                    "ORDER BY momento_registro DESC " +
-                    "LIMIT 25;")
+            value = "SELECT *\n" +
+                    "FROM historico\n" +
+                    "WHERE fk_vaga IN (\n" +
+                    "    SELECT id_vaga\n" +
+                    "    FROM vaga\n" +
+                    "    WHERE fk_estacionamento = ?\n" +
+                    ")\n" +
+                    "AND fk_veiculo != 1\n" +
+                    "ORDER BY momento_registro DESC\n" +
+                    "LIMIT 25")
     List<Historico> pegarDadosHistoricoByIdEstacionamento(Integer id);
 
     @Query(nativeQuery = true,
