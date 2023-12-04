@@ -23,7 +23,7 @@ public class EstacionamentoAdapter implements DbAdapter<EstacionamentoDto, Estac
 
     @Override
     public void update(Integer id, Estacionamento entrada) throws MyException {
-        service.patchEstacionamento(id, entrada);
+
     }
 
     @Override

@@ -8,6 +8,7 @@ import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
 import carcrowdsystem.ccs.models.EnderecoEstacionamento;
 import carcrowdsystem.ccs.request.EstacionamentoRequest;
 import carcrowdsystem.ccs.response.EstacionamentoAllMobileResponse;
+import carcrowdsystem.ccs.services.EstacionamentoService;
 import carcrowdsystem.ccs.services.ViaCepService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -29,6 +30,9 @@ public class EstacionamentoController {
 
     @Autowired
     private final EstacionamentoAdapter estacionamentoAdapter = new EstacionamentoAdapter();
+
+    @Autowired
+    private final EstacionamentoService estacionamentoService = new EstacionamentoService();
 
     private final EstacionamentoMapper estacionamentoMapper = new EstacionamentoMapper();
 
@@ -96,12 +100,7 @@ public class EstacionamentoController {
             @PathVariable Integer id,
             @RequestBody EstacionamentoRequest estacionamento
     ) throws MyException {
-        Estacionamento newEstacionamento = new Estacionamento();
-        newEstacionamento.setCep(estacionamento.getCepEmpresa());
-        newEstacionamento.setNomeEstacionamento(estacionamento.getNomeEmpresa());
-        newEstacionamento.setTelefone(estacionamento.getTelefoneEmpresa());
-        newEstacionamento.setNumeroEndereco(estacionamento.getEnderecoEmpresa());
-        estacionamentoAdapter.update(id, newEstacionamento);
+        estacionamentoService.patchEstacionamento(id, estacionamento);
         return ResponseEntity.status(201).build();
     }
 

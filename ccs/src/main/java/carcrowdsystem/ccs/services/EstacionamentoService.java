@@ -6,6 +6,7 @@ import carcrowdsystem.ccs.exception.MyException;
 import carcrowdsystem.ccs.mapper.EstacionamentoMapper;
 import carcrowdsystem.ccs.models.EnderecoEstacionamento;
 import carcrowdsystem.ccs.repositorys.EstacionamentoRepository;
+import carcrowdsystem.ccs.request.EstacionamentoRequest;
 import carcrowdsystem.ccs.response.EstacionamentoAllMobileResponse;
 import org.apache.hc.core5.http.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,23 +43,19 @@ public class EstacionamentoService {
         return toListDto(estacionamentoRepository.findAll());
     }
 
-    public void patchEstacionamento(Integer id, Estacionamento estacionamento) {
+    public void patchEstacionamento(Integer id, EstacionamentoRequest estacionamento) {
         Optional<Estacionamento> estacionamentoAntigo = estacionamentoRepository.findById(id);
-        if (estacionamentoAntigo.isEmpty()){
-            estacionamentoRepository.save(estacionamento);
-            return;
+        if(estacionamento.getNomeEmpresa() != null && !estacionamento.getNomeEmpresa().isEmpty()){
+            estacionamentoAntigo.get().setNomeEstacionamento(estacionamento.getNomeEmpresa());
         }
-        if(estacionamento.getNomeEstacionamento() != null){
-            estacionamentoAntigo.get().setNomeEstacionamento(estacionamento.getNomeEstacionamento());
+        if(estacionamento.getCepEmpresa() != null && !estacionamento.getCepEmpresa().isEmpty()){
+            estacionamentoAntigo.get().setCep(estacionamento.getCepEmpresa());
         }
-        if(estacionamento.getCep() != null){
-            estacionamentoAntigo.get().setCep(estacionamento.getCep());
+        if(estacionamento.getTelefoneEmpresa() != null && !estacionamento.getTelefoneEmpresa().isEmpty()){
+            estacionamentoAntigo.get().setTelefone(estacionamento.getTelefoneEmpresa());
         }
-        if(estacionamento.getTelefone() != null){
-            estacionamentoAntigo.get().setTelefone(estacionamento.getTelefone());
-        }
-        if(estacionamento.getNumeroEndereco() != null){
-            estacionamentoAntigo.get().setNumeroEndereco(estacionamento.getNumeroEndereco());
+        if(estacionamento.getEnderecoEmpresa() != null && !estacionamento.getEnderecoEmpresa().isEmpty()){
+            estacionamentoAntigo.get().setNumeroEndereco(estacionamento.getEnderecoEmpresa());
         }
         estacionamentoRepository.save(estacionamentoAntigo.get());
     }
