@@ -55,6 +55,7 @@ public interface HistoricoRepository extends JpaRepository<Historico, Integer> {
                     "    FROM vaga " +
                     "    WHERE fk_estacionamento = ? " +
                     ") " +
+                    "AND fk_veiculo != 1 " +
                     "AND DATE(momento_registro) = DATE(DATE_SUB(NOW(), INTERVAL 3 HOUR)) " +
                     "AND status_registro = '1';"
     )
