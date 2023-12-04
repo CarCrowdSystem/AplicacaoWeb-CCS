@@ -14,13 +14,13 @@ public interface VagaRepository extends JpaRepository<Vaga, Integer> {
                 "    h.*,\n" +
                 "    ROW_NUMBER() OVER (PARTITION BY h.fk_vaga ORDER BY h.momento_registro DESC) AS NumeroLinha\n" +
                 "  FROM historico h\n" +
-                "  WHERE h.fk_vaga IN (SELECT id_vaga FROM vaga WHERE fk_estacionamento = ?)\n" +
+                "  WHERE h.fk_vaga IN (SELECT id_vaga FROM vaga WHERE fk_estacionamento = ? AND status_registro != 3)\n" +
                 ")\n" +
                 "SELECT\n" +
                 "  h.fk_vaga\n" +
                 "FROM HistoricoNumerado h\n" +
                 "WHERE h.NumeroLinha = 1 AND h.status_registro = 1\n" +
-                "LIMIT 1"
+                "LIMIT 1;"
     )
     Optional<Integer> pegarIdVagaLivreByIdEstacionamento(Integer idEstacionamento);
 }
