@@ -45,24 +45,24 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
         nativeQuery = true,
         value = """
                 SELECT
-                    e.nome_estacionamento AS nome,
-                    e.cep,
-                    h.momento_registro,
-                    h.valor_pago AS valor,
-                    h.status_registro AS status,
-                    ve.placa,
-                    r.id_reserva
+                	e.nome_estacionamento AS nome,
+                	e.cep,
+                	DATE_SUB(h.momento_registro, INTERVAL 3 HOUR) AS momento_registro,
+                	h.valor_pago AS valor,
+                	h.status_registro AS status,
+                	ve.placa,
+                	r.id_reserva
                 FROM
-                    historico h
-                    JOIN vaga v ON h.fk_vaga = v.id_vaga
-                    JOIN estacionamento e ON v.fk_estacionamento = e.id_estacionamento
-                    JOIN veiculo ve ON h.fk_veiculo = ve.id_veiculo
-                    JOIN cliente c ON ve.fk_cliente = c.id_cliente
-                    JOIN reserva r ON h.id_historico = r.fk_historico
+                	historico h
+                	JOIN vaga v ON h.fk_vaga = v.id_vaga
+                	JOIN estacionamento e ON v.fk_estacionamento = e.id_estacionamento
+                	JOIN veiculo ve ON h.fk_veiculo = ve.id_veiculo
+                	JOIN cliente c ON ve.fk_cliente = c.id_cliente
+                	JOIN reserva r ON h.id_historico = r.fk_historico
                 WHERE
-                    c.id_cliente = ?
+                	c.id_cliente = 30
                 ORDER BY
-                    momento_registro DESC;
+                	momento_registro DESC;
                 """
     )
         List<Object[]> getAllReservasByIdCliente(Integer id);

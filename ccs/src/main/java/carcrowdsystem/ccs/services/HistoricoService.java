@@ -333,16 +333,16 @@ public class HistoricoService {
         List<Reserva> reservas = reservaRepository.getReservasByIdEstacionamento(idEstacionamento);
         List<reservaResponseDto> returnReservas = new ArrayList<>();
         for(Reserva r: reservas){
-            if(r.getDataHoraReserva().toLocalDate().toString().equals(LocalDate.now().toString()))
-            returnReservas.add(new reservaResponseDto(
-                r.getId(),
-                r.getVeiculo().getCliente().getNome(),
-                r.getDataHoraReserva().format(formatter),
-                r.getDataHoraReserva().toLocalTime().toString(),
-                r.getVeiculo().getCliente().getTelefone(),
-                r.getVeiculo().getModelo(),
-                r.getVeiculo().getMarca()
-            ));
+                returnReservas.add(new reservaResponseDto(
+                    r.getId(),
+                    r.getVeiculo().getCliente().getNome(),
+                    r.getDataHoraReserva().format(formatter),
+                    r.getDataHoraReserva().toLocalTime().toString(),
+                    r.getVeiculo().getCliente().getTelefone(),
+                    r.getVeiculo().getModelo(),
+                    r.getVeiculo().getMarca()
+                )
+            );
         }
         return returnReservas;
     }

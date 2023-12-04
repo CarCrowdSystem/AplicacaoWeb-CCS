@@ -1,6 +1,5 @@
 package carcrowdsystem.ccs.repositorys;
 
-import carcrowdsystem.ccs.dtos.historico.CheckoutSemanalResponse;
 import carcrowdsystem.ccs.entitys.Estacionamento;
 import carcrowdsystem.ccs.entitys.Historico;
 import org.springframework.data.jpa.repository.JpaRepository;
