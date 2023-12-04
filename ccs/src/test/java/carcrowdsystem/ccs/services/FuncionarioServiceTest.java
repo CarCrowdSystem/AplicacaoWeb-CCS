@@ -35,7 +35,7 @@ class FuncionarioServiceTest {
         List<FuncionarioDto> funcionariosDto = FuncionarioBuilder.criarListaFuncionarioDto();
 
         Mockito.when(this.funcionarioRepository.findAllByIdEstacionamento(id)).thenReturn(funcionarios);
-        Mockito.when(this.funcionarioRepository.findAll()).thenReturn(funcionarios);
+        Mockito.when(this.funcionarioRepository.findAllHabilitado()).thenReturn(funcionarios);
         List<FuncionarioDto> listar = this.funcionarioService.getAllFuncs(id);
         Assertions.assertEquals(funcionariosDto.size(), listar.size());
     }

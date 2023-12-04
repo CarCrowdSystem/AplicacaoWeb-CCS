@@ -12,8 +12,8 @@ public class FuncionarioBuilder {
     }
 
     public static List<FuncionarioDto> criarListaFuncionarioDto() {
-        return  List.of(new FuncionarioDto(1, "Teste", "22233344499", false,
-                "teste1@gmail.com"), new FuncionarioDto(2, "Teste2", "33344455588",
+        return  List.of(new FuncionarioDto(2, "Teste", "22233344499", false,
+                "teste1@gmail.com"), new FuncionarioDto(3, "Teste2", "33344455588",
                 false, "teste2@gmail.com"));
     }
 
